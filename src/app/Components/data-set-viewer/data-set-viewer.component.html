@@ -1,0 +1,9 @@
+<h1>Data Set Viewer</h1>
+
+<h3>Disaster Declarations Summary</h3>
+
+<ul>
+  <li *ngFor="let disaster of disasters$ | async">
+    {{disaster.femaDeclarationString}}: {{disaster.disasterNumber}};  {{disaster.state}};  {{disaster.declarationType}};  {{disaster.declarationDate}};
+  </li>
+</ul>

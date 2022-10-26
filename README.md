@@ -1,5 +1,9 @@
 # OpenFemaNgClient
 
+FEMA has released their OpenFEMA resource, providing a wide variety of publically available data, as well documented at: <https://www.fema.gov/about/reports-and-data/openfema>.
+
+This is a basic Angular and Typescript application that provides an example approach for accessing a few of these data sets. At this point it is mainly a proof of concept. Much remains before this would serve as an enterprise ready tool!
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
 
 ## Development server
