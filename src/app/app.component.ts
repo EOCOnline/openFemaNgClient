@@ -1,20 +1,20 @@
-/*import { Component } from '@angular/core';
-import {DataSetViewerComponent} from './Components'
-import { RouterModule } from '@angular/router';
+import { Component } from '@angular/core';
+// import {DataSetViewerComponent} from './Components'
+// import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  //templateUrl: './app.component.html',
-  templateUrl: './Components/data-set-viewer/data-set-viewer.component.html',
- // standalone: true,
+  templateUrl: './app.component.html',
+  // templateUrl: './Components/data-set-viewer/data-set-viewer.component.html',
+  // standalone: true,
   styleUrls: ['./app.component.scss'],
-  //imports:[DataSetViewerComponent],
+  // imports:[DataSetViewerComponent],
 })
 export class AppComponent {
   title = 'openFemaNgClient';
 }
-*/
 
+/*
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 //import { HttpClientModule } from '@angular/common/http';
@@ -25,8 +25,10 @@ import { catchError, retry } from 'rxjs/operators';
 import { DisasterDeclarationsSummaryType } from 'src/app/services';
 import { BrowserModule } from '@angular/platform-browser';
 
+
 @Component({
-  selector: 'app-data-set-viewer',
+  // selector: 'app-data-set-viewer',
+  selector: 'app-root',
   standalone: true,  // https://angular.io/guide/standalone-components
   imports: [CommonModule,
     // BrowserModule,
@@ -36,6 +38,8 @@ import { BrowserModule } from '@angular/platform-browser';
   templateUrl: './components/data-set-viewer/data-set-viewer.component.html',
   styleUrls: ['./components/data-set-viewer/data-set-viewer.component.scss']
 })
+
+
 export class DataSetViewerComponent implements OnInit {
 
   disasters$: Observable<DisasterDeclarationsSummaryType[]>
@@ -52,3 +56,4 @@ export class DataSetViewerComponent implements OnInit {
   }
 
 }
+*/

@@ -5,13 +5,15 @@ import { HttpClient } from '@angular/common/http';  // https://angular.io/guide/
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-import { DisasterDeclarationsSummaryType } from 'src/app/services';
+import { DisasterDeclarationsSummaryType, WebDisasterSummariesService } from 'src/app/services';
 import { BrowserModule } from '@angular/platform-browser';
+import { DataSetCardComponent } from '../.';
 
 @Component({
   selector: 'app-data-set-viewer',
   standalone: true,  // https://angular.io/guide/standalone-components
   imports: [CommonModule,
+    DataSetCardComponent,
     // BrowserModule,
     // import HttpClientModule after BrowserModule.
     // HttpClientModule
@@ -22,10 +24,11 @@ import { BrowserModule } from '@angular/platform-browser';
 export class DataSetViewerComponent implements OnInit {
 
   disasters$: Observable<DisasterDeclarationsSummaryType[]>
- api = "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries"
+  api = "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries"
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private webDisasterSummariesService: WebDisasterSummariesService,
     ) {
       this.disasters$ = this.httpClient.get<DisasterDeclarationsSummaryType[]>(`${this.api}$filter=state eq 'WA'`)
      }
