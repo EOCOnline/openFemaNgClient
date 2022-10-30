@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DisasterDeclarationsSummaryType, WebDisasterSummariesService } from 'src/app/services';
 import { RouterModule } from '@angular/router';
-//import { DataSetCardComponent } from './dataset-card.component';
-//import { DataSetViewerComponent } from '../../app.component';
+//import { DatasetCardComponent } from './dataset-card.component';
+//import { DatasetViewerComponent } from '../../app.component';
 
 @Component({
   selector: 'app-dataset-card',
@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './dataset-card.component.html',
   styleUrls: ['./dataset-card.component.scss']
 })
-export class DataSetCardComponent implements OnInit {
+export class DatasetCardComponent implements OnInit {
 
   @Input() disaster!: DisasterDeclarationsSummaryType;
   @Input() index!: Number;

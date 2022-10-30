@@ -7,13 +7,13 @@ import { catchError, retry } from 'rxjs/operators';
 
 import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services';
 import { BrowserModule } from '@angular/platform-browser';
-import { DataSetCardComponent } from '..';
+import { DatasetCardComponent } from '..';
 
 @Component({
   selector: 'app-dataset-viewer',
   standalone: true,  // https://angular.io/guide/standalone-components
   imports: [CommonModule,
-    DataSetCardComponent,
+    DatasetCardComponent,
     // BrowserModule,
     // import HttpClientModule after BrowserModule.
     // HttpClientModule
@@ -21,7 +21,7 @@ import { DataSetCardComponent } from '..';
   templateUrl: './dataset-viewer.component.html',
   styleUrls: ['./dataset-viewer.component.scss']
 })
-export class DataSetViewerComponent implements OnInit {
+export class DatasetViewerComponent implements OnInit {
 
   private declarationsSummariesSubscription!: Subscription
   private disasterDeclarationsSummary!: DisasterDeclarationsSummary
@@ -31,7 +31,7 @@ export class DataSetViewerComponent implements OnInit {
     //private httpClient: HttpClient,
     private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
     ) {
-      console.log (`DataSetViewerComponent: Getting declarationsSummariesSubscription`)
+      console.log (`DatasetViewerComponent: Getting declarationsSummariesSubscription`)
      // debugger
 
       this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
@@ -44,13 +44,13 @@ export class DataSetViewerComponent implements OnInit {
         complete: () => console.info('declarationsSummariesSubscription complete')
       })
 
-      console.log (`DataSetViewerComponent: Got declarationsSummariesSubscription, awaiting results`)
+      console.log (`DatasetViewerComponent: Got declarationsSummariesSubscription, awaiting results`)
      }
 
   ngOnInit(): void {
     // fetch data async after constructior when async pipe subscribes to the disasters$ observable
     debugger
-    console.log (`DataSetViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
+    console.log (`DatasetViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
   }
 
 }

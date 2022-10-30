@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataSetViewerComponent } from './dataset-viewer.component';
+import { DatasetViewerComponent } from './dataset-viewer.component';
 
-describe('DataSetViewerComponent', () => {
-  let component: DataSetViewerComponent;
-  let fixture: ComponentFixture<DataSetViewerComponent>;
+describe('DatasetViewerComponent', () => {
+  let component: DatasetViewerComponent;
+  let fixture: ComponentFixture<DatasetViewerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ DataSetViewerComponent ]
+      imports: [ DatasetViewerComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DataSetViewerComponent);
+    fixture = TestBed.createComponent(DatasetViewerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

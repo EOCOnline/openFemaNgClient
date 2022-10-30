@@ -4,7 +4,7 @@ import { metadataType } from './'
 
 
 // TODO: grab this automatically from:
-// https://www.fema.gov/api/open/v1/OpenFemaDataSetFields?$filter=openFemaDataSet%20eq%20%27DisasterDeclarationsSummaries%27%20and%20datasetVersion%20eq%202
+// https://www.fema.gov/api/open/v1/OpenFemaDatasetFields?$filter=openFemaDataset%20eq%20%27DisasterDeclarationsSummaries%27%20and%20datasetVersion%20eq%202
 
 export type DisasterDeclarationsSummaryType = {
   femaDeclarationString:  string;

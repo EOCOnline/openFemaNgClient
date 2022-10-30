@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-// import {DataSetViewerComponent} from './Components'
+// import {DatasetViewerComponent} from './Components'
 // import { RouterModule } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
   // templateUrl: './Components/dataset-viewer/dataset-viewer.component.html',
   // standalone: true,
   styleUrls: ['./app.component.scss'],
-  // imports:[DataSetViewerComponent],
+  // imports:[DatasetViewerComponent],
 })
 export class AppComponent {
   title = 'openFemaNgClient';
@@ -40,7 +40,7 @@ import { BrowserModule } from '@angular/platform-browser';
 })
 
 
-export class DataSetViewerComponent implements OnInit {
+export class DatasetViewerComponent implements OnInit {
 
   disasters$: Observable<DisasterDeclarationsSummaryType[]>
  api = "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries"
