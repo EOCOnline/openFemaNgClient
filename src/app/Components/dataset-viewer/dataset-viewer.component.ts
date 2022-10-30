@@ -7,10 +7,10 @@ import { catchError, retry } from 'rxjs/operators';
 
 import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services';
 import { BrowserModule } from '@angular/platform-browser';
-import { DataSetCardComponent } from '../.';
+import { DataSetCardComponent } from '..';
 
 @Component({
-  selector: 'app-data-set-viewer',
+  selector: 'app-dataset-viewer',
   standalone: true,  // https://angular.io/guide/standalone-components
   imports: [CommonModule,
     DataSetCardComponent,
@@ -18,8 +18,8 @@ import { DataSetCardComponent } from '../.';
     // import HttpClientModule after BrowserModule.
     // HttpClientModule
   ],
-  templateUrl: './data-set-viewer.component.html',
-  styleUrls: ['./data-set-viewer.component.scss']
+  templateUrl: './dataset-viewer.component.html',
+  styleUrls: ['./dataset-viewer.component.scss']
 })
 export class DataSetViewerComponent implements OnInit {
 

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataSetViewerComponent } from './data-set-viewer.component';
+import { DataSetViewerComponent } from './dataset-viewer.component';
 
 describe('DataSetViewerComponent', () => {
   let component: DataSetViewerComponent;

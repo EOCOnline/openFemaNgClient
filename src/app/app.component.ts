@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  // templateUrl: './Components/data-set-viewer/data-set-viewer.component.html',
+  // templateUrl: './Components/dataset-viewer/dataset-viewer.component.html',
   // standalone: true,
   styleUrls: ['./app.component.scss'],
   // imports:[DataSetViewerComponent],
@@ -27,7 +27,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 
 @Component({
-  // selector: 'app-data-set-viewer',
+  // selector: 'app-dataset-viewer',
   selector: 'app-root',
   standalone: true,  // https://angular.io/guide/standalone-components
   imports: [CommonModule,
@@ -35,8 +35,8 @@ import { BrowserModule } from '@angular/platform-browser';
     // import HttpClientModule after BrowserModule.
     // HttpClientModule
   ],
-  templateUrl: './components/data-set-viewer/data-set-viewer.component.html',
-  styleUrls: ['./components/data-set-viewer/data-set-viewer.component.scss']
+  templateUrl: './components/dataset-viewer/dataset-viewer.component.html',
+  styleUrls: ['./components/dataset-viewer/dataset-viewer.component.scss']
 })
 
 
