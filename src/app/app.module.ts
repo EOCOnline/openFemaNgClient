@@ -3,11 +3,13 @@ import { BrowserModule } from '@angular/platform-browser'
 import { HttpClientModule } from '@angular/common/http' //https://angular.io/guide/http#setup-for-server-communication
 
 import { AppRoutingModule } from './app-routing.module'
-import { AppComponent } from './app.component'
+import { AppComponent } from './app.component';
+import { DatasetDetailsComponent } from './Components/dataset-details/dataset-details.component'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DatasetDetailsComponent
   ],
   imports: [
     BrowserModule,
