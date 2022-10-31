@@ -7,7 +7,7 @@ import { metadataType } from './'
 // https://www.fema.gov/api/open/v1/OpenFemaDatasetFields?$filter=openFemaDataset%20eq%20%27DisasterDeclarationsSummaries%27%20and%20datasetVersion%20eq%202
 
 // Should align with & explained by https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2
-
+//! Review: Above had to be changed as follows to import json file of summaries (see items below with comments)
 export type DisasterDeclarationsSummaryType = {
   femaDeclarationString:  string;
   disasterNumber: number;
@@ -23,34 +23,19 @@ export type DisasterDeclarationsSummaryType = {
   hmProgramDeclared: boolean;
   incidentBeginDate: string; // Date;
   incidentEndDate: string | null; // Date;
-  disasterCloseoutDate: string | null;
+  disasterCloseoutDate: string | null; // Date;
   fipsStateCode:  string;
   fipsCountyCode:  string;
   placeCode:  string;
   designatedArea:  string;
-  declarationRequestNumber:  string;
-  lastIAFilingDate: string | null;
+  declarationRequestNumber:  string; // number;
+  lastIAFilingDate: string | null; // Date;
+  lastRefresh:  string; // Date
   hash:  string;
   id:  string;
-  lastRefresh:  string; // Date
 }
 
 export interface DisasterDeclarationsSummary {
   metadata: metadataType;
   DisasterDeclarationsSummaries: DisasterDeclarationsSummaryType[]
 }
-/*
-type real = ({ femaDeclarationString: string; disasterNumber: number; state: string; declarationType: string; declarationDate: string; fyDeclared: number; incidentType: string; declarationTitle: string; ... 15 more ...; lastRefresh: string; } | { ...; } | { ...; } | { ...; } | { ...; })[]
-// is not assignable to type 'DisasterDeclarationsSummaryType[]'.
-
-//Type '
-type mine = { femaDeclarationString: string; disasterNumber: number; state: string; declarationType: string; declarationDate: string; fyDeclared: number; incidentType: string; declarationTitle: string; ... 15 more ...; lastRefresh: string; } | { ...; } | { ...; } | { ...; } | { ...; }
-//' is not assignable to type 'DisasterDeclarationsSummaryType'.
-
-// Type '
-type third = { femaDeclarationString: string; disasterNumber: number; state: string; declarationType: string; declarationDate: string; fyDeclared: number; incidentType: string; declarationTitle: string; ... 15 more ...; lastRefresh: string; }
-//' is not assignable to type 'DisasterDeclarationsSummaryType'.
-
-// Types of property 'declarationDate' are incompatible.
-// Type 'string' is not assignable to type 'Date'.
-*/

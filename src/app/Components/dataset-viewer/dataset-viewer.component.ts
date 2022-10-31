@@ -31,6 +31,13 @@ export class DatasetViewerComponent implements OnInit {
     //private httpClient: HttpClient,
     private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
     ) {
+      {
+        // Following works: based on reading an actual JSON file
+        console.log (`DatasetViewerComponent: Getting Summary`)
+        let myTest = disasterDeclarationsSummariesV2Service.test()
+        console.error (`DatasetViewerComponent: ${JSON.stringify(myTest.DisasterDeclarationsSummaries[0])}`)
+      }
+
       console.log (`DatasetViewerComponent: Getting declarationsSummariesSubscription`)
      // debugger
 
@@ -49,7 +56,7 @@ export class DatasetViewerComponent implements OnInit {
 
   ngOnInit(): void {
     // fetch data async after constructior when async pipe subscribes to the disasters$ observable
-    debugger
+   // debugger
     console.log (`DatasetViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
   }
 

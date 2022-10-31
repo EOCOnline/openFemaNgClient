@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, OnInit, Optional, SkipSelf } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http'  // https://angular.io/guide/http
+import { HttpClientModule, HttpErrorResponse } from '@angular/common/http'  // https://angular.io/guide/http
 import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, Observable, throwError } from 'rxjs'
 import { catchError, retry } from 'rxjs/operators'
@@ -24,7 +24,7 @@ import * as DeclSummary from './../../assets/DisasterDeclarationsSummariesV2.jso
 export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy{
 
   disasterDeclarationsSummary!: DisasterDeclarationsSummary
-  private disasterDeclarationsSummaryObservable$: Observable<DisasterDeclarationsSummary>
+  disasterDeclarationsSummaryObservable$!: Observable<DisasterDeclarationsSummary>
   disasterDeclarationsSummaries!: [DisasterDeclarationsSummaryType];
   api = "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries"
   apiFile = "./../../assets/DisasterDeclarationsSummariesV2.json"
@@ -65,7 +65,21 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
 
       console.log (`DisasterDeclarationsSummariesV2Service: Getting observable`)
 
-      this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.api}$filter=state eq 'WA'`)
+
+      this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.api}`)
+
+      this.disasterDeclarationsSummaryObservable$.subscribe({
+          next: (v) => {
+            //console.log(v)
+            console.error(`disaster: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`)
+          },
+          error: (e) => console.error(`Subscription got error: ${e}`),
+          complete: () => console.info('Subscription complete')
+      })
+
+
+
+      //this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.api}$filter=state eq 'WA'`)
       //this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.apiFile}`)
 
 
@@ -74,22 +88,20 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
       this.updateDisasterDeclarationsSummary(this.disasterDeclarationsSummary)
 
       //debugger
-      console.log (`DisasterDeclarationsSummariesV2Service: Got observable: ${this.disasterDeclarationsSummaryObservable$}`)
+      // console.log (`DisasterDeclarationsSummariesV2Service: Got observable: ${this.disasterDeclarationsSummaryObservable$}`)
    }
 
-
-test():DisasterDeclarationsSummary {
-  // fails with: Error: Should not import the named export 'DisasterDeclarationsSummaries'.'0' (imported as 'DeclSummary') from default-exporting module (only default export is available soon)
-  //let Summary0 = DeclSummary.DisasterDeclarationsSummaries[0]
-  //return (`DisasterDeclarationsSummariesV2Service: ${Summary0.femaDeclarationString} -- ${Summary0.disasterNumber}`)
-  return DeclSummary
-}
-
-
-
-
-
     ngOnInit(): void {
+
+      console.error(`===================== DisasterDeclarationsSummariesV2Service - ngOnInit`)
+
+
+
+    //  this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.api}$filter=state eq 'WA'`)
+      //this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.apiFile}`)
+
+
+
       // fetch data async after constructior when async pipe subscribes to the disasters$ observable
       //debugger
       //console.log (`DisasterDeclarationsSummariesV2Service: Got observable: ${this.disasterDeclarationsSummaryObservable$}`)
@@ -119,6 +131,13 @@ test():DisasterDeclarationsSummary {
       this.disasterDeclarationsSummaryObservable$
     }
 
+    test():DisasterDeclarationsSummary {
+      // fails with: Error: Should not import the named export 'DisasterDeclarationsSummaries'.'0' (imported as 'DeclSummary') from default-exporting module (only default export is available soon)
+      // let Summary0 = DeclSummary.DisasterDeclarationsSummaries[0]
+      // console.error `DisasterDeclarationsSummariesV2Service: ${Summary0.femaDeclarationString} -- ${Summary0.disasterNumber}`
+      return DeclSummary
+    }
+
     ngOnDestroy() {
 
     }
@@ -127,6 +146,7 @@ test():DisasterDeclarationsSummary {
 
 /*
 https://polcode.com/resources/blog/is-angular-still-worth-it-in-2022/
+nice super-simple example of Observables
 
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from "rxjs";
