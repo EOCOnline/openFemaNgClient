@@ -1,5 +1,6 @@
 import { metadataType } from './'
 
+// Should align with & explained by https://www.fema.gov/openfema-data-page/fema-web-disaster-summaries-v1
 export type FemaWebDisasterSummaryType = {
   disasterNumber: number;
   totalNumberIaApproved: number | null;
@@ -19,5 +20,5 @@ export type FemaWebDisasterSummaryType = {
 
 export interface FemaWebDisasterSummary {
   metadata: metadataType;
-  FemaWebDisasterSummaries:  [FemaWebDisasterSummaryType]
+  FemaWebDisasterSummaries:  FemaWebDisasterSummaryType[]
 }

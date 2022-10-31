@@ -5,13 +5,18 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs'
 import { catchError, retry } from 'rxjs/operators'
 import { metadataType, DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService } from './'
 
-/*
-Error: src/app/services/disaster-declarations-summaries-v2.service.ts:7:26 - error TS2732: Cannot find module './../../../assets/DisasterDeclarationsSummariesV2.json'. Consider using '--resolveJsonModule' to import module with '.json' extension.
-
-7 import * as secrets from './../../../assets/DisasterDeclarationsSummariesV2.json' // https://stackoverflow.com/questions/71098595/purpose-of-resolvejsonmodule
-*/
-//import * as secrets from './../../../assets/DisasterDeclarationsSummariesV2.json'
-// https://stackoverflow.com/questions/71098595/purpose-of-resolvejsonmodule
+/**
+ * To import json files:
+ * 1) Import statement requires "compilerOptions": {..., "resolveJsonModule": true, ... in tsconfig.json
+ *    per https://mariusschulz.com/blog/importing-json-modules-in-typescript
+ *    (acknowledging potential memory suck fo importing large json files)
+ * 2) or prepend the data in your JSON file with export default, and then save the file as data.js
+ *    instead of data.json, and then import it as a standard module: import {default as data} from './data.js'
+ * 3) or use window.fetch
+ *
+ * Details: https://stackoverflow.com/questions/71098595/purpose-of-resolvejsonmodule
+ */
+import * as DeclSummary from './../../assets/DisasterDeclarationsSummariesV2.json'
 
 @Injectable({
   providedIn: 'root'
@@ -22,16 +27,14 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
   private disasterDeclarationsSummaryObservable$: Observable<DisasterDeclarationsSummary>
   disasterDeclarationsSummaries!: [DisasterDeclarationsSummaryType];
   api = "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries"
-  apiFile = "./../../../assets/DisasterDeclarationsSummariesV2.json"
-  //apiFile = "./../../../assets/FemaWebDisasterSummaries.json"
+  apiFile = "./../../assets/DisasterDeclarationsSummariesV2.json"
+  //apiFile = "./../../assets/FemaWebDisasterSummaries.json"
 
   private declarationsSummarySubject$!: BehaviorSubject<DisasterDeclarationsSummary>
- // declarationsSummaries:
 
-
-  /**
-   *
-   * Optional alternative for testing, etc.: https://medium.com/@amcdnl/mocking-with-angular-more-than-just-unit-testing-cbb7908c9fcc
+   /**
+   * Optional alternative - for testing, etc.:
+   * https://medium.com/@amcdnl/mocking-with-angular-more-than-just-unit-testing-cbb7908c9fcc
    * https://github.com/angular/angular/tree/main/packages/misc/angular-in-memory-web-api
    * as demonstrated at: https://angular.io/guide/http#setup-for-server-communication
    *
@@ -74,6 +77,18 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
       console.log (`DisasterDeclarationsSummariesV2Service: Got observable: ${this.disasterDeclarationsSummaryObservable$}`)
    }
 
+
+test():DisasterDeclarationsSummary {
+  // fails with: Error: Should not import the named export 'DisasterDeclarationsSummaries'.'0' (imported as 'DeclSummary') from default-exporting module (only default export is available soon)
+  //let Summary0 = DeclSummary.DisasterDeclarationsSummaries[0]
+  //return (`DisasterDeclarationsSummariesV2Service: ${Summary0.femaDeclarationString} -- ${Summary0.disasterNumber}`)
+  return DeclSummary
+}
+
+
+
+
+
     ngOnInit(): void {
       // fetch data async after constructior when async pipe subscribes to the disasters$ observable
       //debugger
@@ -93,7 +108,7 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
     console.log(`Notified subscribers of new Disaster Summaries object ${JSON.stringify(newDisasterDeclarationsSummary)} `)
   }
 
-      /**
+ /**
    * Expose Observable to 3rd parties, but not the actual subject (which could be abused)
    */
   public getDisasterDeclarationsSummariesV2ServiceObserver(): Observable<DisasterDeclarationsSummary> {

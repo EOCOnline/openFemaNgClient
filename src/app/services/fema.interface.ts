@@ -8,7 +8,7 @@ export type metadataType = {
   filter: string;
   orderby: string;
   select: null | string;
-  rundate: Date;
+  rundate: string;
   entityname: string; // DisasterDeclarationsSummaries
   version: string;
   top: number;
