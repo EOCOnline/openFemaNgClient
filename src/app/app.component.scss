@@ -7,6 +7,7 @@ nav {
   display: flex;
   justify-content: space-between;
   margin: 20px 10px 10px 10px;
+  font-family: Roboto, 'Alumni Sans Inline One', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
 }
 
 nav div.menu-items {
@@ -14,9 +15,12 @@ nav div.menu-items {
   width: 10%;
   justify-content: space-between;
 }
+
 nav > div {
   display: flex;
 }
+
 .title {
   font-size: 25pt;
+
 }

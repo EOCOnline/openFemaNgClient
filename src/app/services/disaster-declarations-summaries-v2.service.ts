@@ -18,10 +18,24 @@ import { metadataType, DisasterDeclarationsSummaryType, DisasterDeclarationsSumm
  */
 import * as DeclSummary from './../../assets/DisasterDeclarationsSummariesV2.json'
 
+/**
+ * Since we have to do lots of these potentially
+ * should we use <generics> or a Factory pattern as described at:
+ * https://stackblitz.com/edit/rjlopezdev-injector?embed=1&file=src/app/food/food.component.html
+ * or https://medium.com/@rjlopezdev/angular-tips-combine-abstract-factory-pattern-injector-to-inject-a-service-depends-on-f0787c6a7390
+ * Each one could be a singleton for that particular type of API
+ */
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy{
+
+  /**
+   * Use a BehaviorSubject over a basic Observable, as later gets re-executed for each creation
+   * https://stackoverflow.com/questions/39494058/behaviorsubject-vs-observable
+   */
 
   disasterDeclarationsSummary!: DisasterDeclarationsSummary
   disasterDeclarationsSummaryObservable$!: Observable<DisasterDeclarationsSummary>
@@ -29,6 +43,9 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
   api = "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries"
   apiFile = "./../../assets/DisasterDeclarationsSummariesV2.json"
   //apiFile = "./../../assets/FemaWebDisasterSummaries.json"
+
+  //public dataObsevable: BehaviorSubject<boolean> = new BehaviorSubject<boolean> (null)
+
 
   private declarationsSummarySubject$!: BehaviorSubject<DisasterDeclarationsSummary>
 
@@ -68,6 +85,8 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
 
       this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.api}`)
 
+      this.declarationsSummarySubject$ = new BehaviorSubject(this.disasterDeclarationsSummary)
+
       this.disasterDeclarationsSummaryObservable$.subscribe({
           next: (v) => {
             // ! This gets -- but does NOT save the subscribed object!
@@ -78,10 +97,9 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
           complete: () => console.info('Subscription complete')
       })
 
-      // Do we want this (more sophisticated) or the above: disasterDeclarationsSummaryObservable$
       // this.declarationsSummarySubject$ = new BehaviorSubject(this.disasterDeclarationsSummary)
       // Now save the observable for others to grab...
-      // this.updateDisasterDeclarationsSummary(this.disasterDeclarationsSummary)
+      this.updateDisasterDeclarationsSummary(this.disasterDeclarationsSummary)
    }
 
     ngOnInit(): void {
