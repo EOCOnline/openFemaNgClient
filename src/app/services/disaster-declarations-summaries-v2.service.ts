@@ -26,28 +26,42 @@ import * as DeclSummary from './../../assets/DisasterDeclarationsSummariesV2.jso
  * Each one could be a singleton for that particular type of API
  */
 
+  /**
+   * To interact with OpenFEMA API server we have some options:
+   *
+   * fetch(): Promise
+   * - fully standard, no Angular wrappings, simplest
+   * - good for one-time download (as we are doing)
+   *
+   * HttpClient - Angular's solution, better for ongoing interaction with an API server: GET/POST/etc.
+   * - or for a service posting data periodically over time
+   *
+   * basic Observable gets reexecuted for each recreation & won't show any previous emission from API
+   * BehaviorSubject always returns a result on creation
+   * https://stackoverflow.com/questions/39494058/behaviorsubject-vs-observable
+   *
+   * HttpClient service makes use of observables for all transactions
+   * vs. https://developer.mozilla.org/en-US/docs/Web/API/fetch
+   * https://stackoverflow.com/questions/47505072/why-should-i-use-httpclient-over-fetch
+   * https://stackoverflow.com/questions/39494058/behaviorsubject-vs-observable
+   *
+   * For our 'simple' just get the data, we use fetch.
+   */
 
-@Injectable({
+Injectable({
   providedIn: 'root'
 })
 export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy{
 
-  /**
-   * Use a BehaviorSubject over a basic Observable, as later gets re-executed for each creation
-   * https://stackoverflow.com/questions/39494058/behaviorsubject-vs-observable
-   */
+
 
   disasterDeclarationsSummary!: DisasterDeclarationsSummary
-  disasterDeclarationsSummaryObservable$!: Observable<DisasterDeclarationsSummary>
-  disasterDeclarationsSummaries!: [DisasterDeclarationsSummaryType];
+  //disasterDeclarationsSummaryObservable$!: Observable<DisasterDeclarationsSummary>
+  //disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
   api = "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries"
   apiFile = "./../../assets/DisasterDeclarationsSummariesV2.json"
-  //apiFile = "./../../assets/FemaWebDisasterSummaries.json"
 
-  //public dataObsevable: BehaviorSubject<boolean> = new BehaviorSubject<boolean> (null)
-
-
-  private declarationsSummarySubject$!: BehaviorSubject<DisasterDeclarationsSummary>
+  private declarationsSummarySubject$: BehaviorSubject<DisasterDeclarationsSummary>
 
    /**
    * Optional alternative - for testing, etc.:
@@ -76,16 +90,68 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
         })
       }
 
-      // HttpClient service makes use of observables for all transactions
-      // vs. https://developer.mozilla.org/en-US/docs/Web/API/fetch
-      // https://stackoverflow.com/questions/47505072/why-should-i-use-httpclient-over-fetch
-
-      console.log (`DisasterDeclarationsSummariesV2Service: Getting observable`)
 
 
-      this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.api}`)
+      console.log (`DisasterDeclarationsSummariesV2Service Constructor: Getting observable`)
 
-      this.declarationsSummarySubject$ = new BehaviorSubject(this.disasterDeclarationsSummary)
+
+
+      function formatMovie(movie: any): Movie {
+        return { title: movie.title, id: movie.id };
+      }
+      class MovieService {
+        getMovies(genre: string): Promise<Movie[]> {
+          return fetch(`https://www.movies.com/${genre}`)
+              .then(res => res.json())
+              .then(res => res.map((movie: any) => formatMovie(movie))
+        }
+      }
+      const apiClient = new MovieService();
+      //log list of movies
+      apiClient.getMovies('sci-fi').then(movies => console.log(movies));
+
+
+
+
+
+
+// https://www.delftstack.com/howto/typescript/typescript-fetch/
+// Consuming the fetchToDo to retrieve a Todo
+fetchToDo<Todo>("https://jsonplaceholder.typicode.com/todos/2")
+  .then((toDoItem) => {
+    // assigning the response data `toDoItem` directly to `myNewToDo` variable which is
+    // of Todo type
+    let myNewToDo:Todo = toDoItem;
+    // It is possible to access Todo object attributes easily
+    console.log('\n id: '+ myNewToDo.id + '\n title: ' + myNewToDo.title + '\n completed: ' + myNewToDo.completed + '\n User Id: ' + myNewToDo.userId);
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+      try {
+        const posts = await this.apiService.get('/posts');
+        // work with posts
+    } catch (error) {
+        // handle error
+    }
+    console.log('this happens **after** the request completes');
+
+
+
+      //this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.api}`)
+
+      //this.declarationsSummarySubject$ = new BehaviorSubject(this.disasterDeclarationsSummary)
+      this.declarationsSummarySubject$ = new BehaviorSubject(this.httpClient.get<DisasterDeclarationsSummary>(`${this.api}`))
 
       this.disasterDeclarationsSummaryObservable$.subscribe({
           next: (v) => {
