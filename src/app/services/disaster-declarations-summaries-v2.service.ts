@@ -93,7 +93,7 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
       let disasterDeclarationsSummary2 = this.useHttpClient()
       let disasterDeclarationsSummary3 = this.useBehaviorSubject()
 
-      debugger
+      //debugger
    }
 
    useHttpClient() {
@@ -104,11 +104,11 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
         next: (v) => {
           // ! This gets -- but does NOT save the subscribed object!
           //console.log(v)
-          console.error(`disaster via BSubject: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`)
+          console.error(`disaster via HttpClient: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`)
           return v
         },
-        error: (e) => console.error(`Subscription got error: ${e}`),
-        complete: () => console.info('Subscription complete')
+        error: (e) => console.error(`Subscription via HttpClient got error: ${e}`),
+        complete: () => console.info('Subscription via HttpClient complete')
     }
       // // https://rxjs.dev/deprecations/subscribe-arguments: use only one argument
       // v => console.error(`disaster via httpClient: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`),
@@ -120,7 +120,7 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
 
    useBehaviorSubject() {
     console.log (`DisasterDeclarationsSummariesV2Service useBehaviorSubject`)
-    //this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.api}`)
+    this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.apiURL}`)
     this.declarationsSummarySubject$ = new BehaviorSubject(this.disasterDeclarationsSummary)
     // this.declarationsSummarySubject$ = new BehaviorSubject(this.httpClient.get<DisasterDeclarationsSummary>(this.apiURL)   )
 
@@ -130,8 +130,8 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
           //console.log(v)
           console.error(`disaster via BSubject: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`)
         },
-        error: (e) => console.error(`Subscription got error: ${e}`),
-        complete: () => console.info('Subscription complete')
+        error: (e) => console.error(`Subscription via BSubject got error: ${e}`),
+        complete: () => console.info('Subscription via BSubject complete')
     })
 
     // this.declarationsSummarySubject$ = new BehaviorSubject(this.disasterDeclarationsSummary)

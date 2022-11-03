@@ -7,14 +7,14 @@ import { catchError, retry } from 'rxjs/operators';
 
 import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services';
 import { BrowserModule } from '@angular/platform-browser';
-import { DatasetCardComponent } from '..';
+import { DatasetCardComponent } from '../';
 
 @Component({
   selector: 'app-dataset-viewer',
   standalone: true,  // https://angular.io/guide/standalone-components
   imports: [
     CommonModule,
-    DatasetCardComponent,
+    DatasetCardComponent
   ],
   templateUrl: './dataset-viewer.component.html',
   styleUrls: ['./dataset-viewer.component.scss']
@@ -23,7 +23,7 @@ export class DatasetViewerComponent implements OnInit {
 
   private declarationsSummariesSubscription!: Subscription
   private disasterDeclarationsSummary!: DisasterDeclarationsSummary
-
+  disasterDeclarationsSummaries: DisasterDeclarationsSummaryType[] |null = null
 
   constructor(
     //private httpClient: HttpClient,
@@ -41,7 +41,7 @@ export class DatasetViewerComponent implements OnInit {
       this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
         next: (newDisasterDeclarationsSummary) => {
           this.disasterDeclarationsSummary = newDisasterDeclarationsSummary
-          console.log(`Received new disasterDeclarationsSummary via subscription. ${JSON.stringify(newDisasterDeclarationsSummary)}`)
+          this.displayDataSet()
           //debugger
         },
         error: (e) => console.error('declarationsSummariesSubscription got:' + e),
@@ -57,4 +57,10 @@ export class DatasetViewerComponent implements OnInit {
     console.log (`DatasetViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
   }
 
+  displayDataSet() {
+    console.log(`Received new disasterDeclarationsSummary via subscription. metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
+    console.log(`Received new disasterDeclarationsSummary via subscription. DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
+
+    this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
+  }
 }
