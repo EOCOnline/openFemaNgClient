@@ -48,20 +48,18 @@ import * as DeclSummary from './../../assets/DisasterDeclarationsSummariesV2.jso
    * For our 'simple' just get the data, we use fetch.
    */
 
-Injectable({
+@Injectable({
   providedIn: 'root'
 })
 export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy{
 
-
-
-  disasterDeclarationsSummary!: DisasterDeclarationsSummary
-  //disasterDeclarationsSummaryObservable$!: Observable<DisasterDeclarationsSummary>
-  //disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
-  api = "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries"
+  apiURL = "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries"
   apiFile = "./../../assets/DisasterDeclarationsSummariesV2.json"
 
-  private declarationsSummarySubject$: BehaviorSubject<DisasterDeclarationsSummary>
+    disasterDeclarationsSummary!: DisasterDeclarationsSummary
+  disasterDeclarationsSummaryObservable$!: Observable<DisasterDeclarationsSummary>
+  //disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
+  private declarationsSummarySubject$!: BehaviorSubject<DisasterDeclarationsSummary>
 
    /**
    * Optional alternative - for testing, etc.:
@@ -90,15 +88,102 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
         })
       }
 
+      console.log (`DisasterDeclarationsSummariesV2Service Constructor`)
+      //let disasterDeclarationsSummary1 = this.useFetch()
+      let disasterDeclarationsSummary2 = this.useHttpClient()
+      let disasterDeclarationsSummary3 = this.useBehaviorSubject()
+
+      debugger
+   }
+
+   useHttpClient() {
+    // Ang Dev w/ TS, pg 278
+    // call from ngOnInit?
+    this.httpClient.get<DisasterDeclarationsSummary>(this.apiURL)
+    .subscribe({
+        next: (v) => {
+          // ! This gets -- but does NOT save the subscribed object!
+          //console.log(v)
+          console.error(`disaster via BSubject: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`)
+          return v
+        },
+        error: (e) => console.error(`Subscription got error: ${e}`),
+        complete: () => console.info('Subscription complete')
+    }
+      // // https://rxjs.dev/deprecations/subscribe-arguments: use only one argument
+      // v => console.error(`disaster via httpClient: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`),
+      // (err: HttpErrorResponse) => console.error(`disaster via httpClient error: ${err}`)
+    )
+    //return v
+   }
 
 
-      console.log (`DisasterDeclarationsSummariesV2Service Constructor: Getting observable`)
+   useBehaviorSubject() {
+    console.log (`DisasterDeclarationsSummariesV2Service useBehaviorSubject`)
+    //this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.api}`)
+    this.declarationsSummarySubject$ = new BehaviorSubject(this.disasterDeclarationsSummary)
+    // this.declarationsSummarySubject$ = new BehaviorSubject(this.httpClient.get<DisasterDeclarationsSummary>(this.apiURL)   )
+
+    this.disasterDeclarationsSummaryObservable$.subscribe({
+        next: (v) => {
+          // ! This gets -- but does NOT save the subscribed object!
+          //console.log(v)
+          console.error(`disaster via BSubject: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`)
+        },
+        error: (e) => console.error(`Subscription got error: ${e}`),
+        complete: () => console.info('Subscription complete')
+    })
+
+    // this.declarationsSummarySubject$ = new BehaviorSubject(this.disasterDeclarationsSummary)
+    // Now save the observable for others to grab...
+    this.updateDisasterDeclarationsSummary(this.disasterDeclarationsSummary)
+    return this.disasterDeclarationsSummary
+   }
+
+/*
+    // https://www.delftstack.com/howto/typescript/typescript-fetch/
+    fetchDisasterDeclarationsSummary<T>(resourceUrl: string): Promise<T> {
+      // return fetch(resourceUrl).then(response => {
+      //     // fetching the reponse body data
+      //     // return response.json<T>() //error TS2558: Expected 0 type arguments, but got 1
+      //     this.disasterDeclarationsSummary = response.json<T>()
+      //   })
+    }
+
+    useFetch(): DisasterDeclarationsSummary | null {
+      console.log (`DisasterDeclarationsSummariesV2Service useFetch`)
+      this.fetchDisasterDeclarationsSummary<DisasterDeclarationsSummary>(`${this.apiURL}`)
+        .then((summaryItem: DisasterDeclarationsSummary) => {
+          // assigning the response data `summaryItem` directly to `myNewToDo` variable which is
+          // of Todo type
+          let allSummaries:DisasterDeclarationsSummary = summaryItem
+          for (let i=0; i<5; i++) {
+            let sumry = allSummaries.DisasterDeclarationsSummaries[i]
+            console.log(`\n ${i}) disasterNumber: ${sumry.disasterNumber}  femaDeclarationString: ${sumry.femaDeclarationString};  declarationType: ${sumry.declarationType};  declarationDate: ${sumry.declarationDate};  state: ${sumry.state}`);
+          }
+          return allSummaries
+        })
+        return null
+    }
+*/
+
+    /*
+
+    //   try {
+    //      const posts = await this.apiService.get('/posts');
+            // work with posts
+    //    } catch (error) {
+            // handle error
+    //    }
+    //    console.log('this happens **after** the request completes');
 
 
 
-      function formatMovie(movie: any): Movie {
+
+      formatMovie(movie: any): Movie {
         return { title: movie.title, id: movie.id };
       }
+
       class MovieService {
         getMovies(genre: string): Promise<Movie[]> {
           return fetch(`https://www.movies.com/${genre}`)
@@ -106,74 +191,19 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
               .then(res => res.map((movie: any) => formatMovie(movie))
         }
       }
+
       const apiClient = new MovieService();
       //log list of movies
       apiClient.getMovies('sci-fi').then(movies => console.log(movies));
-
-
-
-
-
-
-// https://www.delftstack.com/howto/typescript/typescript-fetch/
-// Consuming the fetchToDo to retrieve a Todo
-fetchToDo<Todo>("https://jsonplaceholder.typicode.com/todos/2")
-  .then((toDoItem) => {
-    // assigning the response data `toDoItem` directly to `myNewToDo` variable which is
-    // of Todo type
-    let myNewToDo:Todo = toDoItem;
-    // It is possible to access Todo object attributes easily
-    console.log('\n id: '+ myNewToDo.id + '\n title: ' + myNewToDo.title + '\n completed: ' + myNewToDo.completed + '\n User Id: ' + myNewToDo.userId);
-  });
-
-
-
-
-
-
-
-
-
-
-
-
-
-      try {
-        const posts = await this.apiService.get('/posts');
-        // work with posts
-    } catch (error) {
-        // handle error
     }
-    console.log('this happens **after** the request completes');
-
-
-
-      //this.disasterDeclarationsSummaryObservable$ = this.httpClient.get<DisasterDeclarationsSummary>(`${this.api}`)
-
-      //this.declarationsSummarySubject$ = new BehaviorSubject(this.disasterDeclarationsSummary)
-      this.declarationsSummarySubject$ = new BehaviorSubject(this.httpClient.get<DisasterDeclarationsSummary>(`${this.api}`))
-
-      this.disasterDeclarationsSummaryObservable$.subscribe({
-          next: (v) => {
-            // ! This gets -- but does NOT save the subscribed object!
-            //console.log(v)
-            console.error(`disaster: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`)
-          },
-          error: (e) => console.error(`Subscription got error: ${e}`),
-          complete: () => console.info('Subscription complete')
-      })
-
-      // this.declarationsSummarySubject$ = new BehaviorSubject(this.disasterDeclarationsSummary)
-      // Now save the observable for others to grab...
-      this.updateDisasterDeclarationsSummary(this.disasterDeclarationsSummary)
-   }
+    */
 
     ngOnInit(): void {
       console.log(`DisasterDeclarationsSummariesV2Service - ngOnInit`)
     }
 
 /**
-  * notify observers of any changes (REVIEW: Is this likely?!)
+  * notify observers of any changes (REVIEW: This is only updated every ~week or less?)
   */
   public updateDisasterDeclarationsSummary(newDisasterDeclarationsSummary: DisasterDeclarationsSummary) {
     // Do any needed sanity/validation here
