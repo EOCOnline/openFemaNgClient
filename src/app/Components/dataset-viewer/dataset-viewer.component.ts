@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';  // https://angular.io/guide/http
 import { Observable, Subscription, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services';
+import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services'
 import { BrowserModule } from '@angular/platform-browser';
 import { DatasetCardComponent } from '../';
 
 
 // inspired by:
 // https://github.com/angular/examples/tree/main/walk-my-dog
-// An example from the video at https://angular.io/guide/standalone-components
+// An example explained in a video at https://angular.io/guide/standalone-components
 
 @Component({
   selector: 'app-dataset-viewer',
@@ -24,7 +24,7 @@ import { DatasetCardComponent } from '../';
   templateUrl: './dataset-viewer.component.html',
   styleUrls: ['./dataset-viewer.component.scss']
 })
-export class DatasetViewerComponent implements OnInit {
+export class DatasetViewerComponent implements OnInit, OnDestroy {
 
   private declarationsSummariesSubscription!: Subscription
   private disasterDeclarationsSummary!: DisasterDeclarationsSummary
@@ -67,5 +67,9 @@ export class DatasetViewerComponent implements OnInit {
     console.log(`Received new disasterDeclarationsSummary via subscription. DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
 
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
+  }
+
+  ngOnDestroy(): void {
+    this.declarationsSummariesSubscription?.unsubscribe()
   }
 }
