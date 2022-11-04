@@ -9,6 +9,11 @@ import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisast
 import { BrowserModule } from '@angular/platform-browser';
 import { DatasetCardComponent } from '../';
 
+
+// inspired by:
+// https://github.com/angular/examples/tree/main/walk-my-dog
+// An example from the video at https://angular.io/guide/standalone-components
+
 @Component({
   selector: 'app-dataset-viewer',
   standalone: true,  // https://angular.io/guide/standalone-components
@@ -53,7 +58,7 @@ export class DatasetViewerComponent implements OnInit {
 
   ngOnInit(): void {
     // fetch data async after constructior when async pipe subscribes to the disasters$ observable
-   // debugger
+    // debugger
     console.log (`DatasetViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
   }
 
