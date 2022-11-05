@@ -16,7 +16,7 @@ import { metadataType, DisasterDeclarationsSummaryType, DisasterDeclarationsSumm
  *
  * Details: https://stackoverflow.com/questions/71098595/purpose-of-resolvejsonmodule
  */
-import * as DeclSummary from './../../assets/DisasterDeclarationsSummariesV2.json'
+import * as DeclSummary from './../../assets/data/DisasterDeclarationsSummariesV2.json'
 
 /**
  * Since we have to do lots of these potentially
