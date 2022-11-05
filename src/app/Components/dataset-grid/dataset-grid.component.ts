@@ -48,7 +48,7 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
 
     defaultColDef: {
       flex: 1, //https://ag-grid.com/angular-data-grid/column-sizing/#column-flex
-      minWidth: 80,
+      minWidth: 50,
       editable: true,
       //singleClickEdit: true,
       resizable: true,
@@ -63,11 +63,12 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
   private rowData: any[] = []
 
 
-  constructor(readonly webDisasterSummariesService: WebDisasterSummariesService,
+  constructor(
+    //readonly webDisasterSummariesService: WebDisasterSummariesService,
     private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
     @Inject(DOCUMENT) private document: Document,
     ) {
-    // Whats source for data: service or DatasetViewerComponent?
+    // Whats source for data: service (YES); NO: DatasetViewerComponent?
 
     console.log (`DatasetGridComponent: constructor`)
 
@@ -78,7 +79,8 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
     this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
       next: (newDisasterDeclarationsSummary) => {
         this.disasterDeclarationsSummary = newDisasterDeclarationsSummary
-        this.displayDataSet()
+        //this.displayDataSet()
+        this.gotNewData(newDisasterDeclarationsSummary.DisasterDeclarationsSummaries)
         //debugger
       },
       error: (e) => console.error('declarationsSummariesSubscription got:' + e),
@@ -90,6 +92,9 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log (`DatasetGridComponent: ngOnInit()`)
+
+    console.log (`DatasetGridComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
+
 /*
     femaDeclarationString:  string;
     disasterNumber: number;
@@ -154,7 +159,7 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
     if (this.gridApi) {
       this.gridApi.refreshCells()
     } else {
-      console.log("no this.gridApi yet in ngOnInit()")
+      console.log("DatasetGridComponent: no this.gridApi yet in ngOnInit()")
     }
   }
 
@@ -164,7 +169,7 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
   }
 
   onGridReady = (params: any) => {
-    console.log("onGridReady()")
+    console.log("DatasetGridComponent: onGridReady()")
 
     this.gridApi = params.api
     //console.log(`onGridReady() gridApi: ${this.gridApi}`)
@@ -190,7 +195,7 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
   }
 
   onFirstDataRendered(params: any) {
-    console.log("onFirstDataRendered()")
+    console.log("DatasetGridComponent: onFirstDataRendered()")
 
     // following should not be needed, duplicate of onGridReady()...
     this.gridApi = params.api
@@ -208,18 +213,18 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
       this.gridApi.refreshCells()
       this.gridApi.sizeColumnsToFit()
     } else {
-      console.warn(`refreshGrid(): gridApi not established yet!`)
+      console.warn(`DatasetGridComponent: refreshGrid(): gridApi not established yet!`)
     }
   }
 
   reloadPage() {
-    console.log(`Reloading window!`)
+    console.log(`DatasetGridComponent: Reloading window!`)
     window.location.reload()
   }
 
-
   gotNewData(newData: DisasterDeclarationsSummaryType[]) {
-    console.log(`New collection of DisasterDeclarationsSummaryType observed.`)
+    console.log(`DatasetGridComponent: New collection of DisasterDeclarationsSummaryType observed.`)
+    console.log(`DatasetGridComponent: ${JSON.stringify(newData[0])}`)
 
     this.disasterDeclarationsSummaries = newData
     //this.fieldReportArray = newData.fieldReportArray
