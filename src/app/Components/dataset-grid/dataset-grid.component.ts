@@ -165,7 +165,7 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
 
   displayDataSet() {
     console.log (`DatasetGridComponent: displayDataSet()`)
-
+  // use gotNewData() instead...
   }
 
   onGridReady = (params: any) => {
@@ -185,7 +185,6 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
     } else {
       console.log("no this.gridApi yet in onGridReady()")
     }
-
 
     // set initial pagination size
     //paginationAutoPageSize: true
