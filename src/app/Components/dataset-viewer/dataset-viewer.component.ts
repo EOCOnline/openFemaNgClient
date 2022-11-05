@@ -29,7 +29,7 @@ import {NgxPaginationModule} from 'ngx-pagination'
 export class DatasetViewerComponent implements OnInit, OnDestroy {
   // https://michaelbromley.github.io/ngx-pagination
   @Input('data') disasterDeclarationsSummaries: DisasterDeclarationsSummaryType[] = [];
-  page: number = 1;
+  page = 1;
 
   private declarationsSummariesSubscription!: Subscription
   private disasterDeclarationsSummary!: DisasterDeclarationsSummary
