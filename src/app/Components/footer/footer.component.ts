@@ -16,6 +16,9 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core'
 })
 export class FooterComponent { //implements OnInit, OnDestroy
 
+  collection = [`item -1`]
+  p = 1
+
   today = new Date()
   version = "0.0.1"
 
@@ -24,6 +27,11 @@ export class FooterComponent { //implements OnInit, OnDestroy
     //@Inject(DOCUMENT) private document: Document
     ) {
     console.log(`======== FooterComponent Constructor() ============`)
+
+    for (let i = 1; i <= 100; i++) {
+      this.collection.push(`item ${i}`)
+    }
+
   }
 
   ngOnInit(): void {

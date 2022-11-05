@@ -3,14 +3,15 @@
 <h3>Disaster Declarations Summary</h3>
 
 <ul>
-  <li *ngFor="let disaster of disasterDeclarationsSummaries| paginate: { itemsPerPage: 10, currentPage: page }">
-    ; index as i
-    i) {{disaster.femaDeclarationString}}: &nbsp;&nbsp;&nbsp;&nbsp; #{{disaster.disasterNumber}}; &nbsp;&nbsp;&nbsp;&nbsp; ST: {{disaster.state}}; &nbsp;&nbsp;&nbsp;&nbsp; Type: {{disaster.declarationType}}; &nbsp;&nbsp;&nbsp;&nbsp; Date: {{disaster.declarationDate | date:'mediumDate'}};
+  <li *ngFor="let disaster of disasterDeclarationsSummaries; index as i">
+     paginate:  itemsPerPage: 10, currentPage: page
+
+    {{i}}) {{disaster.femaDeclarationString}}: &nbsp;&nbsp;&nbsp;&nbsp; #{{disaster.disasterNumber}}; &nbsp;&nbsp;&nbsp;&nbsp; ST: {{disaster.state}}; &nbsp;&nbsp;&nbsp;&nbsp; Type: {{disaster.declarationType}}; &nbsp;&nbsp;&nbsp;&nbsp; Date: {{disaster.declarationDate | date:'mediumDate'}};
     <br>
     <!-- app-dataset-card [disaster]=disaster [index]=i></app-dataset-card -->
   </li>
 </ul>
 
-<div class="has-text-centered">
+<!-- div class="has-text-centered">
   <pagination-controls (pageChange)="page = $event"></pagination-controls>
-</div>
+</div -->

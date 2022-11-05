@@ -8,7 +8,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services'
 import { BrowserModule } from '@angular/platform-browser';
 import { DatasetCardComponent } from '../';
-//import {NgxPaginationModule} from 'ngx-pagination'
+import {NgxPaginationModule} from 'ngx-pagination'
 
 // inspired by:
 // https://github.com/angular/examples/tree/main/walk-my-dog
