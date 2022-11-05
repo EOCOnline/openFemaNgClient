@@ -3,23 +3,13 @@
 <h3>Disaster Declarations Summary</h3>
 
 <ul>
-  <li *ngFor="let disaster of disasterDeclarationsSummaries; index as i">
+  <li *ngFor="let disaster of disasterDeclarationsSummaries| paginate: { itemsPerPage: 10, currentPage: page }; index as i ">
     {{i}}) {{disaster.femaDeclarationString}}: &nbsp;&nbsp;&nbsp;&nbsp; #{{disaster.disasterNumber}}; &nbsp;&nbsp;&nbsp;&nbsp; ST: {{disaster.state}}; &nbsp;&nbsp;&nbsp;&nbsp; Type: {{disaster.declarationType}}; &nbsp;&nbsp;&nbsp;&nbsp; Date: {{disaster.declarationDate | date:'mediumDate'}};
     <br>
-    <hr>
-    <br>
     <!-- app-dataset-card [disaster]=disaster [index]=i></app-dataset-card -->
-    dataset card here...
-    <br>
-
   </li>
 </ul>
 
-<footer><br>
-  <hr>
-  <br>
-  <p>eoc.online™ provides free tools for Emergency Operations Centers and local CERT/VOAD/Citizen Corps groups. For more information check out <a href="https://eoc.online" target="_blank">https://eoc.online</a>.</p>
-  <br>
-  <p>We'd love to get your reports of use and suggestions for enhancement. To report issues please visit <a href="https://github.com/EOCOnline/OpenFemaNgClient/issues/" target="_blank">https://github.com/EOCOnline/OpenFemaNgClient/issues/</a></p>
-  <br>
-  <p>©2022 eoc.online, under the MIT License</p></footer>
+<div class="has-text-centered">
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';  // https://angular.io/guide/http
@@ -22,13 +22,17 @@ import { DatasetCardComponent } from '../';
     DatasetCardComponent
   ],
   templateUrl: './dataset-viewer.component.html',
-  styleUrls: ['./dataset-viewer.component.scss']
+  styleUrls: ['./dataset-viewer.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush, // https://michaelbromley.github.io/ngx-pagination/#/basic
 })
 export class DatasetViewerComponent implements OnInit, OnDestroy {
+  // https://michaelbromley.github.io/ngx-pagination
+  @Input('data') disasterDeclarationsSummaries: DisasterDeclarationsSummaryType[] = [];
+  page: number = 1;
 
   private declarationsSummariesSubscription!: Subscription
   private disasterDeclarationsSummary!: DisasterDeclarationsSummary
-  disasterDeclarationsSummaries: DisasterDeclarationsSummaryType[] |null = null
+  //disasterDeclarationsSummaries: DisasterDeclarationsSummaryType[] |null = null
 
   constructor(
     //private httpClient: HttpClient,

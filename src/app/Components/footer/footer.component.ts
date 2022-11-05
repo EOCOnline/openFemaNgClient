@@ -16,9 +16,9 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core'
 })
 export class FooterComponent { //implements OnInit, OnDestroy
 
-/*  today = new Date()
+  today = new Date()
   version = "0.0.1"
-*/
+
 
   constructor(
     //@Inject(DOCUMENT) private document: Document
