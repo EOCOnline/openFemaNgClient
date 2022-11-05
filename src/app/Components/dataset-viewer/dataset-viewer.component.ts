@@ -13,15 +13,16 @@ import {NgxPaginationModule} from 'ngx-pagination'
 // inspired by:
 // https://github.com/angular/examples/tree/main/walk-my-dog
 // An example explained in a video at https://angular.io/guide/standalone-components
-
-@Component({
-  selector: 'app-dataset-viewer',
-  standalone: true,  // https://angular.io/guide/standalone-components
+/*
+standalone: true,  // https://angular.io/guide/standalone-components
   imports: [
     CommonModule,
     DatasetCardComponent,
     // NgxPaginationModule,
   ],
+  */
+@Component({
+  selector: 'app-dataset-viewer',
   templateUrl: './dataset-viewer.component.html',
   styleUrls: ['./dataset-viewer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush, // https://michaelbromley.github.io/ngx-pagination/#/basic
