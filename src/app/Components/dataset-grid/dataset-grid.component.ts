@@ -217,8 +217,8 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
   }
 
   reloadPage() {
-    console.log(`DatasetGridComponent: Reloading window!`)
-    window.location.reload()
+    console.error(`DatasetGridComponent: NOT Reloading window!`)
+    //window.location.reload()
   }
 
   gotNewData(newData: DisasterDeclarationsSummaryType[]) {
