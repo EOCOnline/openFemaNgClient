@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+//import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';  // https://angular.io/guide/http
 import { Observable, Subscription, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -8,33 +8,35 @@ import { catchError, retry } from 'rxjs/operators';
 import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services'
 import { BrowserModule } from '@angular/platform-browser';
 import { DatasetCardComponent } from '../';
-import {NgxPaginationModule} from 'ngx-pagination'
 
-// inspired by:
-// https://github.com/angular/examples/tree/main/walk-my-dog
-// An example explained in a video at https://angular.io/guide/standalone-components
+
+// see: https://github.com/angular/examples/tree/main/walk-my-dog; from https://angular.io/guide/standalone-components video
 /*
-standalone: true,  // https://angular.io/guide/standalone-components
-  imports: [
-    CommonModule,
-    DatasetCardComponent,
-    // NgxPaginationModule,
-  ],
+  Following removed in order to access NgxPaginationModule
+    import {NgxPaginationModule} from 'ngx-pagination'
+
+    standalone: true,  // https://angular.io/guide/standalone-components
+      imports: [
+        CommonModule,
+        DatasetCardComponent,
+        // NgxPaginationModule,
+      ],
   */
+
 @Component({
   selector: 'app-dataset-viewer',
   templateUrl: './dataset-viewer.component.html',
   styleUrls: ['./dataset-viewer.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush, // https://michaelbromley.github.io/ngx-pagination/#/basic
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatasetViewerComponent implements OnInit, OnDestroy {
   // https://michaelbromley.github.io/ngx-pagination
-  @Input('data') disasterDeclarationsSummaries: DisasterDeclarationsSummaryType[] = [];
+  //@Input('data') disasterDeclarationsSummaries: DisasterDeclarationsSummaryType[] = [];
   page = 1;
 
   private declarationsSummariesSubscription!: Subscription
   private disasterDeclarationsSummary!: DisasterDeclarationsSummary
-  //disasterDeclarationsSummaries: DisasterDeclarationsSummaryType[] |null = null
+  disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
 
   constructor(
     //private httpClient: HttpClient,
@@ -65,12 +67,12 @@ export class DatasetViewerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // fetch data async after constructior when async pipe subscribes to the disasters$ observable
     // debugger
-    console.log (`DatasetViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
+    console.error (`DatasetViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
   }
 
   displayDataSet() {
-    console.log(`Received new disasterDeclarationsSummary via subscription. metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
-    console.log(`Received new disasterDeclarationsSummary via subscription. DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
+    console.log(`Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
+    console.log(`Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
 
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
   }

@@ -6,6 +6,12 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "u1": "",
+    "u2": "",
+    "u3": "",
+    "u4": "",
+    "u5": "",
+    "u6": "",
     "test": "ng test"
   },
   "private": true,
