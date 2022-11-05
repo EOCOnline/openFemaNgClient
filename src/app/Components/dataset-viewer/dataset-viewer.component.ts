@@ -31,12 +31,12 @@ import { DatasetCardComponent } from '../';
 })
 export class DatasetViewerComponent implements OnInit, OnDestroy {
   // https://michaelbromley.github.io/ngx-pagination
-  //@Input('data') disasterDeclarationsSummaries: DisasterDeclarationsSummaryType[] = [];
+  @Input('data') disasterDeclarationsSummaries: DisasterDeclarationsSummaryType[] = [];
   page = 1;
 
   private declarationsSummariesSubscription!: Subscription
   private disasterDeclarationsSummary!: DisasterDeclarationsSummary
-  disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
+  //disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
 
   constructor(
     //private httpClient: HttpClient,
