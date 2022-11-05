@@ -1,10 +1,11 @@
-import { Subscription } from 'rxjs'
+//import { Subscription } from 'rxjs'
 
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core'
 
 //import { LogService, SettingsService, SettingsType } from '../services'
-import { DOCUMENT, formatDate } from '@angular/common'
+//import { DOCUMENT, formatDate } from '@angular/common'
 //import { Utility } from '../utility';
+
 /**
  * Footer component
  */
@@ -13,17 +14,16 @@ import { DOCUMENT, formatDate } from '@angular/common'
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent implements OnInit, OnDestroy {
+export class FooterComponent { //implements OnInit, OnDestroy
 
-  today = new Date()
+/*  today = new Date()
   version = "0.0.1"
-
+*/
 
   constructor(
-    @Inject(DOCUMENT) private document: Document) {
-
-    console.log(`======== Constructor() ============`)
-
+    //@Inject(DOCUMENT) private document: Document
+    ) {
+    console.log(`======== FooterComponent Constructor() ============`)
   }
 
   ngOnInit(): void {

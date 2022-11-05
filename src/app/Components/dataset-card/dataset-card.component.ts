@@ -13,14 +13,16 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./dataset-card.component.scss']
 })
 export class DatasetCardComponent implements OnInit {
-
-  @Input() disaster : DisasterDeclarationsSummaryType | null = null
-  @Input() index : Number | null = null
-
+/*
+  @  Input() disaster : DisasterDeclarationsSummaryType | null = null
+  @   Input() index : Number | null = null
+*/
   constructor(readonly webDisasterSummariesService: WebDisasterSummariesService) {
+    /*
     if (!this.index) {
       this.index=-1
     }
+    */
   }
 
   ngOnInit(): void {

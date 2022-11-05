@@ -41,7 +41,7 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
 
     // EVENT handlers
     // onRowClicked: event => console.log('A row was clicked'),
-    onSelectionChanged: (event: SelectionChangedEvent) => this.onRowSelection(event),
+    // onSelectionChanged: (event: SelectionChangedEvent) => this.onRowSelection(event),
 
     // CALLBACKS
     // getRowHeight: (params) => 25
@@ -202,32 +202,30 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
   }
 
   //onFirstDataRendered(params: any) {
-    refreshGrid() {
-      // https://blog.ag-grid.com/refresh-grid-after-data-change/
-      if (this.gridApi) {
-        this.gridApi.refreshCells()
-        this.gridApi.sizeColumnsToFit()
-      } else {
-        this.log.warn(`refreshGrid(): gridApi not established yet!`)
-      }
+  refreshGrid() {
+    // https://blog.ag-grid.com/refresh-grid-after-data-change/
+    if (this.gridApi) {
+      this.gridApi.refreshCells()
+      this.gridApi.sizeColumnsToFit()
+    } else {
+      console.warn(`refreshGrid(): gridApi not established yet!`)
     }
+  }
 
-    reloadPage() {
-      console.log(`Reloading window!`)
-      window.location.reload()
-    }
-
-
-    gotNewFieldReports(newReports: FieldReportsType) {
-      console.log(`New collection of ${newReports.numReport} Field Reports observed.`)
-
-      this.fieldReports = newReports
-      this.fieldReportArray = newReports.fieldReportArray
-      this.refreshGrid()
-      //this.reloadPage()  // TODO: needed? - creates endless loop!
-    }
+  reloadPage() {
+    console.log(`Reloading window!`)
+    window.location.reload()
+  }
 
 
+  gotNewData(newData: DisasterDeclarationsSummaryType[]) {
+    console.log(`New collection of DisasterDeclarationsSummaryType observed.`)
+
+    this.disasterDeclarationsSummaries = newData
+    //this.fieldReportArray = newData.fieldReportArray
+    this.refreshGrid()
+    //this.reloadPage()  // TODO: needed? - creates endless loop!
+  }
 
   ngOnDestroy(): void {
     this.declarationsSummariesSubscription?.unsubscribe()
