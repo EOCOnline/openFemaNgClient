@@ -19,7 +19,8 @@ import { DatasetCardComponent } from '../';
   standalone: true,  // https://angular.io/guide/standalone-components
   imports: [
     CommonModule,
-    DatasetCardComponent
+    DatasetCardComponent,
+    // NgxPaginationModule,
   ],
   templateUrl: './dataset-viewer.component.html',
   styleUrls: ['./dataset-viewer.component.scss'],
