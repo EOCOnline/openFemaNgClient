@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-// import {DatasetViewerComponent} from './Components'
+// import {DatasetViewerComponent} from './components'
 // import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  // templateUrl: './Components/dataset-viewer/dataset-viewer.component.html',
+  // templateUrl: './components/dataset-viewer/dataset-viewer.component.html',
   // standalone: true,
   styleUrls: ['./app.component.scss'],
   // imports:[DatasetViewerComponent],
