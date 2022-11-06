@@ -33,7 +33,7 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
   rowData: any[] | null = null // set rowData to null or undefined to show loading panel by default
 
   private defaultColDef = {
-    flex: 1, //https://ag-grid.com/angular-data-grid/column-sizing/#column-flex
+    flex: 5, //https://ag-grid.com/angular-data-grid/column-sizing/#column-flex
     minWidth: 50,
     editable: true,
     //singleClickEdit: true,
@@ -129,11 +129,11 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
         id:  string;
     */
     this.columnDefs = [
-      { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 3, flex: 5 },
-      { headerName: "#", field: "disasterNumber", tooltipField: "disasterNumber", flex: 5 },
-      { headerName: "State", field: "state", flex: 5 }, //, maxWidth: 200
+      { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 3, flex: 15 },
+      { headerName: "#", field: "disasterNumber", tooltipField: "disasterNumber", flex: 2 },
+      { headerName: "State", field: "state", flex: 2 }, //, maxWidth: 200
       { headerName: "Decl Type", field: "declarationType", tooltipField: "declarationType", flex: 5 }, //, maxWidth: 200
-      { headerName: "Date", field: "declarationDate", tooltipField: "declarationDate", flex: 5 }, //, maxWidth: 200
+      { headerName: "Date", field: "declarationDate", tooltipField: "declarationDate", valueGetter: this.myDateGetter, flex: 5 }, //, maxWidth: 200
       { headerName: "Inc Type", field: "incidentType", tooltipField: "incidentType", flex: 5 }, //, maxWidth: 200
       /*
       {
@@ -168,6 +168,37 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
     } else {
       console.log("DatasetGridComponent: no this.gridApi yet in ngOnInit()")
     }
+  }
+
+  /**
+   * Given a fieldReport, finds the date, and returns it as 'Sun Jan-01 23:00:00'
+   * @param params
+   * @returns
+   */
+  myDateGetter = (params: { data: DisasterDeclarationsSummaryType }) => {
+    const weekday = ["Sun ", "Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat "]
+    let dt = 'unknown date'
+    let d: Date = new Date(params.data.declarationDate)
+    //this.log.excessive(`Day is: ${d.toISOString()}`, this.id)
+    //this.log.excessive(`WeekDay is: ${d.getDay}`, this.id)
+
+    try {  // TODO: Use the date pipe instead?
+      //weekday[d.getDay()] +
+      dt = formatDate(d, 'M-dd HH:MM:ss', 'en-US')
+      //this.log.excessive(`Day is: ${params.data.date.toISOString()}`, this.id)
+    } catch (error: any) {
+      dt = `Bad date format: Error name: ${error.name}; msg: ${error.message}`
+    }
+
+    // https://www.w3schools.com/jsref/jsref_obj_date.asp
+    //this.log.excessive(`Day is: ${params.data.date.toISOString()}`, this.id)
+    /*
+        if (this.isValidDate(d)) {
+          dt = weekday[d.getDay()] + formatDate(d, 'yyyy-MM-dd HH:MM:ss', 'en-US')
+          this.log.excessive(`Day is: ${params.data.date.toISOString()}`, this.id)
+        }
+    */
+    return dt
   }
 
   displayDataSet_UNUSED() {
