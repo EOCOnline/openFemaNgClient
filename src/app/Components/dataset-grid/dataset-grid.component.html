@@ -1,13 +1,12 @@
-
 <h1>Dataset Grid View</h1>
 
 <div id="reportsgrid">
   <ag-grid-angular #reportsGrid rowAnimation style="width: 100%; height: 60vh;" (gridReady)="onGridReady($event)"
-    [gridOptions]="gridOptions" class="ag-theme-alpine" [rowData]="disasterDeclarationsSummaries" [columnDefs]="columnDefs"
+    [gridOptions]="gridOptions" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs"
     [tooltipShowDelay]="500">
     <!--
 [defaultColDef]="defaultColDef"
-[columnDefs]="columnDefs"
+
 
     was :  [rowData]="fieldReports.fieldreportArray | async"
     (firstDataRendered)="onFirstDataRendered($event)"
@@ -18,4 +17,3 @@
       -->
   </ag-grid-angular>
 </div>
-<app-footer>WHY IS THIS OVERWRITTEN - also in app.component.html</app-footer>

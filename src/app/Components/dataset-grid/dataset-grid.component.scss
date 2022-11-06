@@ -1,18 +1,25 @@
+// https://www.ag-grid.com/javascript-data-grid/global-style-customisation-sass/#getting-started
+// see styles.scss
+
 h1 {
   //text-decoration:none;
-  font-size: large;
+  font-size  : large;
   font-weight: bold;
   // float:right;
   margin-left: 2vw;
-  font-family: "Baloo 2","Open Sans",Helvetica, sans-serif;
+  font-family: "Baloo 2", "Open Sans", Helvetica, sans-serif;
 }
 
 #reportsgrid {
   margin-left: 2vw;
-  font-size: small;
+  font-size  : small;
 }
 
 .text-center {
-text-align: center;
-//margin-left: 2vw;
+  text-align   : center;
+  //margin-left: 2vw;
+}
+
+p {
+  font-family: Lato;
 }

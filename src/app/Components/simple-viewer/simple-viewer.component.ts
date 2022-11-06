@@ -41,38 +41,38 @@ export class SimpleViewerComponent implements OnInit, OnDestroy {
   constructor(
     //private httpClient: HttpClient,
     private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
-    ) {
+  ) {
 
-      // Following works: based on reading an actual JSON file
-      /*
-      let myTest = disasterDeclarationsSummariesV2Service.test()
-        console.error (`SimpleViewerComponent: ${JSON.stringify(myTest.DisasterDeclarationsSummaries[0])}`)
-      */
+    // Following works: based on reading an actual JSON file
+    /*
+    let myTest = disasterDeclarationsSummariesV2Service.test()
+      console.error (`SimpleViewerComponent: ${JSON.stringify(myTest.DisasterDeclarationsSummaries[0])}`)
+    */
 
-      console.log (`SimpleViewerComponent: Getting declarationsSummariesSubscription`)
+    console.log(`SimpleViewerComponent: Getting declarationsSummariesSubscription`)
 
-      this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
-        next: (newDisasterDeclarationsSummary) => {
-          this.disasterDeclarationsSummary = newDisasterDeclarationsSummary
-          this.displayDataSet()
-          //debugger
-        },
-        error: (e) => console.error('declarationsSummariesSubscription got:' + e),
-        complete: () => console.info('declarationsSummariesSubscription complete')
-      })
+    this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
+      next: (newDisasterDeclarationsSummary) => {
+        this.disasterDeclarationsSummary = newDisasterDeclarationsSummary
+        this.displayDataSet()
+        //debugger
+      },
+      error: (e) => console.error('declarationsSummariesSubscription got:' + e),
+      complete: () => console.info('declarationsSummariesSubscription complete')
+    })
 
-      console.log (`SimpleViewerComponent: Got declarationsSummariesSubscription, awaiting results`)
-     }
+    console.log(`SimpleViewerComponent: Got declarationsSummariesSubscription, awaiting results`)
+  }
 
   ngOnInit(): void {
     // fetch data async after constructior when async pipe subscribes to the disasters$ observable
     // debugger
-    console.error (`SimpleViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
+    console.error(`SimpleViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
   }
 
   displayDataSet() {
-    console.log(`Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
-    console.log(`Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
+    console.log(`SimpleViewerComponent: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
+    console.log(`SimpleViewerComponent: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
 
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
   }

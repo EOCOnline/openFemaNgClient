@@ -29,7 +29,7 @@ import { AgGridModule } from 'ag-grid-angular'
     HttpClientModule,
     FormsModule,
     NgxPaginationModule,
-    AgGridModule,
+    AgGridModule, //.withComponents([]),
   ],
   providers: [],
   bootstrap: [AppComponent]

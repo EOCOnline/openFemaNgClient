@@ -3,8 +3,10 @@ import { AfterViewInit, Component, Inject, OnDestroy, OnInit, Pipe, PipeTransfor
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms'
 import { Observable, subscribeOn, Subscription, throwError } from 'rxjs'
 
+import { HttpClient } from "@angular/common/http";
 import { GridOptions, SelectionChangedEvent } from 'ag-grid-community'
 // , TeamService
+import { AgGridModule } from 'ag-grid-angular';
 
 import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services'
 
@@ -25,13 +27,28 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
   public columnDefs!: any
   private gridColumnApi
   private gridApi: any
+  //private getRowNodeId;
+
+  private backupRowData: any[] = []
+  rowData: any[] | null = null // set rowData to null or undefined to show loading panel by default
+
+  private defaultColDef = {
+    flex: 1, //https://ag-grid.com/angular-data-grid/column-sizing/#column-flex
+    minWidth: 50,
+    editable: true,
+    //singleClickEdit: true,
+    resizable: true,
+    sortable: true,
+    filter: true,
+    floatingFilter: true
+  }
 
   // https://www.ag-grid.com/angular-data-grid/grid-interface/#grid-options-1
   // https://blog.ag-grid.com/how-to-get-the-data-of-selected-rows-in-ag-grid/
   // NOT monitored for changes on the fly: https://stackoverflow.com/questions/52519129/ag-grid-and-angular-how-to-switch-grid-options-dynamically/52519796#52519796
   gridOptions: GridOptions = {
     // PROPERTIES
-    rowSelection: "multiple",
+    //rowSelection: "multiple",
 
     // https://www.ag-grid.com/javascript-data-grid/row-pagination/#pagination-properties
     pagination: true,
@@ -46,31 +63,21 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
     // CALLBACKS
     // getRowHeight: (params) => 25
 
-    defaultColDef: {
-      flex: 1, //https://ag-grid.com/angular-data-grid/column-sizing/#column-flex
-      minWidth: 50,
-      editable: true,
-      //singleClickEdit: true,
-      resizable: true,
-      sortable: true,
-      filter: true,
-      floatingFilter: true
-    },
+    defaultColDef: this.defaultColDef,
     // set rowData to null or undefined to show loading panel by default
-    rowData: null,
+    rowData: this.rowData,
   }
-  //private backupRowData: any[] = []
-  private rowData: any[] = []
 
 
   constructor(
     //readonly webDisasterSummariesService: WebDisasterSummariesService,
+    private http: HttpClient,
     private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
     @Inject(DOCUMENT) private document: Document,
-    ) {
+  ) {
     // Whats source for data: service (YES); NO: DatasetViewerComponent?
 
-    console.log (`DatasetGridComponent: constructor`)
+    console.log(`DatasetGridComponent: constructor`)
 
     this.gridApi = ""
     this.gridColumnApi = ""
@@ -87,40 +94,40 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
       complete: () => console.info('declarationsSummariesSubscription complete')
     })
 
-    console.log (`DatasetGridComponent: Got declarationsSummariesSubscription, awaiting results`)
-   }
+    console.log(`DatasetGridComponent: Got declarationsSummariesSubscription, awaiting results`)
+  }
 
   ngOnInit(): void {
-    console.log (`DatasetGridComponent: ngOnInit()`)
+    console.log(`DatasetGridComponent: ngOnInit()`)
 
-    console.log (`DatasetGridComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
+    console.log(`DatasetGridComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
 
-/*
-    femaDeclarationString:  string;
-    disasterNumber: number;
-    state:  string;
-    declarationType:  string;
-    declarationDate:  string; // Date;
-    fyDeclared: number;
-    incidentType:  string;
-    declarationTitle:  string;
-    ihProgramDeclared: boolean;
-    iaProgramDeclared: boolean;
-    paProgramDeclared: boolean;
-    hmProgramDeclared: boolean;
-    incidentBeginDate: string; // Date;
-    incidentEndDate: string | null; // Date;
-    disasterCloseoutDate: string | null; // Date;
-    fipsStateCode:  string;
-    fipsCountyCode:  string;
-    placeCode:  string;
-    designatedArea:  string;
-    declarationRequestNumber:  string; // number;
-    lastIAFilingDate: string | null; // Date;
-    lastRefresh:  string; // Date
-    hash:  string;
-    id:  string;
-*/
+    /*
+        femaDeclarationString:  string;
+        disasterNumber: number;
+        state:  string;
+        declarationType:  string;
+        declarationDate:  string; // Date;
+        fyDeclared: number;
+        incidentType:  string;
+        declarationTitle:  string;
+        ihProgramDeclared: boolean;
+        iaProgramDeclared: boolean;
+        paProgramDeclared: boolean;
+        hmProgramDeclared: boolean;
+        incidentBeginDate: string; // Date;
+        incidentEndDate: string | null; // Date;
+        disasterCloseoutDate: string | null; // Date;
+        fipsStateCode:  string;
+        fipsCountyCode:  string;
+        placeCode:  string;
+        designatedArea:  string;
+        declarationRequestNumber:  string; // number;
+        lastIAFilingDate: string | null; // Date;
+        lastRefresh:  string; // Date
+        hash:  string;
+        id:  string;
+    */
     this.columnDefs = [
       { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 3, flex: 5 },
       { headerName: "#", field: "disasterNumber", tooltipField: "disasterNumber", flex: 5 },
@@ -163,18 +170,19 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
     }
   }
 
-  displayDataSet() {
-    console.log (`DatasetGridComponent: displayDataSet()`)
-  // use gotNewData() instead...
+  displayDataSet_UNUSED() {
+    console.log(`DatasetGridComponent: displayDataSet()`)
+    // use gotNewData() instead...
   }
 
   onGridReady = (params: any) => {
-    console.log("DatasetGridComponent: onGridReady()")
+    console.error("DatasetGridComponent: onGridReady()")
 
     this.gridApi = params.api
-    //console.log(`onGridReady() gridApi: ${this.gridApi}`)
+    console.log(`onGridReady() gridApi: ${this.gridApi}`)
+
     this.gridColumnApi = params.columnApi
-    // console.log(`onGridReady() gridColumnApi: ${this.gridColumnApi}`)
+    console.log(`onGridReady() gridColumnApi: ${this.gridColumnApi}`)
 
     // https://ag-grid.com/angular-data-grid/column-sizing/#example-default-resizing
     params.api.sizeColumnsToFit()
@@ -187,10 +195,43 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
     }
 
     // set initial pagination size
-    //paginationAutoPageSize: true
+    // paginationAutoPageSize: true
     // this.gridApi.paginationAutoPageSize(true) // also see: onRowsPerPage
 
-    //console.log("onGridReady() done")
+    let rows: DisasterDeclarationsSummary | null = null
+    for (let sec = 0; sec++; sec < 10) {
+      rows = this.disasterDeclarationsSummariesV2Service.getSummaries()
+      console.log(`got sec=${sec}`)
+      if (rows) {
+        console.log("DatasetGridComponent onGridReady(): Got rows!")
+        break
+      }
+    }
+
+    if (rows) {
+      console.log("DatasetGridComponent onGridReady(): Set rows...")
+      this.gotNewData(rows.DisasterDeclarationsSummaries)
+    }
+
+    console.log("onGridReady() done")
+  }
+
+  onGridReady2_UNUSED(params: any) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+
+    this.http
+      .get(
+        "https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/olympicWinnersSmall.json"
+      )
+      .subscribe((data: any) => {
+        data.length = 10;
+        data = data.map((row: any, index: number) => {
+          return { ...row, id: index + 1 };
+        });
+        this.backupRowData = data;
+        this.rowData = data;
+      });
   }
 
   onFirstDataRendered(params: any) {
@@ -222,10 +263,12 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
   }
 
   gotNewData(newData: DisasterDeclarationsSummaryType[]) {
-    console.log(`DatasetGridComponent: New collection of DisasterDeclarationsSummaryType observed.`)
+    console.warn(`DatasetGridComponent: New collection of ${newData.length} DisasterDeclarationsSummaryTypes observed.`)
     console.log(`DatasetGridComponent: ${JSON.stringify(newData[0])}`)
 
+
     this.disasterDeclarationsSummaries = newData
+    this.rowData = newData
     //this.fieldReportArray = newData.fieldReportArray
     this.refreshGrid()
     //this.reloadPage()  // TODO: needed? - creates endless loop!
