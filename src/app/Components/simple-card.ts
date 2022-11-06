@@ -9,6 +9,7 @@ import { DisasterDeclarationsSummaryType } from '../services/disaster-declaratio
    //standalone: true,
    //imports: [CommonModule, RouterModule],
    template: `
+   <h5>simple-card</h5>
    <article class="pet-card">
      <p class="description">
        <span class="pet-name">{{disaster.femaDeclarationString}}</span> in {{disaster.state}} of type
@@ -34,10 +35,12 @@ import { DisasterDeclarationsSummaryType } from '../services/disaster-declaratio
  `]
  })
  export class SimpleCardComponent implements OnInit {
-   @Input() disaster!: DisasterDeclarationsSummaryType;
-   @Input() index!: Number;
+   @Input() disaster!: DisasterDeclarationsSummaryType
+   @Input() index!: Number
 
-   constructor() { }
+   constructor() {
+    console.log (`SimpleCardComponent: constructor`)
+    }
 
    ngOnInit(): void {
    }
