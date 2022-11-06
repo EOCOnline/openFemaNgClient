@@ -28,6 +28,12 @@ import { DatasetCardComponent } from '../';
   templateUrl: './dataset-viewer.component.html',
   styleUrls: ['./dataset-viewer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,  // https://angular.io/guide/standalone-components
+  imports: [
+    CommonModule,
+    // DatasetCardComponent, can't as this is no longer stANDALONE...
+    // NgxPaginationModule,
+  ],
 })
 export class DatasetViewerComponent implements OnInit, OnDestroy {
   // https://michaelbromley.github.io/ngx-pagination
@@ -41,33 +47,33 @@ export class DatasetViewerComponent implements OnInit, OnDestroy {
   constructor(
     //private httpClient: HttpClient,
     private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
-    ) {
+  ) {
 
-      // Following works: based on reading an actual JSON file
-      /*
-      let myTest = disasterDeclarationsSummariesV2Service.test()
-        console.error (`DatasetViewerComponent: ${JSON.stringify(myTest.DisasterDeclarationsSummaries[0])}`)
-      */
+    // Following works: based on reading an actual JSON file
+    /*
+    let myTest = disasterDeclarationsSummariesV2Service.test()
+      console.error (`DatasetViewerComponent: ${JSON.stringify(myTest.DisasterDeclarationsSummaries[0])}`)
+    */
 
-      console.log (`DatasetViewerComponent: Getting declarationsSummariesSubscription`)
+    console.log(`DatasetViewerComponent: Getting declarationsSummariesSubscription`)
 
-      this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
-        next: (newDisasterDeclarationsSummary) => {
-          this.disasterDeclarationsSummary = newDisasterDeclarationsSummary
-          this.displayDataSet()
-          //debugger
-        },
-        error: (e) => console.error('declarationsSummariesSubscription got:' + e),
-        complete: () => console.info('declarationsSummariesSubscription complete')
-      })
+    this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
+      next: (newDisasterDeclarationsSummary) => {
+        this.disasterDeclarationsSummary = newDisasterDeclarationsSummary
+        this.displayDataSet()
+        //debugger
+      },
+      error: (e) => console.error('declarationsSummariesSubscription got:' + e),
+      complete: () => console.info('declarationsSummariesSubscription complete')
+    })
 
-      console.log (`DatasetViewerComponent: Got declarationsSummariesSubscription, awaiting results`)
-     }
+    console.log(`DatasetViewerComponent: Got declarationsSummariesSubscription, awaiting results`)
+  }
 
   ngOnInit(): void {
     // fetch data async after constructior when async pipe subscribes to the disasters$ observable
     // debugger
-    console.error (`DatasetViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
+    console.error(`DatasetViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
   }
 
   displayDataSet() {
