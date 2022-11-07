@@ -129,16 +129,6 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
         id:  string;
     */
 
-    //this.fieldReportStatuses.forEach(function(value) { (params.value === value.status) ? { backgroundColor: value.color }  : return(null) }
-    /*
-    for (let i = 0; i < this.fieldReportStatuses.length; i++) {
-      if (params.value === this.fieldReportStatuses[i].status) {
-        return { backgroundColor: this.fieldReportStatuses[i].color }
-      }
-    }
-    return null
-  */
-
     /*
           disaster.incidentType}}</span>
           disaster.femaDeclarationString}}:
@@ -162,7 +152,7 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
       { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 50, flex: 25 },
       { headerName: "declarationTitle", field: "declarationTitle", headerTooltip: 'declarationTitle', width: 50, flex: 25 },
       { headerName: "designatedArea", field: "designatedArea", headerTooltip: 'designatedArea', width: 50, flex: 25 },
-      { headerName: "State", field: "state", flex: 2 }, //, maxWidth: 200
+      { headerName: "State", field: "state", flex: 1 }, //, maxWidth: 200
 
 
       { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 50, flex: 25 },
