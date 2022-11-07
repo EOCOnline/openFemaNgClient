@@ -4,5 +4,6 @@ export { DatasetDetailsComponent } from './dataset-details/dataset-details.compo
 export { CardViewerComponent } from './card-viewer/card-viewer.component'
 export { CardComponent } from './card/card.component'
 export { DatasetGridComponent } from './dataset-grid/dataset-grid.component'
+export { MapComponent } from './map/map.component'
 export { NavbarComponent } from './navbar/navbar.component'
 export { FooterComponent } from './footer/footer.component'
