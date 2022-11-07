@@ -33,10 +33,10 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
   rowData: any[] | null = null // set rowData to null or undefined to show loading panel by default
 
   private defaultColDef = {
-    flex: 5, //https://ag-grid.com/angular-data-grid/column-sizing/#column-flex
-    minWidth: 50,
-    editable: true,
-    //singleClickEdit: true,
+    flex: 3, //https://ag-grid.com/angular-data-grid/column-sizing/#column-flex
+    minWidth: 100,
+    // editable: true,
+    // singleClickEdit: true,
     resizable: true,
     sortable: true,
     filter: true,
@@ -129,7 +129,7 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
         id:  string;
     */
     this.columnDefs = [
-      { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 3, flex: 15 },
+      { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 50, flex: 25 },
       { headerName: "#", field: "disasterNumber", tooltipField: "disasterNumber", flex: 2 },
       { headerName: "State", field: "state", flex: 2 }, //, maxWidth: 200
       { headerName: "Decl Type", field: "declarationType", tooltipField: "declarationType", flex: 5 }, //, maxWidth: 200

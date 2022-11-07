@@ -1,5 +1,16 @@
 <article class="dataset-card">
-  {{index}}
+  <span [ngStyle]="{'background-color':
+    (disaster.incidentType == 'Fire') ? '#FF6E40':
+    (disaster.incidentType == 'Flood') ? '##8C9EFF':
+    (disaster.incidentType == 'Severe Storm') ? 'lightblue':
+    (disaster.incidentType == 'Hurricane') ? '#E040FB':
+    (disaster.incidentType == 'Tornade') ? '#E1BEE7':
+    (disaster.incidentType == 'Costal Storm') ? '#80DEEA':
+    (disaster.incidentType == 'Snowstorm') ? '#E0E0E0':
+    (disaster.incidentType == 'Severe Ice Storm') ? '#B2EBF2':
+    (disaster.incidentType == 'Other') ? '#757575':
+    null}">
+    {{index}} - {{disaster.incidentType}}</span>
   <h3 class="dataset-head">{{disaster.femaDeclarationString}}: &nbsp;&nbsp; {{disaster.declarationTitle}}</h3>
   <!-- div class="dataset-subhead"></div -->
 
