@@ -1,20 +1,23 @@
 <h1>Simple Viewer -- Disaster Declarations Summary</h1>
-<article>
-  LENGTH = {{disasterDeclarationsSummaries.length}}<br>
+<div class="content">
+  <!-- LENGTH={{disasterDeclarationsSummaries.length}}<br>
   <ul>
-    <li *ngFor="let disaster of disasterDeclarationsSummaries; index as i">
-      <!-- {{i}}) {{disaster.femaDeclarationString}}: &nbsp;&nbsp;&nbsp;&nbsp; #{{disaster.disasterNumber}};
+    <li -->
+  <div
+    *ngFor="let disaster of disasterDeclarationsSummaries | paginate: {itemsPerPage: 40, currentPage: page}; index as i">
+    <!-- {{i}}) {{disaster.femaDeclarationString}}: &nbsp;&nbsp;&nbsp;&nbsp; #{{disaster.disasterNumber}};
       &nbsp;&nbsp;&nbsp;&nbsp; ST: {{disaster.state}}; &nbsp;&nbsp;&nbsp;&nbsp; Type: {{disaster.declarationType}};
       &nbsp;&nbsp;&nbsp;&nbsp; Date: {{disaster.declarationDate | date:'mediumDate'}};
       -->
-      <br>
-      <simple-card [disaster]=disaster [index]=i></simple-card>
-    </li>
-  </ul>
+    <br>
+    <simple-card [disaster]=disaster [index]=i></simple-card>
+  </div>
+  <!-- /li>
+  </ul -->
+</div>
 
-</article>
 <br>
-<!--div class="text-center">
-  paginate: itemsPerPage: 10, currentPage: page
+<div class="text-center">
+
   <pagination-controls (pageChange)="page = $event"></pagination-controls>
-</div -->
+</div>

@@ -20,13 +20,17 @@ import { DisasterDeclarationsSummaryType } from '../services/disaster-declaratio
   styles: [`
    .pet-card {
      display: flex;
-     flex-direction: column;
+     flex-direction: row;
+     flex-wrap: wrap;
      border-radius: 10px;
      box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-     width: 120px;
+     width: 200px;
    }
    .pet-name {
      font-weight: bolder;
+   }
+   .pet-learn-more {
+    text-align:right;
    }
    .description, .pet-headline, .pet-learn-more {
      padding: 10px;

@@ -27,7 +27,7 @@ import { BrowserModule } from '@angular/platform-browser';
   selector: 'simple-viewer',
   templateUrl: './simple-viewer.component.html',
   styleUrls: ['./simple-viewer.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // EVIL: changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SimpleViewerComponent implements OnInit, OnDestroy {
   // https://michaelbromley.github.io/ngx-pagination

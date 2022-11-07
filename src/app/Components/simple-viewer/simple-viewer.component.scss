@@ -1,19 +1,20 @@
 h1 {
-    //text-decoration:none;
-    font-size: large;
-    font-weight: bold;
-    // float:right;
-    margin-left: 2vw;
-    font-family: "Baloo 2","Open Sans",Helvetica, sans-serif;
-  }
+  //text-decoration:none;
+  font-size  : large;
+  font-weight: bold;
+  // float:right;
+  margin-left: 2vw;
+  font-family: "Baloo 2", "Open Sans", Helvetica, sans-serif;
+}
 
-  article {
-    margin-left: 2vw;
-    font-size: small;
-
-  }
+.content {
+  display       : flex;
+  flex-direction: row;
+  flex-wrap     : wrap;
+  margin-left   : 2vw;
+  font-size     : small;
+}
 
 .text-center {
   text-align: center;
-  //margin-left: 2vw;
 }
