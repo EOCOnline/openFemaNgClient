@@ -19,13 +19,13 @@ h1 {
   text-align: center;
 }
 
-#idNumPerPage2 {
+#idNumPerPage {
   width              : 3rem;
   // background-color: rgb(248, 254, 237);
   box-shadow         : rgba(0, 0, 0, 0.16) 0px 5px 6px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
-eeinput[type="number"] {
+unused input[type="number"] {
   width    : 5rem;
   font-size: 100px;
 }

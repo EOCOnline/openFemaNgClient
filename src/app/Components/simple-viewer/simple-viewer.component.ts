@@ -36,9 +36,6 @@ export class SimpleViewerComponent implements OnInit, OnDestroy {
   @ViewChild('NumPerPage') NumPerPage!: ElementRef
 
   // https://michaelbromley.github.io/ngx-pagination
-  itemsPerPage = 30
-  currentPage = 1
-
   config: PaginationInstance = {
     itemsPerPage: 30,
     currentPage: 1
@@ -93,6 +90,7 @@ export class SimpleViewerComponent implements OnInit, OnDestroy {
     this.config.itemsPerPage = Number(this.NumPerPage.nativeElement.value)
     //console.error(`================SimpleViewerComponent: Received new per page value ${this.config.itemsPerPage}`)
   }
+
   ngOnDestroy(): void {
     this.declarationsSummariesSubscription?.unsubscribe()
   }

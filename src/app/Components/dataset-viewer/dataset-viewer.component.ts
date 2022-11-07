@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 //import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';  // https://angular.io/guide/http
@@ -7,6 +7,7 @@ import { catchError, retry } from 'rxjs/operators';
 
 import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services'
 import { BrowserModule } from '@angular/platform-browser';
+import { PaginationInstance } from 'ngx-pagination';
 //import { DatasetCardComponent } from '../';
 
 
@@ -39,7 +40,13 @@ import { BrowserModule } from '@angular/platform-browser';
 export class DatasetViewerComponent implements OnInit, OnDestroy {
   // https://michaelbromley.github.io/ngx-pagination
   @Input('data') disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
-  page = 1;
+  @ViewChild('NumPerPage') NumPerPage!: ElementRef
+
+  // https://michaelbromley.github.io/ngx-pagination
+  config: PaginationInstance = {
+    itemsPerPage: 15,
+    currentPage: 1
+  }
 
   private declarationsSummariesSubscription!: Subscription
   private disasterDeclarationsSummary!: DisasterDeclarationsSummary
@@ -82,6 +89,12 @@ export class DatasetViewerComponent implements OnInit, OnDestroy {
     console.log(`DatasetViewerComponent: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
 
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
+  }
+
+  onNumberPerPage() {
+    //let cntrl = document.getElementById("NumPerPage") as HTMLInputElement
+    this.config.itemsPerPage = Number(this.NumPerPage.nativeElement.value)
+    //console.error(`================SimpleViewerComponent: Received new per page value ${this.config.itemsPerPage}`)
   }
 
   ngOnDestroy(): void {
