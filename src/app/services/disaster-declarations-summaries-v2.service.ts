@@ -222,8 +222,13 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
   }
 
   // For this dataset, can return the whole thing at once if desired (NOTE: server returns ONLY 1000 records by default)
-  getSummaries() {
+  getSummaries(): DisasterDeclarationsSummary {
     return this.disasterDeclarationsSummary
+  }
+
+  // For this dataset, can return the whole thing at once if desired (NOTE: server returns ONLY 1000 records by default)
+  getSummary(index = 0): DisasterDeclarationsSummaryType {
+    return this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[index]
   }
 
   test_UNUSED(): DisasterDeclarationsSummary {
