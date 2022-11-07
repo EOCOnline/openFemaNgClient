@@ -1,11 +1,12 @@
 <h1>Simple Viewer -- Disaster Declarations Summary</h1>
 <article>
-
+  LENGTH = {{disasterDeclarationsSummaries.length}}<br>
   <ul>
     <li *ngFor="let disaster of disasterDeclarationsSummaries; index as i">
-      {{i}}) {{disaster.femaDeclarationString}}: &nbsp;&nbsp;&nbsp;&nbsp; #{{disaster.disasterNumber}};
+      <!-- {{i}}) {{disaster.femaDeclarationString}}: &nbsp;&nbsp;&nbsp;&nbsp; #{{disaster.disasterNumber}};
       &nbsp;&nbsp;&nbsp;&nbsp; ST: {{disaster.state}}; &nbsp;&nbsp;&nbsp;&nbsp; Type: {{disaster.declarationType}};
       &nbsp;&nbsp;&nbsp;&nbsp; Date: {{disaster.declarationDate | date:'mediumDate'}};
+      -->
       <br>
       <simple-card [disaster]=disaster [index]=i>app-dataset-card for {{i}}</simple-card>
     </li>
