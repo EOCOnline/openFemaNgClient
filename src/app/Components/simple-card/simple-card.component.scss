@@ -1,0 +1,45 @@
+.dataset-card {
+  display       : flex;
+  flex-direction: column;
+  flex-wrap     : wrap;
+  border-radius : 10px;
+  box-shadow    : rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  width         : 200px;
+  height        : 120px;
+  margin        : 8px;
+  padding       : 10px 0 0px 15px;
+}
+
+.item {
+  font-weight: bold;
+  font-style : italic;
+}
+
+.dataset-head {
+  font-size    : normal;
+  font-weight  : bold;
+  margin-bottom: 5px;
+}
+
+.dataset-location {
+  font-weight  : bold;
+  font-size    : small;
+  margin-bottom: 3px;
+}
+
+.dataset-date {
+  font-size    : small;
+  margin-bottom: 3px;
+}
+
+.dataset-description {
+  font-size    : small;
+  font-weight  : normal;
+  margin-bottom: 3px;
+}
+
+.dataset-details {
+  font-size   : small;
+  text-align  : right;
+  margin-right: 10px;
+}

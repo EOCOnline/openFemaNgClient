@@ -1,0 +1,17 @@
+<article class="dataset-card">
+
+  <span class="item">{{index}}</span>
+  <h3 class="dataset-head">{{disaster.femaDeclarationString}}: &nbsp;&nbsp;
+    {{disaster.declarationTitle}}</h3>
+  <!-- div class="dataset-subhead"></div -->
+
+  <div class="dataset-location">{{disaster.designatedArea}}, {{disaster.state}} {{disaster.placeCode}}</div>
+  <span class="dataset-date">{{disaster.incidentBeginDate | date: 'shortDate' }} to
+    {{disaster.incidentEndDate | date: 'shortDate'}}; closed {{disaster.disasterCloseoutDate | date:
+    'shortDate'}}</span>
+
+  <div class="dataset-description">FIPS: {{disaster.fipsCountyCode}} & {{disaster.fipsStateCode}}; Reqest
+    # {{disaster.declarationRequestNumber}}</div>
+
+  <div class="dataset-details"><a href="/details/{{index}}">See all detail fields</a></div>
+  <article>
