@@ -8,6 +8,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services'
 import { BrowserModule } from '@angular/platform-browser';
 // import { SimpleCardComponent } from '..'
+import { PaginationInstance } from 'ngx-pagination'
 
 
 // see: https://github.com/angular/examples/tree/main/walk-my-dog; from https://angular.io/guide/standalone-components video
@@ -30,9 +31,14 @@ import { BrowserModule } from '@angular/platform-browser';
   // EVIL: changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SimpleViewerComponent implements OnInit, OnDestroy {
-  // https://michaelbromley.github.io/ngx-pagination
   @Input('data') disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
-  page = 1;
+
+  // https://michaelbromley.github.io/ngx-pagination
+  config: PaginationInstance = {
+    //id: 'simple',
+    itemsPerPage: 30,
+    currentPage: 1
+  }
 
   private declarationsSummariesSubscription!: Subscription
   private disasterDeclarationsSummary!: DisasterDeclarationsSummary

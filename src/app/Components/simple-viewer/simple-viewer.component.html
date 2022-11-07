@@ -3,8 +3,7 @@
   <!-- LENGTH={{disasterDeclarationsSummaries.length}}<br>
   <ul>
     <li -->
-  <div
-    *ngFor="let disaster of disasterDeclarationsSummaries | paginate: {itemsPerPage: 40, currentPage: page}; index as i">
+  <div *ngFor="let disaster of disasterDeclarationsSummaries | paginate: config; index as i">
     <!-- {{i}}) {{disaster.femaDeclarationString}}: &nbsp;&nbsp;&nbsp;&nbsp; #{{disaster.disasterNumber}};
       &nbsp;&nbsp;&nbsp;&nbsp; ST: {{disaster.state}}; &nbsp;&nbsp;&nbsp;&nbsp; Type: {{disaster.declarationType}};
       &nbsp;&nbsp;&nbsp;&nbsp; Date: {{disaster.declarationDate | date:'mediumDate'}};
@@ -19,5 +18,5 @@
 <br>
 <div class="text-center">
 
-  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  <pagination-controls (pageChange)="config.currentPage = $event"></pagination-controls>
 </div>
