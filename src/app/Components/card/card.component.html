@@ -1,19 +1,8 @@
 <article class="dataset-card">
-
-  <span class="item" [ngStyle]="{'background-color':
-    (disaster.incidentType == 'Coastal Storm') ? '#80DEEA':
-    (disaster.incidentType == 'Earthquake') ? '#FFFF00':
-    (disaster.incidentType == 'Fire') ? '#FF6E40':
-    (disaster.incidentType == 'Flood') ? '#8C9EFF':
-    (disaster.incidentType == 'Hurricane') ? '#CE93D8':
-    (disaster.incidentType == 'Severe Ice Storm') ? '#B2EBF2':
-    (disaster.incidentType == 'Severe Storm') ? 'lightblue':
-    (disaster.incidentType == 'Snowstorm') ? '#E0E0E0':
-    (disaster.incidentType == 'Tornado') ? '#E1BEE7':
-    (disaster.incidentType == 'Other') ? '#EEEEEE':
-    null}">
+  <span class="item">
     {{index}} - {{disaster.incidentType}}</span>
-  <h3 class="dataset-head">{{disaster.femaDeclarationString}}: &nbsp;&nbsp;
+  <h3 class="dataset-head" [ngStyle]="calcBackgroundColor(disaster.incidentType)">{{disaster.femaDeclarationString}}:
+    &nbsp;&nbsp;
     {{disaster.declarationTitle}}</h3>
   <!-- div class="dataset-subhead"></div -->
 

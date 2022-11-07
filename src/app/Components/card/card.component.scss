@@ -11,15 +11,16 @@
 }
 
 .item {
-  font-weight: bold;
-  font-style : italic;
-  padding    : 0.1rem 0 0.1rem 0;
+  font-weight   : bold;
+  font-style    : italic;
+  // padding    : 0.3rem 0 0.2rem 0;
 }
 
 .dataset-head {
-  font-size    : normal;
-  font-weight  : bold;
-  margin-bottom: 5px;
+  font-size  : normal;
+  font-weight: bold;
+  margin     : 2px 0;
+  padding    : .6rem 0 0.2rem 0.2rem;
 }
 
 .dataset-location {

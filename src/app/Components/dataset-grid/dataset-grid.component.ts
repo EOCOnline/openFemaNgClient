@@ -8,7 +8,7 @@ import { GridOptions, SelectionChangedEvent } from 'ag-grid-community'
 // , TeamService
 import { AgGridModule } from 'ag-grid-angular';
 
-import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services'
+import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service, DisasterTypes } from 'src/app/services'
 
 @Component({
   selector: 'app-dataset-grid',
@@ -128,10 +128,47 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
         hash:  string;
         id:  string;
     */
+
+    //this.fieldReportStatuses.forEach(function(value) { (params.value === value.status) ? { backgroundColor: value.color }  : return(null) }
+    /*
+    for (let i = 0; i < this.fieldReportStatuses.length; i++) {
+      if (params.value === this.fieldReportStatuses[i].status) {
+        return { backgroundColor: this.fieldReportStatuses[i].color }
+      }
+    }
+    return null
+  */
+
+    /*
+          disaster.incidentType}}</span>
+          disaster.femaDeclarationString}}:
+          disaster.declarationTitle}}</h3>
+          disaster.declarationTitle
+          disaster.state
+          disaster.placeCode}}</div>
+          disaster.incidentBeginDate
+          disaster.incidentEndDate | date: 'shortDate'
+          disaster.disasterCloseoutDate | date:        'shortDate'}}</span>
+          FIPS: {{disaster.fipsCountyCode}} & {{disaster.fipsStateCode}}; Request # {{disaster.declarationRequestNumber}}</div>
+
+    */
+
+
     this.columnDefs = [
+      {
+        headerName: "incidentType", field: "incidentType", headerTooltip: 'incidentType', width: 50, flex: 25,
+        cellStyle: (params: { value: string; }) => { return this.calcBackgroundColor(params.value) }
+      },
+      { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 50, flex: 25 },
+      { headerName: "declarationTitle", field: "declarationTitle", headerTooltip: 'declarationTitle', width: 50, flex: 25 },
+      { headerName: "designatedArea", field: "designatedArea", headerTooltip: 'designatedArea', width: 50, flex: 25 },
+      { headerName: "State", field: "state", flex: 2 }, //, maxWidth: 200
+
+
+      { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 50, flex: 25 },
       { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 50, flex: 25 },
       { headerName: "#", field: "disasterNumber", tooltipField: "disasterNumber", flex: 2 },
-      { headerName: "State", field: "state", flex: 2 }, //, maxWidth: 200
+
       { headerName: "Decl Type", field: "declarationType", tooltipField: "declarationType", flex: 5 }, //, maxWidth: 200
       { headerName: "Date", field: "declarationDate", tooltipField: "declarationDate", valueGetter: this.myDateGetter, flex: 5 }, //, maxWidth: 200
       { headerName: "Inc Type", field: "incidentType", tooltipField: "incidentType", flex: 5 }, //, maxWidth: 200
@@ -168,6 +205,28 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
     } else {
       console.log("DatasetGridComponent: no this.gridApi yet in ngOnInit()")
     }
+  }
+
+  calcBackgroundColor(type: string) {
+    let color: string
+    //color = DisasterTypes[type]
+
+    switch (type) {
+      case 'Coastal Storm': color = DisasterTypes['Coastal Storm']; break
+      case 'Earthquake': color = DisasterTypes.Earthquake; break
+      case 'Fire': color = DisasterTypes.Fire; break
+      case 'Flood': color = DisasterTypes.Flood; break
+      case 'Hurricane': color = DisasterTypes.Hurricane; break
+      case 'Severe Ice Storm': color = DisasterTypes['Severe Ice Storm']; break
+      case 'Severe Storm': color = DisasterTypes['Severe Storm']; break
+      case 'Snowstorm': color = DisasterTypes.Snowstorm; break
+      case 'Tornado': color = DisasterTypes.Tornado; break
+      case 'Other': color = DisasterTypes.Other; break
+
+      default: color = '##A3A3A3'; break
+    }
+
+    return { 'background-color': `${color}` }
   }
 
   /**

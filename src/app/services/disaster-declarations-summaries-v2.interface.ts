@@ -12,14 +12,14 @@ import { metadataType } from './'
 // Should align with & explained by https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2
 //! Review: Above had to be changed as follows to import json file of summaries (see items below with comments)
 export type DisasterDeclarationsSummaryType = {
-  femaDeclarationString:  string;
+  femaDeclarationString: string;
   disasterNumber: number;
-  state:  string;
-  declarationType:  string;
-  declarationDate:  string; // Date;
+  state: string;
+  declarationType: string;
+  declarationDate: string; // Date;
   fyDeclared: number;
-  incidentType:  string;
-  declarationTitle:  string;
+  incidentType: string;
+  declarationTitle: string;
   ihProgramDeclared: boolean;
   iaProgramDeclared: boolean;
   paProgramDeclared: boolean;
@@ -27,18 +27,32 @@ export type DisasterDeclarationsSummaryType = {
   incidentBeginDate: string; // Date;
   incidentEndDate: string | null; // Date;
   disasterCloseoutDate: string | null; // Date;
-  fipsStateCode:  string;
-  fipsCountyCode:  string;
-  placeCode:  string;
-  designatedArea:  string;
-  declarationRequestNumber:  string; // number;
+  fipsStateCode: string;
+  fipsCountyCode: string;
+  placeCode: string;
+  designatedArea: string;
+  declarationRequestNumber: string; // number;
   lastIAFilingDate: string | null; // Date;
-  lastRefresh:  string; // Date
-  hash:  string;
-  id:  string;
+  lastRefresh: string; // Date
+  hash: string;
+  id: string;
 }
 
 export interface DisasterDeclarationsSummary {
   metadata: metadataType;
   DisasterDeclarationsSummaries: DisasterDeclarationsSummaryType[]
+}
+
+// https://www.colorsandfonts.com/color-system
+export const DisasterTypes = {
+  'Coastal Storm': '#80DEEA',
+  'Earthquake': '#FFFF00',
+  'Fire': '#FF6E40',
+  'Flood': '#8C9EFF',
+  'Hurricane': '#CE93D8',
+  'Severe Ice Storm': '#B2EBF2',
+  'Severe Storm': 'lightblue',
+  'Snowstorm': '#E0E0E0',
+  'Tornado': '#E1BEE7',
+  'Other': '#EEEEEE'
 }
