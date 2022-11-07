@@ -1,4 +1,4 @@
-<h1>Simple Viewer -- Disaster Declarations Summary</h1>
+<h1>Card Viewer -- Disaster Declarations Summary</h1>
 <div class="content">
   <!-- LENGTH={{disasterDeclarationsSummaries.length}}<br -->
   <div *ngFor="let disaster of disasterDeclarationsSummaries | paginate: config; index as i">
@@ -7,7 +7,7 @@
       &nbsp;&nbsp;&nbsp;&nbsp; Date: {{disaster.declarationDate | date:'mediumDate'}};
       -->
     <br>
-    <simple-card [disaster]=disaster [index]=i></simple-card>
+    <card [disaster]=disaster [index]=i></card>
   </div>
 </div>
 

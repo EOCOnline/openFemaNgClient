@@ -7,7 +7,7 @@ import { catchError, retry } from 'rxjs/operators';
 
 import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services'
 import { BrowserModule } from '@angular/platform-browser';
-// import { SimpleCardComponent } from '..'
+// import { CardCardComponent } from '..'
 import { PaginationInstance } from 'ngx-pagination'
 
 
@@ -19,19 +19,19 @@ import { PaginationInstance } from 'ngx-pagination'
     standalone: true,  // https://angular.io/guide/standalone-components
       imports: [
         CommonModule,
-        SimpleCardComponent,
+        CardCardComponent,
         // NgxPaginationModule,
       ],
   */
 
 @Component({
-  selector: 'simple-viewer',
-  templateUrl: './simple-viewer.component.html',
-  styleUrls: ['./simple-viewer.component.scss'],
+  selector: 'card-viewer',
+  templateUrl: './card-viewer.component.html',
+  styleUrls: ['./card-viewer.component.scss'],
   providers: [DisasterDeclarationsSummariesV2Service],
   // EVIL: changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SimpleViewerComponent implements OnInit, OnDestroy {
+export class CardViewerComponent implements OnInit, OnDestroy {
   @Input('data') disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
   @ViewChild('NumPerPage') NumPerPage!: ElementRef
 
@@ -54,10 +54,10 @@ export class SimpleViewerComponent implements OnInit, OnDestroy {
     // Following works: based on reading an actual JSON file
     /*
     let myTest = disasterDeclarationsSummariesV2Service.test()
-      console.error (`SimpleViewerComponent: ${JSON.stringify(myTest.DisasterDeclarationsSummaries[0])}`)
+      console.error (`CardViewerComponent: ${JSON.stringify(myTest.DisasterDeclarationsSummaries[0])}`)
     */
 
-    console.log(`SimpleViewerComponent: Getting declarationsSummariesSubscription`)
+    console.log(`CardViewerComponent: Getting declarationsSummariesSubscription`)
 
     this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
       next: (newDisasterDeclarationsSummary) => {
@@ -69,18 +69,18 @@ export class SimpleViewerComponent implements OnInit, OnDestroy {
       complete: () => console.info('declarationsSummariesSubscription complete')
     })
 
-    console.log(`SimpleViewerComponent: Got declarationsSummariesSubscription, awaiting results`)
+    console.log(`CardViewerComponent: Got declarationsSummariesSubscription, awaiting results`)
   }
 
   ngOnInit(): void {
     // fetch data async after constructior when async pipe subscribes to the disasters$ observable
     // debugger
-    console.error(`SimpleViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
+    console.error(`CardViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
   }
 
   displayDataSet() {
-    console.log(`SimpleViewerComponent: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
-    console.log(`SimpleViewerComponent: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[0])}`)
+    console.log(`CardViewerComponent: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
+    console.log(`CardViewerComponent: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[0])}`)
 
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
   }
@@ -88,7 +88,7 @@ export class SimpleViewerComponent implements OnInit, OnDestroy {
   onNumberPerPage() {
     //let cntrl = document.getElementById("NumPerPage") as HTMLInputElement
     this.config.itemsPerPage = Number(this.NumPerPage.nativeElement.value)
-    //console.error(`================SimpleViewerComponent: Received new per page value ${this.config.itemsPerPage}`)
+    //console.error(`================CardViewerComponent: Received new per page value ${this.config.itemsPerPage}`)
   }
 
   ngOnDestroy(): void {

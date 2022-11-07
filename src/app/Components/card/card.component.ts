@@ -5,23 +5,23 @@ import { RouterModule } from '@angular/router';
 import { DisasterDeclarationsSummaryType } from '../../services/disaster-declarations-summaries-v2.interface';
 
 @Component({
-  selector: 'simple-card',
+  selector: 'card',
   // standalone: true,
   // imports: [CommonModule, RouterModule],
-  templateUrl: './simple-card.component.html',
-  styleUrls: ['./simple-card.component.scss']
+  templateUrl: './card.component.html',
+  styleUrls: ['./card.component.scss']
 })
-export class SimpleCardComponent implements OnInit {
+export class CardComponent implements OnInit {
   @Input() disaster!: DisasterDeclarationsSummaryType
   @Input() index!: Number
 
   constructor() {
-    //console.log(`SimpleCardComponent: constructor`)
+    //console.log(`CardComponent: constructor`)
   }
 
   ngOnInit(): void {
-    //console.log(`SimpleCardComponent: ngOnInit`)
-    //console.log(`SimpleCardComponent: disaster=${this.disaster?.femaDeclarationString}, in ${this.disaster?.state}`)
+    //console.log(`CardComponent: ngOnInit`)
+    //console.log(`CardComponent: disaster=${this.disaster?.femaDeclarationString}, in ${this.disaster?.state}`)
   }
 
 }
