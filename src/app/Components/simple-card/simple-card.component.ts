@@ -16,12 +16,12 @@ export class SimpleCardComponent implements OnInit {
   @Input() index!: Number
 
   constructor() {
-    console.log(`SimpleCardComponent: constructor`)
+    //console.log(`SimpleCardComponent: constructor`)
   }
 
   ngOnInit(): void {
-    console.log(`SimpleCardComponent: ngOnInit`)
-    console.log(`SimpleCardComponent: disaster=${this.disaster?.femaDeclarationString}, in ${this.disaster?.state}`)
+    //console.log(`SimpleCardComponent: ngOnInit`)
+    //console.log(`SimpleCardComponent: disaster=${this.disaster?.femaDeclarationString}, in ${this.disaster?.state}`)
   }
 
 }

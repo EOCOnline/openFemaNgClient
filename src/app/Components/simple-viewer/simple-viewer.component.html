@@ -1,8 +1,6 @@
 <h1>Simple Viewer -- Disaster Declarations Summary</h1>
 <div class="content">
-  <!-- LENGTH={{disasterDeclarationsSummaries.length}}<br>
-  <ul>
-    <li -->
+  <!-- LENGTH={{disasterDeclarationsSummaries.length}}<br -->
   <div *ngFor="let disaster of disasterDeclarationsSummaries | paginate: config; index as i">
     <!-- {{i}}) {{disaster.femaDeclarationString}}: &nbsp;&nbsp;&nbsp;&nbsp; #{{disaster.disasterNumber}};
       &nbsp;&nbsp;&nbsp;&nbsp; ST: {{disaster.state}}; &nbsp;&nbsp;&nbsp;&nbsp; Type: {{disaster.declarationType}};
@@ -11,12 +9,11 @@
     <br>
     <simple-card [disaster]=disaster [index]=i></simple-card>
   </div>
-  <!-- /li>
-  </ul -->
 </div>
 
 <br>
 <div class="text-center">
-
-  <pagination-controls (pageChange)="config.currentPage = $event"></pagination-controls>
+  <label>Number/Page: </label><input #NumPerPage id="idNumPerPage2" size="30" type="number" [value]="itemsPerPage"
+    (change)="onNumberPerPage()" (blur)="onNumberPerPage()">
+  <pagination-controls (pageChange)="config.currentPage = $event" [maxSize]="10"></pagination-controls>
 </div>

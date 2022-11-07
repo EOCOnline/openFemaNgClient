@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy, Inject, ViewChild, ElementRef } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 //import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';  // https://angular.io/guide/http
 import { Observable, Subscription, throwError } from 'rxjs';
@@ -28,14 +28,18 @@ import { PaginationInstance } from 'ngx-pagination'
   selector: 'simple-viewer',
   templateUrl: './simple-viewer.component.html',
   styleUrls: ['./simple-viewer.component.scss'],
+  providers: [DisasterDeclarationsSummariesV2Service],
   // EVIL: changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SimpleViewerComponent implements OnInit, OnDestroy {
   @Input('data') disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
+  @ViewChild('NumPerPage') NumPerPage!: ElementRef
 
   // https://michaelbromley.github.io/ngx-pagination
+  itemsPerPage = 30
+  currentPage = 1
+
   config: PaginationInstance = {
-    //id: 'simple',
     itemsPerPage: 30,
     currentPage: 1
   }
@@ -47,6 +51,7 @@ export class SimpleViewerComponent implements OnInit, OnDestroy {
   constructor(
     //private httpClient: HttpClient,
     private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
+    @Inject(DOCUMENT) private document: Document,
   ) {
 
     // Following works: based on reading an actual JSON file
@@ -78,11 +83,16 @@ export class SimpleViewerComponent implements OnInit, OnDestroy {
 
   displayDataSet() {
     console.log(`SimpleViewerComponent: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
-    console.log(`SimpleViewerComponent: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
+    console.log(`SimpleViewerComponent: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[0])}`)
 
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
   }
 
+  onNumberPerPage() {
+    //let cntrl = document.getElementById("NumPerPage") as HTMLInputElement
+    this.config.itemsPerPage = Number(this.NumPerPage.nativeElement.value)
+    //console.error(`================SimpleViewerComponent: Received new per page value ${this.config.itemsPerPage}`)
+  }
   ngOnDestroy(): void {
     this.declarationsSummariesSubscription?.unsubscribe()
   }

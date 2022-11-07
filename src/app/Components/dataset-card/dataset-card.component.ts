@@ -9,7 +9,8 @@ import { DatasetViewerComponent } from './../';
 @Component({
   selector: 'app-dataset-card',
   templateUrl: './dataset-card.component.html',
-  styleUrls: ['./dataset-card.component.scss']
+  styleUrls: ['./dataset-card.component.scss'],
+  //providers:[DisasterDeclarationsSummariesV2Service],
 })
 export class DatasetCardComponent implements OnInit {
   @Input() disaster!: DisasterDeclarationsSummaryType// | null = null

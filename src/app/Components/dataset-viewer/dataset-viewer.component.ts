@@ -34,6 +34,7 @@ import { BrowserModule } from '@angular/platform-browser';
   // DatasetCardComponent, can't as this is no longer stANDALONE...
   // NgxPaginationModule,
   // ],
+  providers: [DisasterDeclarationsSummariesV2Service],
 })
 export class DatasetViewerComponent implements OnInit, OnDestroy {
   // https://michaelbromley.github.io/ngx-pagination
