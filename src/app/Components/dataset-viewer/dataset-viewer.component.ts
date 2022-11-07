@@ -7,7 +7,7 @@ import { catchError, retry } from 'rxjs/operators';
 
 import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services'
 import { BrowserModule } from '@angular/platform-browser';
-import { DatasetCardComponent } from '../';
+//import { DatasetCardComponent } from '../';
 
 
 // see: https://github.com/angular/examples/tree/main/walk-my-dog; from https://angular.io/guide/standalone-components video
@@ -28,12 +28,12 @@ import { DatasetCardComponent } from '../';
   templateUrl: './dataset-viewer.component.html',
   styleUrls: ['./dataset-viewer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,  // https://angular.io/guide/standalone-components
-  imports: [
-    CommonModule,
-    // DatasetCardComponent, can't as this is no longer stANDALONE...
-    // NgxPaginationModule,
-  ],
+  // standalone: true,  // https://angular.io/guide/standalone-components
+  // imports: [
+  // CommonModule,
+  // DatasetCardComponent, can't as this is no longer stANDALONE...
+  // NgxPaginationModule,
+  // ],
 })
 export class DatasetViewerComponent implements OnInit, OnDestroy {
   // https://michaelbromley.github.io/ngx-pagination

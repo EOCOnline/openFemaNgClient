@@ -1,6 +1,6 @@
-@use "@material/icon-button";
-@use "@material/button";
-@use "@material/top-app-bar/mdc-top-app-bar";
+// @use "@material/icon-button";
+// @use "@material/button";
+// @use "@material/top-app-bar/mdc-top-app-bar";
 
 //@include icon-button.core-styles;
 
@@ -61,7 +61,7 @@
   right   : 0px;
 }
 
-.installBtn {
+.installBtn_UNUSED {
   background-color: rgb(147, 227, 227);
   padding         : 5px;
   margin-bottom   : 5px;

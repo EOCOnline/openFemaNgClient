@@ -6,8 +6,8 @@ import { DisasterDeclarationsSummaryType } from '../services/disaster-declaratio
 
 @Component({
   selector: 'simple-card',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
+  // standalone: true,
+  // imports: [CommonModule, RouterModule],
   template: `
    <h5>simple-card</h5>
    <article class="pet-card">
