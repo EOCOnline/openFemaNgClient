@@ -6,7 +6,7 @@
   <span title="{{title}}" class="title">
     <!--  [routerLink]="['/']"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" -->
     <a href="/"><img class="logo" src="assets/icons/wind.ico" title="OpenFemaNgClient" height="40px" width="40px">
-      &nbsp;<h1 class="title">{{title}}</h1>
+      &nbsp;<span class="title">{{title}}</span>
     </a>
   </span>
   <!-- span title="RangerTrak" class="title">
@@ -17,12 +17,10 @@
       </a>
     </span  -->
 
+  <a href="/list">List View</a>
+  <a href="/simple">Simple View</a>
+  <a href="/grid">Grid View</a>
   <nav>
-
-    <a href="/list">List View</a>
-    <a href="/simple">Simple View</a>
-    <a href="/grid">Grid View</a>
-
     <!-- ul>
     <li>
       <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>

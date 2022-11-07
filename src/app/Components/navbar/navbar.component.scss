@@ -11,15 +11,16 @@
 }
 
 .main-nav {
-  display              : flex;
-  //height             : 2em;
-  background           : rgb(183, 244, 255);
+  display            : flex;
+  height             : 4vh;
+  background         : rgb(183, 244, 255);
   // color         : white;
   //border-radius    : 3px;
-  padding-top          : 0.3em;
-  padding-bottom       : 0.25em;
+  padding-top        : 0.3em;
+  padding-bottom     : 0.5em;
   //font-family   : 'Arima Madurai', sans-serif;
-  font-size            : 1.2em;
+  font-size          : 1.2em;
+
 }
 
 .main-nav>ul {
@@ -27,7 +28,8 @@
   padding        : 0;
   margin         : 0;
   display        : flex;
-  flex           : 8;
+  flex           : 12;
+
 }
 
 .main-nav li {
@@ -39,10 +41,13 @@
   display        : flex;
   justify-content: flex-end;
   flex           : 1;
+
 }
 
-.title_UNused {
-  margin-right: 2em;
+.title {
+  width         : 30vw;
+  margin-right  : 2em;
+  vertical-align: top;
 }
 
 .Navbar__progressBar {
@@ -59,30 +64,6 @@
 .rightAlign {
   position: absolute;
   right   : 0px;
-}
-
-.installBtn_UNUSED {
-  background-color: rgb(147, 227, 227);
-  padding         : 5px;
-  margin-bottom   : 5px;
-  border-radius   : 10px;
-  cursor          : pointer;
-  opacity         : 0.75;
-}
-
-.installMe_unused {
-  color: black;
-}
-
-.git_NOTUSED {
-  //align-self: flex-end;
-  position          : absolute;
-  right             : 10px;
-  //background-color: aquamarine;
-  //display: flex;
-  //justify-content: right;
-  //float: right;
-  //clear: both;
 }
 
 #gitLogo {
@@ -106,13 +87,14 @@
   height       : 1.8em;
   padding      : 0 1em;
   margin       : 0 1em;
+
 }
 
 .main-nav a {
   margin-left    : 5px;
   margin-right   : 5px;
   text-decoration: none;
-  vertical-align : middle;
+  vertical-align : bottom;
 }
 
 .main-nav a:hover {

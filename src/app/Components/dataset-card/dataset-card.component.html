@@ -1,10 +1,15 @@
-<p>dataset-card works!</p>
 <article class="dataset-card">
-  <h3 class="dataset-heading"><span class="dataset-name"></span>{{disaster.femaDeclarationString}}:
-    {{disaster.declarationTitle}} -- {{disaster.disasterNumber}}</h3>
-  <p class="dataset-subhead">State: {{disaster.state}}; Type: {{disaster.declarationType}}</p>
-  <p class="dataset-description">
-    <span class="dataset-name">{{disaster.incidentBeginDate}}</span> to {{disaster.incidentEndDate}}
-  </p>
-  <p class="dataset-details"><a href="/details/{{index}}">See all detail fields</a></p>
+
+  <h3 class="dataset-head">{{disaster.femaDeclarationString}}: &nbsp;&nbsp; {{disaster.declarationTitle}}</h3>
+  <!-- div class="dataset-subhead"></div -->
+
+  <div class="dataset-location">{{disaster.designatedArea}}, {{disaster.state}} {{disaster.placeCode}}</div>
+  <span class="dataset-date">{{disaster.incidentBeginDate | date: 'shortDate' }} to
+    {{disaster.incidentEndDate | date: 'shortDate'}}; closed {{disaster.disasterCloseoutDate | date:
+    'shortDate'}}</span>
+
+  <div class="dataset-description">FIPS: {{disaster.fipsCountyCode}} & {{disaster.fipsStateCode}}; Reqest
+    # {{disaster.declarationRequestNumber}}</div>
+
+  <div class="dataset-details"><a href="/details/{{index}}">See all detail fields</a></div>
   <article>

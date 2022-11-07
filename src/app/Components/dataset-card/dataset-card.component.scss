@@ -1,24 +1,43 @@
 .dataset-card {
-  display: flex;
+  display       : flex;
   flex-direction: column;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-  width: 300px;
+  border-radius : 10px;
+  box-shadow    : rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  width         : 350px;
+  margin        : 10px;
+  padding       : 15px 0 10px 15px;
 }
 
 .dataset-head {
-//  border-radius: 10px 10px 0 0;
-  width: 300px;
-}
-
-.dataset-name {
-  font-weight: bolder;
-}
-
-.dataset-description, .dataset-headline, .dataset-details {
-  padding: 10px;
+  //  border-radius: 10px 10px 0 0;
+  font-size          : large;
+  //font-weight: bolder;
+  //width        : 400px;
+  //padding        : 15px 0 0 15px;
+  //padding          : 0;
+  margin-bottom      : 5px;
 }
 
 .dataset-subhead {
-  font-size: 18pt;
+  font-size: small;
+}
+
+.dataset-location {
+  font-weight  : bold;
+  margin-bottom: 3px;
+}
+
+.dataset-date {
+  //font-weight  : bold;
+  margin-bottom: 3px;
+}
+
+.dataset-description {
+  font-weight    : normal;
+  //margin-bottom: 3px;
+}
+
+.dataset-details {
+  text-align  : right;
+  margin-right: 10px;
 }
