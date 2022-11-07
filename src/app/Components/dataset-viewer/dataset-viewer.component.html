@@ -1,21 +1,25 @@
 <h1>Data Set Viewer -- Disaster Declarations Summary</h1>
 <article>
   <ng-container *ngIf="disasterDeclarationsSummaries; else ItsNull">
-    paginate: itemsPerPage: 10, currentPage: page
+    <br>
+    LENGTH = {{disasterDeclarationsSummaries.length}}
     <ul>
-      <li *ngFor="let disaster of disasterDeclarationsSummaries ; index as i">
+      <li
+        *ngFor="let disaster of disasterDeclarationsSummaries | paginate: {itemsPerPage: 10, currentPage: page}; index as i">
+        <!--
         {{i}}) {{disaster.femaDeclarationString}}: &nbsp;&nbsp;&nbsp;&nbsp; #{{disaster.disasterNumber}};
         &nbsp;&nbsp;&nbsp;&nbsp; ST: {{disaster.state}}; &nbsp;&nbsp;&nbsp;&nbsp; Type: {{disaster.declarationType}};
         &nbsp;&nbsp;&nbsp;&nbsp; Date: {{disaster.declarationDate | date:'mediumDate'}};
         <br>
-        lets put out!
-        app-dataset-card disaster=disaster index=i app-dataset-card for i app-dataset-card
+        -->
+        <app-dataset-card [disaster]=disaster [index]=i></app-dataset-card>
       </li>
     </ul>
   </ng-container>
 
-  <ng-template #ItsNull>Woops: disasterDeclarationsSummaries is null!</ng-template>
+  <ng-template #ItsNull>Whoops: disasterDeclarationsSummaries is null!</ng-template>
 </article>
 <br>
 <div class="text-center">
-  pagination-controls (pageChange)="page = $event" pagination-controls </div>
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>
