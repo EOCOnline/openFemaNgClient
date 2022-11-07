@@ -1,21 +1,4 @@
-<nav>
-  <div>
-    <a [routerLink]="['/']"><img class="logo" src="assets/icons/wind.ico" title="OpenFemaNgClient" height="40px"
-        width="40px">
-      &nbsp;
-      <h1 class="title">{{title}}</h1>
-    </a>
-  </div>
-  <a href="/list">List View</a>
-  <a href="/simple">Simple View</a>
-  <a href="/grid">Grid View</a>
+<navbar></navbar>
 
-  <span class="rightAlign">
-    <a href=" https://github.com/EOCOnline/openFemaNgClient" target="_blank"
-      title="See ya at GitHub for issue reports & source code" class="git">
-      <img src="../assets/icons/GitHub-Mark-32px.png" id="gitLogo" /></a>
-  </span>
-</nav>
-
-<router-outlet>Loading...</router-outlet>
+<router-outlet></router-outlet>
 <app-footer></app-footer>

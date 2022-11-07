@@ -7,18 +7,20 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component';
 import { FlexLayoutModule } from '@angular/flex-layout'
 
-import { DatasetGridComponent, DatasetCardComponent, FooterComponent, SimpleViewerComponent, SimpleCardComponent } from './components';
-//DatasetViewerComponent
+import { DatasetGridComponent, DatasetCardComponent, FooterComponent, SimpleViewerComponent, NavbarComponent } from './components';
+// SimpleCardComponent
+// DatasetViewerComponent
 import { AgGridModule } from 'ag-grid-angular'
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarComponent,
     DatasetGridComponent,
-    //DatasetViewerComponent,
+    // DatasetViewerComponent,
     SimpleViewerComponent,
-    SimpleCardComponent,
+    // SimpleCardComponent,
     DatasetCardComponent,
     FooterComponent,
   ],
