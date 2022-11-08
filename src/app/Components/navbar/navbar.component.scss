@@ -11,12 +11,12 @@
 }
 
 .main-nav {
-  display              : flex;
-  height               : 4vh;
+  display                : flex;
+  //height               : 4vh;
   //background         : #FFD54F;
   // https://cssgradient.io/
-  background           : rgb(179, 119, 0);
-  background           : linear-gradient(54deg, rgba(179, 119, 0, 0.8748543362657564) 0%, rgba(173, 150, 33, 1) 69%, rgba(255, 226, 0, 1) 100%);
+  background             : rgb(179, 119, 0);
+  background             : linear-gradient(54deg, rgba(179, 119, 0, 0.8748543362657564) 0%, rgba(173, 150, 33, 1) 69%, rgba(255, 226, 0, 1) 100%);
 
   // color         : white;
   //border-radius    : 3px;

@@ -1,9 +1,19 @@
 <h1>Card Viewer -- Disaster Declarations Summary</h1>
+
+<div class="checks">
+  <ul class="horizList">
+    <span *ngFor="let type of types">
+      <li class="check" (click)="onChanged(type.type)"><input type="checkbox" attr.id='{{type.type}}' checked="true">
+        <label> {{type.type}}</label>
+      </li>
+    </span>
+  </ul>
+</div>
+
 <div class="content">
   <!-- LENGTH={{disasterDeclarationsSummaries.length}}<br -->
   <div *ngFor="let disaster of disasterDeclarationsSummaries | paginate: config; index as i">
-    <br>
-    <card [disaster]=disaster [index]=i></card>
+    <card [disaster]=disaster [index]=i *ngIf="filterBy(disaster.incidentType)"></card>
   </div>
 </div>
 
@@ -12,14 +22,4 @@
   <label>Number/Page: </label><input #NumPerPage id="idNumPerPage" size="30" type="number" [value]="config.itemsPerPage"
     (change)="onNumberPerPage()" (blur)="onNumberPerPage()">
   <pagination-controls (pageChange)="config.currentPage = $event" [maxSize]="10"></pagination-controls>
-</div>
-
-<div class="checks">
-  <ul class="horizList">
-    <span *ngFor="let type of types">
-      <li><input type="checkbox" class="type" checked="true" (change)="onChanged(type.type)">
-        <label> {{type.type}}</label>
-      </li>
-    </span>
-  </ul>
 </div>

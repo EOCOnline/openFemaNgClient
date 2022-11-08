@@ -15,6 +15,8 @@ export class AppComponent {
 }
 
 /*
+!-- TODO:  https://angular.io/api/common/NgIf#shorthand-syntax shows LOADING page logic -->
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 //import { HttpClientModule } from '@angular/common/http';

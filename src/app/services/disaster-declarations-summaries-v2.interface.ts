@@ -45,28 +45,16 @@ export interface DisasterDeclarationsSummary {
 
 // https://www.colorsandfonts.com/color-system
 export const DisasterTypes = [
-  { type: 'Coastal Storm', color: '#80DEEA' },
-  { type: 'Earthquake', color: '#FFFF00' },
-  { type: 'Fire', color: '#FF6E40' },
-  { type: 'Flood', color: '#8C9EFF' },
-  { type: 'Hurricane', color: '#CE93D8' },
-  { type: 'Severe Ice Storm', color: '#B2EBF2' },
-  { type: 'Severe Storm', color: 'lightblue' },
-  { type: 'Snowstorm', color: '#E0E0E0' },
-  { type: 'Tornado', color: '#E1BEE7' },
+  { type: 'Coastal Storm', color: '#80DEEA', display: true },
+  { type: 'Earthquake', color: '#FFFF00', display: true },
+  { type: 'Fire', color: '#FF6E40', display: true },
+  { type: 'Flood', color: '#8C9EFF', display: true },
+  { type: 'Hurricane', color: '#CE93D8', display: true },
+  { type: 'Severe Ice Storm', color: '#B2EBF2', display: true },
+  { type: 'Severe Storm', color: 'lightblue', display: true },
+  { type: 'Snowstorm', color: '#E0E0E0', display: true },
+  { type: 'Tornado', color: '#E1BEE7', display: true },
 
-  { type: 'Other', color: '#EEEEEE' },
+  { type: 'Other', color: '#EEEEEE', display: true },
 ]
 
-export const DisasterTypesOLD = {
-  'Coastal Storm': '#80DEEA',
-  'Earthquake': '#FFFF00',
-  'Fire': '#FF6E40',
-  'Flood': '#8C9EFF',
-  'Hurricane': '#CE93D8',
-  'Severe Ice Storm': '#B2EBF2',
-  'Severe Storm': 'lightblue',
-  'Snowstorm': '#E0E0E0',
-  'Tornado': '#E1BEE7',
-  'Other': '#EEEEEE'
-}

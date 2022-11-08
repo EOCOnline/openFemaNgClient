@@ -19,7 +19,8 @@ import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, DisasterD
   providers: [DisasterDeclarationsSummariesV2Service],
 })
 export class CardViewerComponent implements OnInit, OnDestroy {
-  @Input('data') disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
+  @Input('data') filteredDisasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
+  //  @Input('data') !: DisasterDeclarationsSummaryType[]
   @ViewChild('NumPerPage') NumPerPage!: ElementRef
 
   // https://michaelbromley.github.io/ngx-pagination
@@ -30,6 +31,7 @@ export class CardViewerComponent implements OnInit, OnDestroy {
 
   private declarationsSummariesSubscription!: Subscription
   private disasterDeclarationsSummary!: DisasterDeclarationsSummary
+  disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
   types = DisasterTypes
 
 
@@ -37,7 +39,7 @@ export class CardViewerComponent implements OnInit, OnDestroy {
     private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
     //   @Inject(DOCUMENT) private document: Document,
   ) {
-    console.log(`CardViewerComponent: Getting declarationsSummariesSubscription`)
+    console.log(`CardViewer: Getting declarationsSummariesSubscription`)
     this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
       next: (newDisasterDeclarationsSummary) => {
         this.disasterDeclarationsSummary = newDisasterDeclarationsSummary
@@ -47,19 +49,20 @@ export class CardViewerComponent implements OnInit, OnDestroy {
       complete: () => console.info('declarationsSummariesSubscription complete')
     })
 
-    console.log(`CardViewerComponent: Got declarationsSummariesSubscription, awaiting results`)
+    console.log(`CardViewer: Got declarationsSummariesSubscription, awaiting results`)
   }
 
   ngOnInit(): void {
     // fetch data async after constructior when async pipe subscribes to the disasters$ observable
-    // console.error(`CardViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
+    // console.error(`CardViewer: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
   }
 
   displayDataSet() {
-    // console.log(`CardViewerComponent: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
-    // console.log(`CardViewerComponent: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[0])}`)
+    // console.log(`CardViewer: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
+    // console.log(`CardViewer: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[0])}`)
 
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
+    this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
   }
 
   checkBoxesInit() {
@@ -68,14 +71,32 @@ export class CardViewerComponent implements OnInit, OnDestroy {
   }
 
   onChanged(type: string) {
-    console.error(`CardViewerComponent: got changed ${type}`)
+    let cntrl = document.getElementById(type) as HTMLInputElement
 
+    let arrayItem = this.types.find(el => el.type == type)
+    if (!arrayItem) {
+      console.error(`CardViewer: could NOT find ${type} in list of known disaster types`)
+      return
+    }
+    arrayItem.display = !arrayItem?.display
+    cntrl.checked = arrayItem.display
+
+    console.log(`CardViewer: now ${arrayItem.display ? '' : 'NOT '}displaying ${cntrl.id}`)
+
+    // NOW filter all summaries by whether they should be displayed.
+    // Old way of only displaying card only if that type's display was true messed up pagination...)
+
+    this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries //.filter()
   }
 
   onNumberPerPage() {
     //let cntrl = document.getElementById("NumPerPage") as HTMLInputElement
-    this.config.itemsPerPage = Number(this.NumPerPage.nativeElement.value)
-    //console.error(`================CardViewerComponent: Received new per page value ${this.config.itemsPerPage}`)
+    this.config.itemsPerPage = Number(this.NumPerPage.nativeElement.value)  // relies on @ViewChild
+    //console.log(`CardViewer: Received new per page value ${this.config.itemsPerPage}`)
+  }
+
+  filterBy(type: string) {
+    return this.types.find(el => el.type == type)?.display
   }
 
   ngOnDestroy(): void {
