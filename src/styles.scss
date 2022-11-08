@@ -133,7 +133,28 @@ table {
 }
 
 * {
-  font-family: 'Be Vietnam Pro', sans-serif;
+  font-family: Roboto, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: Sniglet, sans-serif;
+}
+
+h1 {
+  font-size  : 24px;
+  font-weight: bold;
+  margin     : 1rem 0 1rem 2vw;
+  font-family: Sniglet, "Baloo 2", "Open Sans", Helvetica, sans-serif;
+}
+
+h2 {
+  font-size  : large;
+  font-weight: bold;
+  font-family: Sniglet, "Baloo 2", "Open Sans", Helvetica, sans-serif;
 }
 
 @import 'ag-grid-community/dist/styles/ag-grid.css';
