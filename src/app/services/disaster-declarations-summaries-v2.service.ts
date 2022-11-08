@@ -16,7 +16,7 @@ import { metadataType, DisasterDeclarationsSummaryType, DisasterDeclarationsSumm
  *
  * Details: https://stackoverflow.com/questions/71098595/purpose-of-resolvejsonmodule
  */
-import * as DeclSummary from './../../assets/data/DisasterDeclarationsSummariesV2.json'
+//import * as DeclSummary from './../../assets/data/DisasterDeclarationsSummariesV2.json'
 
 /**
  * Since we have to do lots of these potentially
@@ -231,14 +231,16 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
     return this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[index]
   }
 
-  test_UNUSED(): DisasterDeclarationsSummary {
-    // fails: Error: Should not import the named export 'DisasterDeclarationsSummaries'.'0' (imported as 'DeclSummary') from default-exporting module (only default export is available soon)
-    // let Summary0 = DeclSummary.DisasterDeclarationsSummaries[0]
-    // console.error `DisasterDeclarationsSummariesV2Service: ${Summary0.femaDeclarationString} -- ${Summary0.disasterNumber}`
+  /*
+    test_UNUSED(): DisasterDeclarationsSummary {
+      //fails: Error: Should not import the named export 'DisasterDeclarationsSummaries'.'0' (imported as 'DeclSummary') from default-exporting module (only default export is available soon)
+      //let Summary0 = DeclSummary.DisasterDeclarationsSummaries[0]
+      //console.error `DisasterDeclarationsSummariesV2Service: ${Summary0.femaDeclarationString} -- ${Summary0.disasterNumber}`
 
-    // works
-    return DeclSummary
-  }
+      //works
+      return DeclSummary
+    }
+  */
 
   ngOnDestroy() {
 
