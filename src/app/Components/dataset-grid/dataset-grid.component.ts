@@ -129,15 +129,20 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
   }
 
   calcBackgroundColor(type: string) {
-    let color: string = '##A3A3A3' // UNKNOWN!
-
-    for (let i = 0; i < DisasterTypes.length; i++) {
-      if (type == DisasterTypes[i].type) {
-        color = DisasterTypes[0].color
-      }
-    }
-    return { 'background-color': `${color}` }
+    let id = DisasterTypes.find(el => el.type == type)
+    return { 'background-color': `${id ? id.color : '#A3A3A3'}` }
+    // UNKNOWN!
   }
+  /* OLD:
+  let color: string = '##A3A3A3' // UNKNOWN!
+  for (let i = 0; i < DisasterTypes.length; i++) {
+    if (type == DisasterTypes[i].type) {
+      color = DisasterTypes[0].color
+    }
+  }
+  return { 'background-color': `${color}` }
+}
+*/
 
   /**
    * Given a fieldReport, finds the date, and returns it as 'Sun Jan-01 23:00:00'

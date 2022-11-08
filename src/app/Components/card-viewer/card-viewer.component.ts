@@ -98,8 +98,8 @@ export class CardViewerComponent implements OnInit, OnDestroy {
 
   shouldDisplay(el: DisasterDeclarationsSummaryType) {
     // WIERD: can't access this.types within this filter function: scoping issues?!
-    const myTypes = DisasterTypes
-    return myTypes.find(ell => ell.type == el.incidentType)?.display
+    // const myTypes = DisasterTypes
+    return DisasterTypes.find(ell => ell.type == el.incidentType)?.display
   }
 
   filterBy(type: string) {

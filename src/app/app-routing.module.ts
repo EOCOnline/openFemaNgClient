@@ -4,7 +4,7 @@ import { DatasetViewerComponent, DatasetGridComponent, DetailsComponent, CardVie
 
 const routes: Routes = [
   // EAGER Routes
-  { path: "", pathMatch: 'full', redirectTo: 'simple' },
+  { path: "", pathMatch: 'full', redirectTo: 'card' },
   { path: "list", component: DatasetViewerComponent },
   { path: "card", component: CardViewerComponent },
   { path: "grid", component: DatasetGridComponent },
