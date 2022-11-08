@@ -33,8 +33,8 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
   rowData: any[] | null = null // set rowData to null or undefined to show loading panel by default
 
   private defaultColDef = {
-    flex: 3, //https://ag-grid.com/angular-data-grid/column-sizing/#column-flex
-    minWidth: 100,
+    //flex: 3, //https://ag-grid.com/angular-data-grid/column-sizing/#column-flex
+    //minWidth: 50,
     // editable: true,
     // singleClickEdit: true,
     resizable: true,
@@ -102,92 +102,23 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
 
     console.log(`DatasetGridComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
 
-    /*
-        femaDeclarationString:  string;
-        disasterNumber: number;
-        state:  string;
-        declarationType:  string;
-        declarationDate:  string; // Date;
-        fyDeclared: number;
-        incidentType:  string;
-        declarationTitle:  string;
-        ihProgramDeclared: boolean;
-        iaProgramDeclared: boolean;
-        paProgramDeclared: boolean;
-        hmProgramDeclared: boolean;
-        incidentBeginDate: string; // Date;
-        incidentEndDate: string | null; // Date;
-        disasterCloseoutDate: string | null; // Date;
-        fipsStateCode:  string;
-        fipsCountyCode:  string;
-        placeCode:  string;
-        designatedArea:  string;
-        declarationRequestNumber:  string; // number;
-        lastIAFilingDate: string | null; // Date;
-        lastRefresh:  string; // Date
-        hash:  string;
-        id:  string;
-    */
-
-    /*
-          disaster.incidentType}}</span>
-          disaster.femaDeclarationString}}:
-          disaster.declarationTitle}}</h3>
-          disaster.declarationTitle
-          disaster.state
-          disaster.placeCode}}</div>
-          disaster.incidentBeginDate
-          disaster.incidentEndDate | date: 'shortDate'
-          disaster.disasterCloseoutDate | date:        'shortDate'}}</span>
-          FIPS: {{disaster.fipsCountyCode}} & {{disaster.fipsStateCode}}; Request # {{disaster.declarationRequestNumber}}</div>
-
-    */
-
-
     this.columnDefs = [
       {
-        headerName: "incidentType", field: "incidentType", headerTooltip: 'incidentType', width: 50, flex: 25,
+        headerName: "Type", field: "incidentType", headerTooltip: 'incidentType', width: 30,
         cellStyle: (params: { value: string; }) => { return this.calcBackgroundColor(params.value) }
       },
-      { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 50, flex: 25 },
-      { headerName: "declarationTitle", field: "declarationTitle", headerTooltip: 'declarationTitle', width: 50, flex: 25 },
-      { headerName: "designatedArea", field: "designatedArea", headerTooltip: 'designatedArea', width: 50, flex: 25 },
-      { headerName: "State", field: "state", flex: 1 }, //, maxWidth: 200
-
-
-      { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 50, flex: 25 },
-      { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 50, flex: 25 },
-      { headerName: "#", field: "disasterNumber", tooltipField: "disasterNumber", flex: 2 },
-
-      { headerName: "Decl Type", field: "declarationType", tooltipField: "declarationType", flex: 5 }, //, maxWidth: 200
-      { headerName: "Date", field: "declarationDate", tooltipField: "declarationDate", valueGetter: this.myDateGetter, flex: 5 }, //, maxWidth: 200
-      { headerName: "Inc Type", field: "incidentType", tooltipField: "incidentType", flex: 5 }, //, maxWidth: 200
-      /*
-      {
-        headerName: "Lat", field: "lat", cellClass: 'number-cell', flex: 1,
-        valueGetter: (params: { data: FieldReportType }) => { return Math.round(params.data.location.lat * 10000) / 10000.0 }
-      },
-      {
-        headerName: "Lng", field: "lng", cellClass: 'number-cell', flex: 1,
-        valueGetter: (params: { data: FieldReportType }) => { return Math.round(params.data.location.lng * 10000) / 10000.0 },
-      },
-      { headerName: "Reported", headerTooltip: 'Report date', valueGetter: this.myDateGetter, flex: 2 },
-      { headerName: "Elapsed", headerTooltip: 'Hrs:Min:Sec since report', valueGetter: this.myMinuteGetter, flex: 2 },
-      {
-        headerName: "Status", field: "status", flex: 5,
-        cellStyle: (params: { value: string; }) => {
-          //this.fieldReportStatuses.forEach(function(value) { (params.value === value.status) ? { backgroundColor: value.color }  : return(null) }
-          for (let i = 0; i < this.fieldReportStatuses.length; i++) {
-            if (params.value === this.fieldReportStatuses[i].status) {
-              return { backgroundColor: this.fieldReportStatuses[i].color }
-            }
-          }
-          return null
-        }
-        //cellClassRules: this.cellClassRules() }, //, maxWidth: 150
-      },
-      { headerName: "Notes", field: "notes", flex: 50 }, //, maxWidth: 300
-      */
+      { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 60 },
+      { headerName: "Title", field: "declarationTitle", headerTooltip: 'declarationTitle', width: 200 },
+      { headerName: "County", field: "designatedArea", headerTooltip: 'designatedArea', width: 100 },
+      { headerName: "State", field: "state", width: 5 },
+      { headerName: "Zip", field: "placeCode", headerTooltip: 'placeCode', width: 30 },
+      { headerName: "BeginDate", field: "incidentBeginDate", headerTooltip: 'incidentBeginDate', valueGetter: this.myDateGetter, width: 25 },
+      { headerName: "EndDate", field: "incidentEndDate", headerTooltip: 'incidentEndDate', valueGetter: this.myDateGetter, width: 25 },
+      { headerName: "Declared", field: "declarationDate", tooltipField: "declarationDate", valueGetter: this.myDateGetter, width: 25 },
+      { headerName: "Closed", field: "disasterCloseoutDate", tooltipField: "disasterCloseoutDate", valueGetter: this.myDateGetter, width: 25 },
+      { headerName: "FIPS Cty", field: "fipsCountyCode", tooltipField: "fipsCountyCode", width: 10 },
+      { headerName: "FIPS St", field: "fipsStateCode", tooltipField: "fipsStateCode", width: 5 },
+      { headerName: "Req #", field: "declarationRequestNumber", tooltipField: "declarationRequestNumber", width: 10 },
     ];
 
     if (this.gridApi) {
@@ -233,7 +164,7 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
 
     try {  // TODO: Use the date pipe instead?
       //weekday[d.getDay()] +
-      dt = formatDate(d, 'M-dd HH:MM:ss', 'en-US')
+      dt = formatDate(d, 'shortDate', 'en-US')
       //this.log.excessive(`Day is: ${params.data.date.toISOString()}`, this.id)
     } catch (error: any) {
       dt = `Bad date format: Error name: ${error.name}; msg: ${error.message}`
