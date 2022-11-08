@@ -15,6 +15,8 @@ export class CardComponent implements OnInit {
   @Input() disaster!: DisasterDeclarationsSummaryType
   @Input() index!: Number
 
+  types = DisasterTypes
+
   constructor() {
     //console.log(`CardComponent: constructor`)
   }
@@ -25,14 +27,18 @@ export class CardComponent implements OnInit {
   }
 
   calcBackgroundColor(type: string) {
-    let color: string = '##A3A3A3' // UNKNOWN!
-
-    for (let i = 0; i < DisasterTypes.length; i++) {
-      if (type == DisasterTypes[i].type) {
-        color = DisasterTypes[0].color
-      }
-    }
-    return { 'background-color': `${color}` }
+    let id = this.types.find(el => el.type == type)
+    return { 'background-color': `${id ? id.color : '#A3A3A3'}` }
+    // UNKNOWN!
   }
+  /*
+      for (let i = 0; i < DisasterTypes.length; i++) {
+        if (type == DisasterTypes[i].type) {
+          color = DisasterTypes[0].color
+        }
+      }
+      return { 'background-color': `${color}` }
+    }
+    */
 }
 
