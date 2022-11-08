@@ -99,16 +99,27 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log(`DatasetGridComponent: ngOnInit()`)
-
-    console.log(`DatasetGridComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
+    //console.log(`DatasetGridComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
 
     this.columnDefs = [
       {
         headerName: "Type", field: "incidentType", headerTooltip: 'incidentType', width: 30,
         cellStyle: (params: { value: string; }) => { return this.calcBackgroundColor(params.value) }
       },
-      { headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString', width: 60 },
-      { headerName: "Title", field: "declarationTitle", headerTooltip: 'declarationTitle', width: 200 },
+      {
+        headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString',
+        cellRenderer: function (params: any) { //{ data: DisasterDeclarationsSummaryType }
+          return `<a href="/details/${params.rowIndex}">${params.data.femaDeclarationString}</a>`
+        },
+        width: 60
+      },
+      {
+        headerName: "Title", field: "declarationTitle", headerTooltip: 'declarationTitle',
+        cellRenderer: function (params: any) { //{ data: DisasterDeclarationsSummaryType }
+          return `<a href="/details/${params.rowIndex}">${params.data.declarationTitle}</a>`
+        },
+        width: 200
+      },
       { headerName: "County", field: "designatedArea", headerTooltip: 'designatedArea', width: 100 },
       { headerName: "State", field: "state", width: 5 },
       { headerName: "Zip", field: "placeCode", headerTooltip: 'placeCode', width: 30 },

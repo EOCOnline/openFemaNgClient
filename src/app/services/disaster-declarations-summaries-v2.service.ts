@@ -90,7 +90,7 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
 
     console.log(`DisasterDeclarationsSummariesV2Service Constructor`)
     //let disasterDeclarationsSummary1 = this.useFetch()
-    let disasterDeclarationsSummary2 = this.useHttpClient()
+    let disasterDeclarationsSummary = this.useHttpClient()
     let disasterDeclarationsSummary3 = this.useBehaviorSubject()
 
     //debugger
@@ -228,7 +228,12 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
 
   // For this dataset, can return the whole thing at once if desired (NOTE: server returns ONLY 1000 records by default)
   getSummary(index = 0): DisasterDeclarationsSummaryType {
-    return this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[index]
+    console.log(`getSummary: Looking for Disaster Summaries object # ${index}`)
+    let val = this.disasterDeclarationsSummary?.DisasterDeclarationsSummaries[index]
+    if (val) {
+      console.error(`getSummary: Found disaster ${val?.declarationRequestNumber} -- ${val?.declarationTitle}`)
+    }
+    return val
   }
 
   /*

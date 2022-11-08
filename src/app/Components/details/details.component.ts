@@ -12,6 +12,7 @@ import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisast
   styleUrls: ['./details.component.scss'],
   standalone: true,  // https://angular.io/guide/standalone-components
   imports: [CommonModule],
+  providers: [DisasterDeclarationsSummariesV2Service],
 })
 export class DetailsComponent implements OnInit {
   //@Input() disaster!: DisasterDeclarationsSummaryType
@@ -40,7 +41,14 @@ export class DetailsComponent implements OnInit {
 
     this.summary$ = this.route.paramMap.pipe(map(params => {
       console.error(`DetailsComponent onInit: looking up summary # ${params.get('index')}`)
-      return this.disasterDeclarationsSummariesV2Service.getSummary(Number(params.get('index')))
+      let val = this.disasterDeclarationsSummariesV2Service.getSummary(Number(params.get('index')))
+      if (val) {
+        console.error(`DetailsComponent onInit: Found disaster ${val.declarationRequestNumber} -- ${val.declarationTitle}`)
+        return val
+      } else {
+        console.error(`DetailsComponent onInit: Could NOT find disaster # ${params.get('index')}. Maybe too early?`)
+        return undefined
+      }
       //   return this.disasterDeclarationsSummariesV2Service.disasterDeclarationsSummary.DisasterDeclarationsSummaries[Number(params.get('index'))]
     }))
   }

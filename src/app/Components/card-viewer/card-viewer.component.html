@@ -23,5 +23,6 @@
 <div class="text-center">
   <label>Number/Page: </label><input #NumPerPage id="idNumPerPage" size="30" type="number" [value]="config.itemsPerPage"
     (change)="onNumberPerPage()" (blur)="onNumberPerPage()">
-  <pagination-controls (pageChange)="config.currentPage = $event" [maxSize]="10"></pagination-controls>
+  <pagination-controls (pageChange)="config.currentPage = $event"></pagination-controls>
+  <!-- [maxSize]="10" -->
 </div>

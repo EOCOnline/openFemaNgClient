@@ -1,9 +1,12 @@
+<h1>Detailed View of Disaster Declaration</h1>
+<!-- h3 class="dataset-head">{{disaster.femaDeclarationString}}: &nbsp;&nbsp; {{disaster.declarationTitle}}</h3 -->
 
 <article class="details-panel" *ngIf="(summary$ | async) as summary">
   <!--img class="main-img" src="{{summary.photoUrl}}" alt="Photo of {{summary.name}}"-->
   <article>
     <h1 class="main-text">Hi, I'm {{summary.disasterNumber}} -- {{summary.declarationTitle}}</h1>
-    <h2>My request # is <span class="emphasize">{{summary.declarationRequestNumber}} of type {{summary.declarationType}}</span></h2>
+    <h2>My request # is <span class="emphasize">{{summary.declarationRequestNumber}} of type
+        {{summary.declarationType}}</span></h2>
     <p>{{summary.incidentBeginDate}} to {{summary.incidentEndDate}}</p>
     <p>I live in <span class="emphasize">{{summary.state}} at zip {{summary.fipsCountyCode}}</span></p>
   </article>
