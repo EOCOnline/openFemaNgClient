@@ -30,6 +30,7 @@ export class CardViewerComponent implements OnInit, OnDestroy {
 
   private declarationsSummariesSubscription!: Subscription
   private disasterDeclarationsSummary!: DisasterDeclarationsSummary
+  types = DisasterTypes
 
 
   constructor(
@@ -61,20 +62,14 @@ export class CardViewerComponent implements OnInit, OnDestroy {
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
   }
 
-  types = DisasterTypes
-
-  types2 = [
-    { id: 1, name: 'Superman' },
-    { id: 2, name: 'Batman' },
-    { id: 5, name: 'BatGirl' },
-    { id: 3, name: 'Robin' },
-    { id: 4, name: 'Flash' }
-  ];
-
-
   checkBoxesInit() {
     // https://coryrylan.com/blog/creating-a-dynamic-checkbox-list-in-angular
     //  DisasterTypes.forEach(() => this.typesArray.push(new FormControl(true)));
+  }
+
+  onChanged(type: string) {
+    console.error(`CardViewerComponent: got changed ${type}`)
+
   }
 
   onNumberPerPage() {

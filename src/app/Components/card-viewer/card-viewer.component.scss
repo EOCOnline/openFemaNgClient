@@ -25,6 +25,25 @@ h1 {
   box-shadow         : rgba(0, 0, 0, 0.16) 0px 5px 6px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
+.checks {
+  font-size: larger;
+}
+
+ul.horizList {
+  list-style: none;
+  display   : inline
+}
+
+ul.horizList li:not(:last-child) {
+  border-right: 1px solid black;
+}
+
+ul.horizList li {
+  padding   : 0 0.5rem;
+  min-width : 12rem;
+  text-align: center;
+}
+
 unused input[type="number"] {
   width    : 5rem;
   font-size: 100px;

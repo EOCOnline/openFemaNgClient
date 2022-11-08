@@ -2,10 +2,6 @@
 <div class="content">
   <!-- LENGTH={{disasterDeclarationsSummaries.length}}<br -->
   <div *ngFor="let disaster of disasterDeclarationsSummaries | paginate: config; index as i">
-    <!-- {{i}}) {{disaster.femaDeclarationString}}: &nbsp;&nbsp;&nbsp;&nbsp; #{{disaster.disasterNumber}};
-      &nbsp;&nbsp;&nbsp;&nbsp; ST: {{disaster.state}}; &nbsp;&nbsp;&nbsp;&nbsp; Type: {{disaster.declarationType}};
-      &nbsp;&nbsp;&nbsp;&nbsp; Date: {{disaster.declarationDate | date:'mediumDate'}};
-      -->
     <br>
     <card [disaster]=disaster [index]=i></card>
   </div>
@@ -19,8 +15,11 @@
 </div>
 
 <div class="checks">
-  <span *ngFor="let type of types">
-    <input type="checkbox" class="type" checked="true">
-    <label> {{type.type}}</label><br>
-  </span>
+  <ul class="horizList">
+    <span *ngFor="let type of types">
+      <li><input type="checkbox" class="type" checked="true" (change)="onChanged(type.type)">
+        <label> {{type.type}}</label>
+      </li>
+    </span>
+  </ul>
 </div>
