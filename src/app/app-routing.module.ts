@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { DatasetViewerComponent, DatasetGridComponent, DatasetDetailsComponent, CardViewerComponent } from './components'
-
+import { DatasetViewerComponent, DatasetGridComponent, DetailsComponent, CardViewerComponent } from './components'
 
 const routes: Routes = [
   // EAGER Routes
@@ -9,10 +8,9 @@ const routes: Routes = [
   { path: "list", component: DatasetViewerComponent },
   { path: "card", component: CardViewerComponent },
   { path: "grid", component: DatasetGridComponent },
-  { path: 'details/:index', loadComponent: () => import('./components/dataset-details/dataset-details.component').then(m => m.DatasetDetailsComponent) }
+  { path: 'details/:index', loadComponent: () => import('./components/details/details.component').then(m => m.DetailsComponent) }
 
   // LAZY Routes: preloaded right after root app module (via dynamic import module)
-
 
   // Page not found route
   // { path: '**', component: X404Component }

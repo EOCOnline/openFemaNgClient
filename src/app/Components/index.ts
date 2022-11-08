@@ -1,6 +1,6 @@
 export { DatasetViewerComponent } from './dataset-viewer/dataset-viewer.component'
 export { DatasetCardComponent } from './dataset-card/dataset-card.component'
-export { DatasetDetailsComponent } from './dataset-details/dataset-details.component'
+export { DetailsComponent } from './details/details.component'
 export { CardViewerComponent } from './card-viewer/card-viewer.component'
 export { CardComponent } from './card/card.component'
 export { DatasetGridComponent } from './dataset-grid/dataset-grid.component'

@@ -7,13 +7,13 @@ import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisast
 
 
 @Component({
-  selector: 'app-dataset-details.component',
-  templateUrl: './dataset-details.component.html',
-  styleUrls: ['./dataset-details.component.scss'],
+  selector: 'app-details.component',
+  templateUrl: './details.component.html',
+  styleUrls: ['./details.component.scss'],
   standalone: true,  // https://angular.io/guide/standalone-components
   imports: [CommonModule],
 })
-export class DatasetDetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit {
   //@Input() disaster!: DisasterDeclarationsSummaryType
   //@Input() index!: Number
 
@@ -25,13 +25,13 @@ export class DatasetDetailsComponent implements OnInit {
 
   constructor(private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service, private route: ActivatedRoute) {
 
-    console.log(`DatasetDetailsComponent: Getting declarationsSummariesSubscription`)
+    console.log(`DetailsComponent: Getting declarationsSummariesSubscription`)
 
   }
 
 
   ngOnInit(): void {
-    console.log(`DatasetDetailsComponent onInit: Got data yet?!`)
+    console.log(`DetailsComponent onInit: Got data yet?!`)
     this.waitForData()
     //this.disaster = this.disasterDeclarationsSummariesV2Service.getSummary(this.index)
 
@@ -39,7 +39,7 @@ export class DatasetDetailsComponent implements OnInit {
     //this.summary = this.allSummaries.DisasterDeclarationsSummaries[Number(params.get('index'))]
 
     this.summary$ = this.route.paramMap.pipe(map(params => {
-      console.error(`DatasetDetailsComponent onInit: looking up summary # ${params.get('index')}`)
+      console.error(`DetailsComponent onInit: looking up summary # ${params.get('index')}`)
       return this.disasterDeclarationsSummariesV2Service.getSummary(Number(params.get('index')))
       //   return this.disasterDeclarationsSummariesV2Service.disasterDeclarationsSummary.DisasterDeclarationsSummaries[Number(params.get('index'))]
     }))
@@ -48,12 +48,12 @@ export class DatasetDetailsComponent implements OnInit {
   sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
   waitForData() {
-    console.error(`DatasetDetailsComponent waitForData`)
+    console.error(`DetailsComponent waitForData`)
     let rows: DisasterDeclarationsSummary | null = null
     if (rows) {
-      console.error(`DatasetDetailsComponent waitForData SHOULD NOT GET THIS!`)
+      console.error(`DetailsComponent waitForData SHOULD NOT GET THIS!`)
     } else {
-      console.warn(`DatasetDetailsComponent waitForData SHOULD get this!`)
+      console.warn(`DetailsComponent waitForData SHOULD get this!`)
     }
 
     this.sleep(15000)
