@@ -17,3 +17,10 @@
     (change)="onNumberPerPage()" (blur)="onNumberPerPage()">
   <pagination-controls (pageChange)="config.currentPage = $event" [maxSize]="10"></pagination-controls>
 </div>
+
+<div class="checks">
+  <span *ngFor="let type of types">
+    <input type="checkbox" class="type" checked="true">
+    <label> {{type.type}}</label><br>
+  </span>
+</div>

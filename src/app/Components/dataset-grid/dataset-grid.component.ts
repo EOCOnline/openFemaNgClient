@@ -129,24 +129,13 @@ export class DatasetGridComponent implements OnInit, OnDestroy {
   }
 
   calcBackgroundColor(type: string) {
-    let color: string
-    //color = DisasterTypes[type]
+    let color: string = '##A3A3A3' // UNKNOWN!
 
-    switch (type) {
-      case 'Coastal Storm': color = DisasterTypes['Coastal Storm']; break
-      case 'Earthquake': color = DisasterTypes.Earthquake; break
-      case 'Fire': color = DisasterTypes.Fire; break
-      case 'Flood': color = DisasterTypes.Flood; break
-      case 'Hurricane': color = DisasterTypes.Hurricane; break
-      case 'Severe Ice Storm': color = DisasterTypes['Severe Ice Storm']; break
-      case 'Severe Storm': color = DisasterTypes['Severe Storm']; break
-      case 'Snowstorm': color = DisasterTypes.Snowstorm; break
-      case 'Tornado': color = DisasterTypes.Tornado; break
-      case 'Other': color = DisasterTypes.Other; break
-
-      default: color = '##A3A3A3'; break
+    for (let i = 0; i < DisasterTypes.length; i++) {
+      if (type == DisasterTypes[i].type) {
+        color = DisasterTypes[0].color
+      }
     }
-
     return { 'background-color': `${color}` }
   }
 
