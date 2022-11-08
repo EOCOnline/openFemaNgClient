@@ -12,8 +12,9 @@
 
 <div class="content">
   <!-- LENGTH={{disasterDeclarationsSummaries.length}}<br -->
-  <div *ngFor="let disaster of disasterDeclarationsSummaries | paginate: config; index as i">
-    <card [disaster]=disaster [index]=i *ngIf="filterBy(disaster.incidentType)"></card>
+  <div *ngFor="let disaster of filteredDisasterDeclarationsSummaries | paginate: config; index as i">
+    <card [disaster]=disaster [index]=i></card>
+    <!-- card [disaster]=disaster [index]=i *ngIf="filterBy(disaster.incidentType)"></card -->
   </div>
 </div>
 

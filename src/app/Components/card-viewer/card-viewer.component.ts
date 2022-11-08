@@ -60,9 +60,15 @@ export class CardViewerComponent implements OnInit, OnDestroy {
   displayDataSet() {
     // console.log(`CardViewer: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
     // console.log(`CardViewer: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[0])}`)
-
+    console.warn(`CardViewer: Got new declaration summaries!`)
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
     this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
+  }
+
+  onNumberPerPage() {
+    //let cntrl = document.getElementById("NumPerPage") as HTMLInputElement
+    this.config.itemsPerPage = Number(this.NumPerPage.nativeElement.value)  // relies on @ViewChild
+    //console.log(`CardViewer: Received new per page value ${this.config.itemsPerPage}`)
   }
 
   checkBoxesInit() {
@@ -85,14 +91,15 @@ export class CardViewerComponent implements OnInit, OnDestroy {
 
     // NOW filter all summaries by whether they should be displayed.
     // Old way of only displaying card only if that type's display was true messed up pagination...)
-
-    this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries //.filter()
+    console.warn(`CardViewer: onChanged refiltering ${this.disasterDeclarationsSummaries.length}`)
+    this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries.filter(this.shouldDisplay)
+    console.warn(`CardViewer: onChanged refiltered to ${this.filteredDisasterDeclarationsSummaries.length}`)
   }
 
-  onNumberPerPage() {
-    //let cntrl = document.getElementById("NumPerPage") as HTMLInputElement
-    this.config.itemsPerPage = Number(this.NumPerPage.nativeElement.value)  // relies on @ViewChild
-    //console.log(`CardViewer: Received new per page value ${this.config.itemsPerPage}`)
+  shouldDisplay(el: DisasterDeclarationsSummaryType) {
+    // WIERD: can't access this.types within this filter function: scoping issues?!
+    const myTypes = DisasterTypes
+    return myTypes.find(ell => ell.type == el.incidentType)?.display
   }
 
   filterBy(type: string) {
