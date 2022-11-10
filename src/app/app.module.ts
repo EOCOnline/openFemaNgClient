@@ -5,14 +5,14 @@ import { NgxPaginationModule } from 'ngx-pagination'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component';
 
-import { DatasetGridComponent, DatasetCardComponent, FooterComponent, CardViewerComponent, NavbarComponent, DatasetViewerComponent, CardComponent, MapComponent } from './components';
+import { GridComponent, DatasetCardComponent, FooterComponent, CardViewerComponent, NavbarComponent, DatasetViewerComponent, CardComponent, MapComponent } from './components';
 import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    DatasetGridComponent,
+    GridComponent,
     DatasetViewerComponent,
     CardViewerComponent,
     CardComponent,
