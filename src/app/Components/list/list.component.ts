@@ -25,9 +25,9 @@ import { PaginationInstance } from 'ngx-pagination';
   */
 
 @Component({
-  selector: 'app-dataset-viewer',
-  templateUrl: './dataset-viewer.component.html',
-  styleUrls: ['./dataset-viewer.component.scss'],
+  selector: 'list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss'],
   // EVIL: changeDetection: ChangeDetectionStrategy.OnPush,
   // standalone: true,  // https://angular.io/guide/standalone-components
   // imports: [
@@ -37,7 +37,7 @@ import { PaginationInstance } from 'ngx-pagination';
   // ],
   providers: [DisasterDeclarationsSummariesV2Service],
 })
-export class DatasetViewerComponent implements OnInit, OnDestroy {
+export class ListComponent implements OnInit, OnDestroy {
   // https://michaelbromley.github.io/ngx-pagination
   @Input('data') disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
   @ViewChild('NumPerPage') NumPerPage!: ElementRef

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { DatasetViewerComponent, GridComponent, DetailsComponent, CardViewerComponent } from './components'
+import { ListComponent, GridComponent, DetailsComponent, CardViewerComponent } from './components'
 
 const routes: Routes = [
   // EAGER Routes
   { path: "", pathMatch: 'full', redirectTo: 'card' },
-  { path: "list", component: DatasetViewerComponent },
+  { path: "list", component: ListComponent },
   { path: "card", component: CardViewerComponent },
   { path: "grid", component: GridComponent },
   { path: 'details/:index', loadComponent: () => import('./components/details/details.component').then(m => m.DetailsComponent) }

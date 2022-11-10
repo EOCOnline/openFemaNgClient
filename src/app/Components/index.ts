@@ -1,4 +1,4 @@
-export { DatasetViewerComponent } from './dataset-viewer/dataset-viewer.component'
+export { ListComponent } from './list/list.component'
 export { DatasetCardComponent } from './dataset-card/dataset-card.component'
 export { DetailsComponent } from './details/details.component'
 export { CardViewerComponent } from './card-viewer/card-viewer.component'

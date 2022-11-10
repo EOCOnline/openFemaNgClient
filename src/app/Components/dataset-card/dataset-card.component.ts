@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DisasterDeclarationsSummaryType, WebDisasterSummariesService } from 'src/app/services';
 import { RouterModule } from '@angular/router';
-import { DatasetViewerComponent } from './../';
+import { ListComponent } from './../';
 
 //standalone: true,
 //imports: [CommonModule, RouterModule],
