@@ -7,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
 // https://catalog.data.gov/dataset/tiger-line-shapefile-2019-2010-nation-u-s-2010-census-5-digit-zip-code-tabulation-area-zcta5-na
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  selector: 'map-view',
+  templateUrl: './map-view.component.html',
+  styleUrls: ['./map-view.component.scss']
 })
-export class MapComponent implements OnInit {
+export class MapViewComponent implements OnInit {
 
   constructor() { }
 

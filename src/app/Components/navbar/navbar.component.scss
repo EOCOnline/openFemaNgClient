@@ -20,10 +20,9 @@
 
   // color         : white;
   //border-radius    : 3px;
-  padding-top   : 0.3em;
-  padding-bottom: 0.5em;
-  font-family   : Sniglet, 'Arima Madurai', sans-serif;
-  font-size     : 1.5em;
+  padding    : 0.5em;
+  font-family: Sniglet, 'Arima Madurai', sans-serif;
+  font-size  : 1.5em;
 }
 
 .main-nav>ul {
@@ -44,11 +43,10 @@
   display        : flex;
   justify-content: flex-end;
   flex           : 1;
-
 }
 
 .title {
-  width         : 35vw;
+  //width         : 35vw;
   margin-right  : 2em;
   vertical-align: top;
   font-family   : Sniglet, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -68,31 +66,12 @@
 
 .rightAlign {
   position: absolute;
-  right   : 0px;
+  right   : 0;
 }
 
 #gitLogo {
-  height      : 1.5em;
+  height      : 1.2em;
   margin-right: 5px;
-}
-
-.main-nav input {
-  visibility  : hidden;
-  height      : 1.8em;
-  flex        : 1;
-  margin-right: 30px;
-}
-
-.main-nav button {
-  visibility   : hidden;
-  background   : white;
-  border       : 0;
-  border-radius: .8em;
-  color        : orangered;
-  height       : 1.8em;
-  padding      : 0 1em;
-  margin       : 0 1em;
-
 }
 
 .main-nav a {
@@ -103,8 +82,8 @@
 }
 
 .main-nav a:hover {
-  color             : rgb(172, 80, 248);
-  //background-color: yellow;
+  color      : rgb(158, 45, 251);
+  font-weight: bold;
 }
 
 // TODO: Doesn't collapse into a hamburger!!!

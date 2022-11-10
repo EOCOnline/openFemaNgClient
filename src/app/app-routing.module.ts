@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { ListViewComponent, GridViewComponent, DetailsComponent, CardViewComponent } from './components'
+import { ListViewComponent, GridViewComponent, DetailsComponent, CardViewComponent, MapViewComponent } from './components'
 
 const routes: Routes = [
   // EAGER Routes
@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: "list", component: ListViewComponent },
   { path: "card", component: CardViewComponent },
   { path: "grid", component: GridViewComponent },
+  { path: "map", component: MapViewComponent },
   { path: 'details/:index', loadComponent: () => import('./components/details/details.component').then(m => m.DetailsComponent) }
 
   // LAZY Routes: preloaded right after root app module (via dynamic import module)
