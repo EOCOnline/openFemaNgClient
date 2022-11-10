@@ -2,17 +2,17 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DisasterDeclarationsSummaryType, WebDisasterSummariesService } from 'src/app/services';
 import { RouterModule } from '@angular/router';
-import { ListComponent } from './../';
+import { ListComponent } from '..';
 
 //standalone: true,
 //imports: [CommonModule, RouterModule],
 @Component({
-  selector: 'app-dataset-card',
-  templateUrl: './dataset-card.component.html',
-  styleUrls: ['./dataset-card.component.scss'],
+  selector: 'list-item',
+  templateUrl: './list-item.component.html',
+  styleUrls: ['./list-item.component.scss'],
   //providers:[DisasterDeclarationsSummariesV2Service],
 })
-export class DatasetCardComponent implements OnInit {
+export class ListItemComponent implements OnInit {
   @Input() disaster!: DisasterDeclarationsSummaryType// | null = null
   @Input() index: Number = 0// | null = null
 

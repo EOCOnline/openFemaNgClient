@@ -5,7 +5,7 @@ import { NgxPaginationModule } from 'ngx-pagination'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component';
 
-import { GridComponent, DatasetCardComponent, FooterComponent, CardViewerComponent, NavbarComponent, ListComponent, CardComponent, MapComponent } from './components';
+import { GridComponent, ListItemComponent, FooterComponent, CardViewerComponent, NavbarComponent, ListComponent, CardComponent, MapComponent } from './components';
 import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
@@ -16,7 +16,7 @@ import { AgGridModule } from 'ag-grid-angular';
     ListComponent,
     CardViewerComponent,
     CardComponent,
-    DatasetCardComponent,
+    ListItemComponent,
     FooterComponent,
     MapComponent,
   ],

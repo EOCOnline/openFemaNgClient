@@ -1,4 +1,4 @@
-.dataset-card {
+.list-card {
   display       : flex;
   flex-direction: column;
   flex-wrap     : wrap;
@@ -9,7 +9,7 @@
   padding       : 15px 0 10px 15px;
 }
 
-.dataset-head {
+.list-head {
   //  border-radius: 10px 10px 0 0;
   font-size          : large;
   //font-weight: bolder;
@@ -19,26 +19,26 @@
   margin-bottom      : 5px;
 }
 
-.dataset-subhead {
+.list-subhead {
   font-size: small;
 }
 
-.dataset-location {
+.list-location {
   font-weight  : bold;
   margin-bottom: 3px;
 }
 
-.dataset-date {
+.list-date {
   //font-weight  : bold;
   margin-bottom: 3px;
 }
 
-.dataset-description {
+.list-description {
   font-weight    : normal;
   //margin-bottom: 3px;
 }
 
-.dataset-details {
+.list-details {
   text-align  : right;
   margin-right: 10px;
 }

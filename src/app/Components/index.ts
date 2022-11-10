@@ -1,5 +1,5 @@
 export { ListComponent } from './list/list.component'
-export { DatasetCardComponent } from './dataset-card/dataset-card.component'
+export { ListItemComponent } from './list-item/list-item.component'
 export { DetailsComponent } from './details/details.component'
 export { CardViewerComponent } from './card-viewer/card-viewer.component'
 export { CardComponent } from './card/card.component'
