@@ -4,7 +4,7 @@ import { map, Observable, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service, DisasterTypes } from 'src/app/services';
-
+import { Common } from "../"
 
 @Component({
   selector: 'detail-view.component',
@@ -69,9 +69,7 @@ export class DetailViewComponent implements OnInit, AfterViewInit {
   }
 
   calcBackgroundColor(type: string) {
-    let id = this.types.find(el => el.type == type)
-    return { 'background-color': `${id ? id.color : '#A3A3A3'}` }
-    // UNKNOWN!
+    return Common.calcBackgroundColor(type)
   }
 
 

@@ -3,6 +3,7 @@ import { CommonModule, NgIfContext } from '@angular/common';
 // import { Dog } from './disasters.service';
 import { RouterModule } from '@angular/router';
 import { DisasterDeclarationsSummaryType, DisasterTypes } from '../../services/disaster-declarations-summaries-v2.interface';
+import { Common } from "../common"
 
 @Component({
   selector: 'card',
@@ -15,8 +16,6 @@ export class CardComponent implements OnInit {
   @Input() disaster!: DisasterDeclarationsSummaryType
   @Input() index!: Number
 
-  types = DisasterTypes
-
   constructor() {
     //console.log(`CardComponent: constructor`)
   }
@@ -27,18 +26,7 @@ export class CardComponent implements OnInit {
   }
 
   calcBackgroundColor(type: string) {
-    let id = this.types.find(el => el.type == type)
-    return { 'background-color': `${id ? id.color : '#A3A3A3'}` }
-    // UNKNOWN!
+    return Common.calcBackgroundColor(type)
   }
-  /*
-      for (let i = 0; i < DisasterTypes.length; i++) {
-        if (type == DisasterTypes[i].type) {
-          color = DisasterTypes[0].color
-        }
-      }
-      return { 'background-color': `${color}` }
-    }
-    */
 }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Common } from "../"
 
 // https://developer.trimblemaps.com/restful-apis/mapping/polygon/zip-code/
 // https://pcmiler.alk.com/apis/rest/v1.0/Service.svc
@@ -17,5 +17,11 @@ export class MapViewComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+
+  calcBackgroundColor(type: string) {
+    return Common.calcBackgroundColor(type)
+  }
+
 
 }

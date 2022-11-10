@@ -9,6 +9,7 @@ import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisast
 import { BrowserModule } from '@angular/platform-browser';
 import { PaginationInstance } from 'ngx-pagination';
 //import { DatasetCardComponent } from '../';
+import { Common } from "../"
 
 
 // see: https://github.com/angular/examples/tree/main/walk-my-dog; from https://angular.io/guide/standalone-components video
