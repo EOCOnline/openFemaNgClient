@@ -1,26 +1,62 @@
-<h1>Detailed View for {{index}}</h1>
+<h1>Detail View for {{index}}</h1>
 
 <!-- h3 class="dataset-head">{{disaster.femaDeclarationString}}: &nbsp;&nbsp; {{disaster.declarationTitle}}</h3
 -->
 
 <!-- article class="details-panel" *ngIf="(summary$ | async) as summary" -->
 <!-- article *ngIf="gotData" class="details-panel"-->
-<article class="detail-panel">
-  <span class="detail-item">{{index}} - disaster.incidentType</span>
+<article *ngIf="gotData" class="detail-panel">
+
+  <span class="detail-item">{{index}} - {{disaster.incidentType}}</span>
 
   <h3 class="detail-head" [ngStyle]="calcBackgroundColor(disaster.incidentType)">
     {{disaster.femaDeclarationString}}: &nbsp;&nbsp; {{disaster.declarationTitle}}
   </h3>
-  222222
   <!-- div class="detail-subhead"></div -->
 
-  <div class="detail-location">{{disaster.designatedArea}}, {{disaster.state}} {{disaster.placeCode}}23232323</div>
-  33333
+  <div class="detail-location">{{disaster.designatedArea}}, {{disaster.state}} {{disaster.placeCode}}</div>
+
   <span class="detail-date">{{disaster.incidentBeginDate | date: 'shortDate' }} to
     {{disaster.incidentEndDate | date: 'shortDate'}}; closed {{disaster.disasterCloseoutDate | date:
     'shortDate'}}</span>
 
   <div class="detail-description">FIPS: {{disaster.fipsCountyCode}} & {{disaster.fipsStateCode}}; Request
     # {{disaster.declarationRequestNumber}}</div>
+
+  <br>
+  <hr>
+  <br>
+  <h4>Authoritative definitions of these fields: <a
+      href="https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2"
+      target="_blank">https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2</a></h4>
+  <br>
+
+  <div class="listing">
+    <span class="heading">femaDeclarationString:</span> {{disaster.femaDeclarationString}}<br>
+    <span class="heading">disasterNumber:</span> {{disaster.disasterNumber}}<br>
+    <span class="heading">state:</span> {{disaster.state}}<br>
+    <span class="heading">declarationType:</span> {{disaster.declarationType}}<br>
+    <span class="heading">declarationDate:</span> {{disaster.declarationDate}}<br>
+    <span class="heading">fyDeclared:</span> {{disaster.fyDeclared}}<br>
+    <span class="heading">incidentType:</span> {{disaster.incidentType}}<br>
+    <span class="heading">declarationTitle:</span> {{disaster.declarationTitle}}<br>
+    <span class="heading">ihProgramDeclared:</span> {{disaster.ihProgramDeclared}}<br>
+    <span class="heading">iaProgramDeclared:</span> {{disaster.iaProgramDeclared}}<br>
+    <span class="heading">paProgramDeclared:</span> {{disaster.paProgramDeclared}}<br>
+    <span class="heading">hmProgramDeclared:</span> {{disaster.hmProgramDeclared}}<br>
+    <span class="heading">incidentBeginDate:</span> {{disaster.incidentBeginDate}}<br>
+    <span class="heading">incidentEndDate:</span> {{disaster.incidentEndDate}}<br>
+    <span class="heading">disasterCloseoutDate:</span> {{disaster.disasterCloseoutDate}}<br>
+    <span class="heading">fipsStateCode:</span> {{disaster.fipsStateCode}}<br>
+    <span class="heading">fipsCountyCode:</span> {{disaster.fipsCountyCode}}<br>
+    <span class="heading">placeCode:</span> {{disaster.placeCode}}<br>
+    <span class="heading">designatedArea:</span> {{disaster.designatedArea}}<br>
+    <span class="heading">declarationRequestNumber:</span> {{disaster.declarationRequestNumber}}<br>
+    <span class="heading">lastIAFilingDate:</span> {{disaster.lastIAFilingDate}}<br>
+    <span class="heading">lastRefresh:</span> {{disaster.lastRefresh}}<br>
+    <span class="heading">hash:</span> {{disaster.hash}}<br>
+    <span class="heading">id:</span> {{disaster.id}}<br>
+  </div>
+
 
   <article>

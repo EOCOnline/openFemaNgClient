@@ -48,34 +48,22 @@ export class DetailViewComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(`DetailView onInit: Got data yet?!`)
+    console.log(`DetailView onInit`)
 
     this.index = Number(this.route.snapshot.params['index'])
-    //console.log(`DetailView onInit: Got data yet?!`)
     // or this.route.params.subscribe(params=>{ let id = params['id'] })
-
-    // this.itemNumber = this.route.paramMap.get('index')
 
     //this.waitForData()
     //this.disaster = this.disasterDeclarationsSummariesV2Service.getSummary(this.index)
   }
 
   displayData() {
-    console.log(`DetailView displayData: Got ${this.disasterDeclarationsSummary.DisasterDeclarationsSummaries.length} data!`)
+    console.log(`DetailView displayData: Got ${this.disasterDeclarationsSummary.DisasterDeclarationsSummaries.length} records of data`)
 
+    //console.log(`CardViewer: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
 
+    //console.log(`CardViewer: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[0])}`)
 
-    this.disasterDeclarationsSummary = this.disasterDeclarationsSummariesV2Service.getSummaries()
-
-
-    console.log(`CardViewer: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
-
-    console.log(`CardViewer: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[0])}`)
-
-
-    console.log(`DetailView displayData: Got ${this.disasterDeclarationsSummary.DisasterDeclarationsSummaries.length} data!`)
-
-    //this.itemNumber = Number(params.get('index'))
     this.disaster = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[this.index]
     this.gotData = true
   }

@@ -1,17 +1,33 @@
 .detail-panel {
   // display: flex;
-  padding  : 1rem;
+  padding  : 2rem;
+  font-size: larger;
   //gap    : 50px;
 }
 
-.detail-item {
+.detail-item_turnedoff {
   background-color: aliceblue;
 }
 
+.detail-item,
 .detail-head,
 .detail-subhead,
 .detail-location,
 .detail-date,
-.detail-description {
-  font-size: large;
+.detail-description,
+.listing {
+  font-size: larger;
+}
+
+.detail-head {
+  padding: 0.3rem;
+}
+
+.listing {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 125%;
+}
+
+.heading {
+  font-weight: 300;
 }
