@@ -1,4 +1,13 @@
-.list-card {
+.list-item {
+  background-color: rgb(248, 248, 230);
+  margin          : 1rem 0;
+  padding         : .4rem 0;
+  width           : 70vw;
+  border-radius   : 7px;
+  box-shadow      : rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.list-card_unused {
   display       : flex;
   flex-direction: column;
   flex-wrap     : wrap;
@@ -16,7 +25,7 @@
   //width        : 400px;
   //padding        : 15px 0 0 15px;
   //padding          : 0;
-  margin-bottom      : 5px;
+  padding            : .15rem 0;
 }
 
 .list-subhead {
@@ -41,4 +50,5 @@
 .list-details {
   text-align  : right;
   margin-right: 10px;
+  margin-left : 30vw;
 }

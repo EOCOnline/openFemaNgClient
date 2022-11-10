@@ -7,14 +7,14 @@ import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisast
 
 
 @Component({
-  selector: 'app-details.component',
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss'],
+  selector: 'detail-view.component',
+  templateUrl: './detail-view.component.html',
+  styleUrls: ['./detail-view.component.scss'],
   standalone: true,  // https://angular.io/guide/standalone-components
   imports: [CommonModule],
   providers: [DisasterDeclarationsSummariesV2Service],
 })
-export class DetailsComponent implements OnInit {
+export class DetailViewComponent implements OnInit {
   //@Input() disaster!: DisasterDeclarationsSummaryType
   //@Input() index!: Number
 
@@ -26,13 +26,13 @@ export class DetailsComponent implements OnInit {
 
   constructor(private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service, private route: ActivatedRoute) {
 
-    console.log(`DetailsComponent: Getting declarationsSummariesSubscription`)
+    console.log(`DetailView: Getting declarationsSummariesSubscription`)
 
   }
 
 
   ngOnInit(): void {
-    console.log(`DetailsComponent onInit: Got data yet?!`)
+    console.log(`DetailView onInit: Got data yet?!`)
     this.waitForData()
     //this.disaster = this.disasterDeclarationsSummariesV2Service.getSummary(this.index)
 
@@ -40,13 +40,13 @@ export class DetailsComponent implements OnInit {
     //this.summary = this.allSummaries.DisasterDeclarationsSummaries[Number(params.get('index'))]
 
     this.summary$ = this.route.paramMap.pipe(map(params => {
-      console.error(`DetailsComponent onInit: looking up summary # ${params.get('index')}`)
+      console.error(`DetailView onInit: looking up summary # ${params.get('index')}`)
       let val = this.disasterDeclarationsSummariesV2Service.getSummary(Number(params.get('index')))
       if (val) {
-        console.error(`DetailsComponent onInit: Found disaster ${val.declarationRequestNumber} -- ${val.declarationTitle}`)
+        console.error(`DetailView onInit: Found disaster ${val.declarationRequestNumber} -- ${val.declarationTitle}`)
         return val
       } else {
-        console.error(`DetailsComponent onInit: Could NOT find disaster # ${params.get('index')}. Maybe too early?`)
+        console.error(`DetailView onInit: Could NOT find disaster # ${params.get('index')}. Maybe too early?`)
         return undefined
       }
       //   return this.disasterDeclarationsSummariesV2Service.disasterDeclarationsSummary.DisasterDeclarationsSummaries[Number(params.get('index'))]
@@ -56,12 +56,12 @@ export class DetailsComponent implements OnInit {
   sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
   waitForData() {
-    console.error(`DetailsComponent waitForData`)
+    console.error(`DetailView waitForData`)
     let rows: DisasterDeclarationsSummary | null = null
     if (rows) {
-      console.error(`DetailsComponent waitForData SHOULD NOT GET THIS!`)
+      console.error(`DetailView waitForData SHOULD NOT GET THIS!`)
     } else {
-      console.warn(`DetailsComponent waitForData SHOULD get this!`)
+      console.warn(`DetailView waitForData SHOULD get this!`)
     }
 
     this.sleep(15000)

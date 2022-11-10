@@ -44,7 +44,7 @@ export class ListViewComponent implements OnInit, OnDestroy {
 
   // https://michaelbromley.github.io/ngx-pagination
   config: PaginationInstance = {
-    itemsPerPage: 15,
+    itemsPerPage: 10,
     currentPage: 1
   }
 

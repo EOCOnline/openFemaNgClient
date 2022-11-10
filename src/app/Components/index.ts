@@ -1,6 +1,6 @@
 export { ListViewComponent } from './list-view/list-view.component'
 export { ListItemComponent } from './list-item/list-item.component'
-export { DetailsComponent } from './details/details.component'
+export { DetailViewComponent } from './detail-view/detail-view.component'
 export { CardViewComponent } from './card-view/card-view.component'
 export { CardComponent } from './card/card.component'
 export { GridViewComponent } from './grid-view/grid-view.component'
