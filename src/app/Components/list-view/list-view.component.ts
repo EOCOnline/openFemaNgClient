@@ -91,6 +91,10 @@ export class ListViewComponent implements OnInit, OnDestroy {
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
   }
 
+  absoluteIndex(indexOnPage: number): number {
+    return this.config.itemsPerPage * (this.config.currentPage - 1) + indexOnPage;
+  }
+
   onNumberPerPage() {
     //let cntrl = document.getElementById("NumPerPage") as HTMLInputElement
     this.config.itemsPerPage = Number(this.NumPerPage.nativeElement.value)

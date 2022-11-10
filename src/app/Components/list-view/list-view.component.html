@@ -3,22 +3,10 @@
 <!-- TODO:  https://angular.io/api/common/NgIf#shorthand-syntax shows LOADING page logic -->
 <article>
   <ng-container *ngIf="disasterDeclarationsSummaries; else ItsNull">
-
-    <!-- LENGTH = {{disasterDeclarationsSummaries.length}} -->
-    <!-- ul>
-      <li
-    -->
     <span *ngFor="let disaster of disasterDeclarationsSummaries | paginate: config; index as i">
-      <!--
-        {{i}}) {{disaster.femaDeclarationString}}: &nbsp;&nbsp;&nbsp;&nbsp; #{{disaster.disasterNumber}};
-        &nbsp;&nbsp;&nbsp;&nbsp; ST: {{disaster.state}}; &nbsp;&nbsp;&nbsp;&nbsp; Type: {{disaster.declarationType}};
-        &nbsp;&nbsp;&nbsp;&nbsp; Date: {{disaster.declarationDate | date:'mediumDate'}};
-        <br>
-        -->
-      <list-item [disaster]=disaster [index]=i></list-item>
+      <br>
+      <list-item [disaster]=disaster [index]=absoluteIndex(i)> </list-item>
     </span>
-    <!-- /li>
-    </ul -->
   </ng-container>
 
   <ng-template #ItsNull>Whoops: disasterDeclarationsSummaries is null!</ng-template>
