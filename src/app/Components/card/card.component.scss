@@ -1,4 +1,4 @@
-.dataset-card {
+.card {
   display       : flex;
   flex-direction: column;
   flex-wrap     : wrap;
@@ -16,31 +16,31 @@
   // padding    : 0.3rem 0 0.2rem 0;
 }
 
-.dataset-head {
+.card-head {
   font-size  : normal;
   font-weight: bold;
   margin     : 2px 0;
   padding    : .6rem 0 0.2rem 0.2rem;
 }
 
-.dataset-location {
+.card-location {
   font-weight  : bold;
   font-size    : small;
   margin-bottom: 3px;
 }
 
-.dataset-date {
+.card-date {
   font-size    : small;
   margin-bottom: 3px;
 }
 
-.dataset-description {
+.card-description {
   font-size    : small;
   font-weight  : normal;
   margin-bottom: 3px;
 }
 
-.dataset-details {
+.card-details {
   font-size   : small;
   text-align  : right;
   margin-right: 10px;

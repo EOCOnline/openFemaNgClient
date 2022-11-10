@@ -13,12 +13,12 @@ import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, DisasterD
 
 
 @Component({
-  selector: 'card-viewer',
-  templateUrl: './card-viewer.component.html',
-  styleUrls: ['./card-viewer.component.scss'],
+  selector: 'card-view',
+  templateUrl: './card-view.component.html',
+  styleUrls: ['./card-view.component.scss'],
   providers: [DisasterDeclarationsSummariesV2Service],
 })
-export class CardViewerComponent implements OnInit, OnDestroy {
+export class CardViewComponent implements OnInit, OnDestroy {
   @Input('data') filteredDisasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
   //  @Input('data') !: DisasterDeclarationsSummaryType[]
   @ViewChild('NumPerPage') NumPerPage!: ElementRef

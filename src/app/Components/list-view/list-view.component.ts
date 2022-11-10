@@ -25,9 +25,9 @@ import { PaginationInstance } from 'ngx-pagination';
   */
 
 @Component({
-  selector: 'list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
+  selector: 'list-view',
+  templateUrl: './list-view.component.html',
+  styleUrls: ['./list-view.component.scss'],
   // EVIL: changeDetection: ChangeDetectionStrategy.OnPush,
   // standalone: true,  // https://angular.io/guide/standalone-components
   // imports: [
@@ -37,7 +37,7 @@ import { PaginationInstance } from 'ngx-pagination';
   // ],
   providers: [DisasterDeclarationsSummariesV2Service],
 })
-export class ListComponent implements OnInit, OnDestroy {
+export class ListViewComponent implements OnInit, OnDestroy {
   // https://michaelbromley.github.io/ngx-pagination
   @Input('data') disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
   @ViewChild('NumPerPage') NumPerPage!: ElementRef

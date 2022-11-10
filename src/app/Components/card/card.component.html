@@ -1,18 +1,18 @@
-<article class="dataset-card">
+<article class="card">
   <span class="item">
     {{index}} - {{disaster.incidentType}}</span>
-  <h3 class="dataset-head" [ngStyle]="calcBackgroundColor(disaster.incidentType)">{{disaster.femaDeclarationString}}:
+  <h3 class="card-head" [ngStyle]="calcBackgroundColor(disaster.incidentType)">{{disaster.femaDeclarationString}}:
     &nbsp;&nbsp;
     {{disaster.declarationTitle}}</h3>
-  <!-- div class="dataset-subhead"></div -->
+  <!-- div class="card-subhead"></div -->
 
-  <div class="dataset-location">{{disaster.designatedArea}}, {{disaster.state}} {{disaster.placeCode}}</div>
-  <span class="dataset-date">{{disaster.incidentBeginDate | date: 'shortDate' }} to
+  <div class="card-location">{{disaster.designatedArea}}, {{disaster.state}} {{disaster.placeCode}}</div>
+  <span class="card-date">{{disaster.incidentBeginDate | date: 'shortDate' }} to
     {{disaster.incidentEndDate | date: 'shortDate'}}; closed {{disaster.disasterCloseoutDate | date:
     'shortDate'}}</span>
 
-  <div class="dataset-description">FIPS: {{disaster.fipsCountyCode}} & {{disaster.fipsStateCode}}; Request
+  <div class="card-description">FIPS: {{disaster.fipsCountyCode}} & {{disaster.fipsStateCode}}; Request
     # {{disaster.declarationRequestNumber}}</div>
 
-  <div class="dataset-details"><a href="/details/{{index}}">See all detail fields</a></div>
+  <div class="card-details"><a href="/details/{{index}}">See all detail fields</a></div>
   <article>

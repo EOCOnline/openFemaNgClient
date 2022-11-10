@@ -11,11 +11,11 @@ import { AgGridModule } from 'ag-grid-angular';
 import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service, DisasterTypes } from 'src/app/services'
 
 @Component({
-  selector: 'grid',
-  templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.scss']
+  selector: 'grid-view',
+  templateUrl: './grid-view.component.html',
+  styleUrls: ['./grid-view.component.scss']
 })
-export class GridComponent implements OnInit, OnDestroy {
+export class GridViewComponent implements OnInit, OnDestroy {
 
   private declarationsSummariesSubscription!: Subscription
   // private fieldReportStatuses: FieldReportStatusType[] = []
