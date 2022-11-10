@@ -4,7 +4,7 @@
   <ul class="horizList">
     Disaster Types to Display:
     <span *ngFor="let type of types">
-      <li class="check" (click)="onChanged(type.type)"><input type="checkbox" attr.id='{{type.type}}' checked="true">
+      <li class="check" (click)="onChecked(type.type)"><input type="checkbox" attr.id='{{type.type}}' checked="true">
         <label> {{type.type}}</label>
       </li>
     </span>

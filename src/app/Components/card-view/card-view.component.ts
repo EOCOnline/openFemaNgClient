@@ -60,7 +60,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
   displayDataSet() {
     // console.log(`CardViewer: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
     // console.log(`CardViewer: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[0])}`)
-    console.warn(`CardViewer: Got new declaration summaries!`)
+    console.log(`CardViewer: Got new declaration summaries!`)
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
     this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
   }
@@ -71,12 +71,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
     //console.log(`CardViewer: Received new per page value ${this.config.itemsPerPage}`)
   }
 
-  checkBoxesInit() {
-    // https://coryrylan.com/blog/creating-a-dynamic-checkbox-list-in-angular
-    //  DisasterTypes.forEach(() => this.typesArray.push(new FormControl(true)));
-  }
-
-  onChanged(type: string) {
+  onChecked(type: string) {
     let cntrl = document.getElementById(type) as HTMLInputElement
 
     let arrayItem = this.types.find(el => el.type == type)

@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: "card", component: CardViewComponent },
   { path: "grid", component: GridViewComponent },
   { path: "map", component: MapViewComponent },
-  { path: 'details/:index', loadComponent: () => import('./components/detail-view/detail-view.component').then(m => m.DetailViewComponent) }
+  { path: 'details/:index', component: DetailViewComponent }
+  //  { path: 'details/:index', loadComponent: () => import('./components/detail-view/detail-view.component').then(m => m.DetailViewComponent) } // for standalone
 
   // LAZY Routes: preloaded right after root app module (via dynamic import module)
 

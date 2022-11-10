@@ -1,67 +1,126 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
-import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services';
+import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service, DisasterTypes } from 'src/app/services';
 
 
 @Component({
   selector: 'detail-view.component',
   templateUrl: './detail-view.component.html',
   styleUrls: ['./detail-view.component.scss'],
-  standalone: true,  // https://angular.io/guide/standalone-components
-  imports: [CommonModule],
+  // standalone: true,  // https://angular.io/guide/standalone-components
+  // imports: [CommonModule],
   providers: [DisasterDeclarationsSummariesV2Service],
 })
-export class DetailViewComponent implements OnInit {
-  //@Input() disaster!: DisasterDeclarationsSummaryType
+export class DetailViewComponent implements OnInit, AfterViewInit {
+  @Input() disaster!: DisasterDeclarationsSummaryType
+  @Input('data') disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
+
   //@Input() index!: Number
 
   //summary$!: Observable<DisasterDeclarationsSummary | undefined>;
-  summary$!: Observable<DisasterDeclarationsSummaryType | undefined>
+  disaster$!: Observable<DisasterDeclarationsSummaryType | undefined>
+  private declarationsSummariesSubscription!: Subscription
   //disaster!: DisasterDeclarationsSummaryType
-  allSummaries!: DisasterDeclarationsSummary
-  summary!: DisasterDeclarationsSummaryType
+  disasterDeclarationsSummary!: DisasterDeclarationsSummary
 
-  constructor(private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service, private route: ActivatedRoute) {
+  index = -1
+  gotData = false
+  types = DisasterTypes
+
+  constructor(
+    private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
+    private route: ActivatedRoute) {
+    console.log(`DetailView: constructor`)
 
     console.log(`DetailView: Getting declarationsSummariesSubscription`)
-
+    this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
+      next: (newDisasterDeclarationsSummary) => {
+        this.disasterDeclarationsSummary = newDisasterDeclarationsSummary
+        this.displayData()
+      },
+      error: (e) => console.error('DetailView: declarationsSummariesSubscription got:' + e),
+      complete: () => console.info('DetailView: declarationsSummariesSubscription complete')
+    })
+    console.log(`CardViewer: Got declarationsSummariesSubscription, awaiting results`)
   }
-
 
   ngOnInit(): void {
     console.log(`DetailView onInit: Got data yet?!`)
-    this.waitForData()
+
+    this.index = Number(this.route.snapshot.params['index'])
+    //console.log(`DetailView onInit: Got data yet?!`)
+    // or this.route.params.subscribe(params=>{ let id = params['id'] })
+
+    // this.itemNumber = this.route.paramMap.get('index')
+
+    //this.waitForData()
     //this.disaster = this.disasterDeclarationsSummariesV2Service.getSummary(this.index)
+  }
 
-    this.allSummaries = this.disasterDeclarationsSummariesV2Service.getSummaries()
-    //this.summary = this.allSummaries.DisasterDeclarationsSummaries[Number(params.get('index'))]
+  displayData() {
+    console.log(`DetailView displayData: Got ${this.disasterDeclarationsSummary.DisasterDeclarationsSummaries.length} data!`)
 
+
+
+    this.disasterDeclarationsSummary = this.disasterDeclarationsSummariesV2Service.getSummaries()
+
+
+    console.log(`CardViewer: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
+
+    console.log(`CardViewer: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[0])}`)
+
+
+    console.log(`DetailView displayData: Got ${this.disasterDeclarationsSummary.DisasterDeclarationsSummaries.length} data!`)
+
+    //this.itemNumber = Number(params.get('index'))
+    this.disaster = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries[this.index]
+    this.gotData = true
+  }
+
+  calcBackgroundColor(type: string) {
+    let id = this.types.find(el => el.type == type)
+    return { 'background-color': `${id ? id.color : '#A3A3A3'}` }
+    // UNKNOWN!
+  }
+
+
+  ngAfterViewInit() {
+    console.log(`DetailView ngAfterContentInit`)
+
+    /*
+    //! Moving following from OnInit to here still does NOT avoid: https://angular.io/errors/NG0100
+    //  Previous value: 'null'. Current value: 'undefined'
     this.summary$ = this.route.paramMap.pipe(map(params => {
-      console.error(`DetailView onInit: looking up summary # ${params.get('index')}`)
-      let val = this.disasterDeclarationsSummariesV2Service.getSummary(Number(params.get('index')))
+      this.itemNumber = Number(params.get('index'))
+
+      console.error(`DetailView onInit: looking up summary # ${this.itemNumber}`)
+      let val = this.disasterDeclarationsSummariesV2Service.getSummary(this.itemNumber)
+
       if (val) {
-        console.error(`DetailView onInit: Found disaster ${val.declarationRequestNumber} -- ${val.declarationTitle}`)
+        console.error(`DetailView onInit: Found disaster #${this.itemNumber}) ${val.declarationRequestNumber} -- ${val.declarationTitle}`)
         return val
       } else {
-        console.error(`DetailView onInit: Could NOT find disaster # ${params.get('index')}. Maybe too early?`)
+        console.error(`DetailView onInit: Could NOT find disaster # ${this.itemNumber}. Maybe too early?`)
         return undefined
       }
       //   return this.disasterDeclarationsSummariesV2Service.disasterDeclarationsSummary.DisasterDeclarationsSummaries[Number(params.get('index'))]
     }))
+*/
   }
 
   sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
+  //! This still seemed to block execution of 'background' loading of summaried: need to do with Promise?!
   waitForData() {
-    console.error(`DetailView waitForData`)
+    console.log(`DetailView waitForData`)
     let rows: DisasterDeclarationsSummary | null = null
     if (rows) {
-      console.error(`DetailView waitForData SHOULD NOT GET THIS!`)
+      console.warn(`DetailView waitForData SHOULD NOT GET THIS!`)
     } else {
-      console.warn(`DetailView waitForData SHOULD get this!`)
+      console.log(`DetailView waitForData SHOULD get this!`)
     }
 
     this.sleep(15000)
