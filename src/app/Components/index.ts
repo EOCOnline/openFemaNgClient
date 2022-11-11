@@ -5,6 +5,7 @@ export { CardViewComponent } from './card-view/card-view.component'
 export { CardComponent } from './card/card.component'
 export { GridViewComponent } from './grid-view/grid-view.component'
 export { MapViewComponent } from './map-view/map-view.component'
+export { MapComponent } from './map/map.component'
 export { NavbarComponent } from './navbar/navbar.component'
 export { FooterComponent } from './footer/footer.component'
 
