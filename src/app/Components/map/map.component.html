@@ -1,11 +1,16 @@
 <h1>Map View</h1>
 
-<google-map id="map" width="100%" [center]="center" [zoom]="zoom" [options]="mapOptions"
-  (mapMousemove)="onMapMouseMove($event)" (zoomChanged)="onMapZoomed()" (mapInitialized)="onMapInitialized($event)">
+<google-map id="map" width="100%" [options]="mapOptions" (mapInitialized)="onMapInitialized($event)">
   <div id="markerDiv" #markerDiv *ngFor="let marker of markers"></div>
 </google-map>
 
-<!-- article class="list-item">
+<!--
+
+  [center]="center" [zoom]="zoom"
+  (mapMousemove)="onMapMouseMove($event)" (zoomChanged)="onMapZoomed()"
+
+
+  article class="list-item">
   <span class="title">{{index}} - {{disaster.incidentType}}</span>
 
   <h3 class="list-head" [ngStyle]="calcBackgroundColor(disaster.incidentType)">{{disaster.femaDeclarationString}}:

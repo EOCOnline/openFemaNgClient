@@ -35,27 +35,22 @@ export class MapComponent implements OnInit {
   // this.ngMap: GoogleMap (Angular wrapper for the same underlying map!)
   // this.gMap: google.maps.Map (JavaScript core map) - made available in onMapInitialized()
   gMap!: google.maps.Map
-  overviewGMap!: google.maps.Map
-  overviewMapType = { cur: 0, types: { type: ['roadmap', 'terrain', 'satellite', 'hybrid',] } }
-  // overviewGMapOptions: google.maps.MapOptions
 
   mapOptions: google.maps.MapOptions = {
     zoomControl: true,
     scrollwheel: true,
-    disableDoubleClickZoom: true,
-    // If stored in settings, could reset it in onMapInitialized(), also allows 'terrain'
+    disableDoubleClickZoom: false,
     mapTypeId: google.maps.MapTypeId.TERRAIN,  // https://developers.google.com/maps/documentation/javascript/maptypes
-    zoom: 18,
+    zoom: 12,
     maxZoom: 21,
     minZoom: 4,
-    draggableCursor: 'crosshair', //https://www.w3.org/TR/CSS21/ui.html#propdef-cursor has others...
+    //draggableCursor: 'crosshair', //https://www.w3.org/TR/CSS21/ui.html#propdef-cursor has others...
     //heading: 90,
   }
 
-  infowindow = new google.maps.InfoWindow({
-    maxWidth: 150,
-  })
+  //infowindow = new google.maps.InfoWindow({ maxWidth: 150, })
 
+  disasterArray!: DisasterDeclarationsSummaryType[]
   // Google MapMarker only wraps google.maps.LatLngLiteral (positions) - NOT google.maps.Marker: styles, behaviors, etc. -- But might be able to set marker options?
   markers: google.maps.Marker[] = []
   markerCluster!: MarkerClusterer
@@ -63,31 +58,26 @@ export class MapComponent implements OnInit {
   markerClustererImagePath =
     'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m';
   // markerOptions = { draggable: false }
-  // label = 'RangerTrak Label'
 
   labelIndex = 0;
-  // infoContent = ''
   apiLoaded //: Observable<boolean> // used by template
 
-  iconBase = "./../../../assets/icons/"
+  iconBase = "../../../assets/icons/"
 
-  protected settingsSubscription!: Subscription
-  protected settings!: SettingsType
-
-  protected map!: Map
-  public location!: LocationType
-  public center = { lat: 0, lng: 0 }
-  public mouseLatLng = this.center // google.maps.LatLngLiteral |
+  //  protected map!: Map
+  //  public location!: LocationType
+  //  public center = { lat: 0, lng: 0 }
+  //  public mouseLatLng = this.center // google.maps.LatLngLiteral |
   public zoom = 10 // actual zoom level of main map
-  public zoomDisplay = 10 // what's displayed below main map
+  //  public zoomDisplay = 10 // what's displayed below main map
 
 
   constructor(
-    readonly webDisasterSummariesService: WebDisasterSummariesService,
+    //readonly webDisasterSummariesService: WebDisasterSummariesService,
     httpClient: HttpClient,
     @Inject(DOCUMENT) protected document: Document
   ) {
-    console.log(`======== Constructor() ============ Google Map, using version ${google.maps.version}`, this.id)
+    console.log(`======== Constructor() ============ Google Map, using version ${google.maps.version}`)
 
     // https://github.com/angular/components/tree/master/src/google-maps/map-marker-clusterer
     // this.markerPositions = []; evil angular wrapper
@@ -130,9 +120,9 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
   }
 
   ngOnInit(): void {
-    this.log.excessive("ngOnInit()", this.id)
-    this.center = { lat: this.settings.defLat, lng: this.settings.defLng }
-    this.mouseLatLng = this.center
+    console.log("ngOnInit()")
+    //this.center = { lat: this.settings.defLat, lng: this.settings.defLng }
+    //this.mouseLatLng = this.center
 
 
   }
@@ -143,21 +133,23 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
  * @returns
  */
   initMainMap() {
-    this.log.verbose("(Abstract) initMainMap()", this.id)
+    console.log("(Abstract) initMainMap()")
 
-    if (!this.settings) {
-      this.log.error(`(Abstract) initMainMap(): Settings not yet initialized while initializing the abstract Map!`, this.id)
-      return
-    }
-    //? Per guidence on settings page: Maps do not use defLat/lng... They are auto-centered on the bounding coordinates centroid of all points entered and the map is then zoomed to show all points.
-    this.center = { lat: this.settings ? this.settings.defLat : 0, lng: this.settings ? this.settings.defLng : 0 }
-    this.mouseLatLng = this.center
-    this.zoom = this.settings ? this.settings.google.defZoom : 15
-    this.zoomDisplay = this.settings ? this.settings.google.defZoom : 15
+    // if (!this.webDisasterSummariesService) {
+    //   console.error(`initMainMap(): webDisasterSummariesService not yet initialized while initializing the Map!`)
+    //   return
+    // }
 
 
-    if (!this.fieldReports) { //! or displayedFieldReportArray
-      this.log.error(`(Abstract) initMainMap(): fieldReports not yet initialized while initializing abstract Map!`, this.id)
+    // Auto-center maps on bounding coordinates centroid of all markers, then zoom map to show all points
+    // this.center = { lat: this.settings ? this.settings.defLat : 0, lng: this.settings ? this.settings.defLng : 0 }
+    // this.mouseLatLng = this.center
+    // this.zoom = this.settings ? this.settings.google.defZoom : 15
+    // this.zoomDisplay = this.settings ? this.settings.google.defZoom : 15
+
+
+    if (!this.disasterArray) {
+      console.error(`initMainMap(): disasterArray not yet initialized !`)
       return
     }
 
@@ -167,13 +159,13 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
       at GmapComponent.initMainMap (gmap.component.ts:237:15)
       */
 
-      this.gMap.setCenter({ lat: this.settings ? this.settings.defLat : 0, lng: this.settings ? this.settings.defLng : 0 })
-      this.gMap.setZoom(this.settings ? this.settings.google.defZoom : 15)
-      this.gMap.fitBounds(this.fieldReportService.boundsToBound(this.fieldReports!.bounds))
+      //this.gMap.setCenter({ lat: this.settings ? this.settings.defLat : 0, lng: this.settings ? this.settings.defLng : 0 })
+      //this.gMap.setZoom(this.settings ? this.settings.google.defZoom : 15)
+      this.gMap.fitBounds(this.disasterArray.boundsToBound(this.fieldReports!.bounds))
       //      this.gMap.setMapTypeId("roadmap")
       //this.gMap.setMapTypeId('terrain')
     } else {
-      this.log.error(`initMainMap(): this.gMap NOT INitialized yet! `, this.id)
+      console.error(`initMainMap(): this.gMap NOT INitialized yet! `)
     }
   }
 
@@ -184,42 +176,38 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
   // this.ngMap: GoogleMap (Angular wrapper for the same underlying map!)
   // this.gMap: google.maps.Map (JavaScript core map) - made available in onMapInitialized()
   onMapInitialized(mappy: google.maps.Map) {
-    this.log.verbose(`onMapInitialized()`, this.id)
+    console.log(`onMapInitialized()`)
 
-    // This event is ONLY registered for the main map, not overview
     this.gMap = mappy
     // Listen in on mouse moves/zooms
-    this.captureGMoveAndZoom(this.gMap)
-    if (this.displayReports) {
-      // gets: core.mjs:6485 ERROR TypeError: bounds.getEast is not a function at FieldReportService.boundsToBound (field-report.service.ts:193:56)
-      // this.gMap.fitBounds(this.fieldReportService.boundsToBound(this.fieldReports!.bounds))
+    //this.captureGMoveAndZoom(this.gMap)
 
-      // https://github.com/googlemaps/js-markerclusterer
-      // https://newbedev.com/google-markerclusterer-decluster-markers-below-a-certain-zoom-level
-      this.markerCluster = new MarkerClusterer({
-        map: this.gMap,
-        markers: this.markers,
-        // algorithm?: Algorithm,
-        // renderer?: Renderer,
-        // onClusterClick?: onClusterClickHandler,
-      })
+    // gets: core.mjs:6485 ERROR TypeError: bounds.getEast is not a function at FieldReportService.boundsToBound (field-report.service.ts:193:56)
+    // this.gMap.fitBounds(this.fieldReportService.boundsToBound(this.fieldReports!.bounds))
 
-      this.getAndDisplayFieldReports() // REVIEW: Works with NO Markers?
+    // https://github.com/googlemaps/js-markerclusterer
+    // https://newbedev.com/google-markerclusterer-decluster-markers-below-a-certain-zoom-level
+    this.markerCluster = new MarkerClusterer({
+      map: this.gMap,
+      markers: this.markers,
+      // algorithm?: Algorithm,
+      // renderer?: Renderer,
+      // onClusterClick?: onClusterClickHandler,
+    })
+
+    this.getAndDisplayDisasterReports() // REVIEW: Works with NO Markers?
 
 
-      //  this.log.excessive("into updateFieldReports()", this.id)
+    //  console.log("into updateDisasterReports()")
 
-      this.updateFieldReports()
+    this.updateDisasterReports()
 
-    }
-    /* TODO: Emit update for subscribers: instead of always reloading at init stage...
-        this.fieldReportArray = this.fieldReportService.getFieldReports().valueChanges.subscribe(x => {
-          this.log.verbose(`Subscription to location got: ${x}`, this.id)
-        })
-        */
   }
-
-
+  /* TODO: Emit update for subscribers: instead of always reloading at init stage...
+      this.disasterArray = this.fieldReportService.getDisasterReports().valueChanges.subscribe(x => {
+        console.log(`Subscription to location got: ${x}`)
+      })
+      */
 
 
   // ------------------------------------  Markers  ---------------------------------------
@@ -230,22 +218,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
   }
 
   displayMarkers() {
-    this.log.verbose(`(Abstract) displayMarkers()`, this.id)
-
-    if (!this.displayReports) {
-      this.log.error(`(Abstract) displayMarkers() BUT displayReports is false!`, this.id)
-    }
-
-    if (!this.displayedFieldReportArray) {
-      this.log.error(`(Abstract) displayMarkers() BUT No Field Reports received yet!`, this.id)
-      return
-    }
-
-    //! this.addMarker(this.fieldReports[i].location.lat, this.fieldReports[i].location.lng, this.fieldReports[i].status)
-
-
-
-
+    console.log(`(Abstract) displayMarkers()`)
 
     let latlng
     //let infoContent
@@ -253,44 +226,52 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
     let title
     let icon
     let labelColor
-    let fr: FieldReportType
+    let disaster: DisasterDeclarationsSummaryType
 
-    let fieldReportStatuses: FieldReportStatusType[] = this.settings!.fieldReportStatuses
-    // REVIEW: Might this mess with existing fr's? (User instructed NOT to rename existing statuses...)
-    this.log.verbose(`displayMarkers got ${this.fieldReportArray.length} field reports to display`, this.id)
+    let disasterTypes = DisasterTypes //
+    // REVIEW: Might this mess with existing disaster's? (User instructed NOT to rename existing statuses...)
+    console.log(`displayMarkers got ${this.disasterArray.length} field reports to display`)
+
+    if (!this.disasterArray) {
+      console.error(`displayMarkers() BUT No disasterArray yet!`)
+      return
+    }
+
+    //! this.addMarker(this.fieldReports[i].location.lat, this.fieldReports[i].location.lng, this.fieldReports[i].status)
+
 
     //! TODO: Start by hiding/clearing existing markers & rebuilding....
     //this.markerCluster.clearMarkers()
     this.removeAllMarkers()
 
-    //if (!this.fieldReportArray.length) {
+    //if (!this.disasterArray.length) {
     //this.removeAllMarkers()
     //this.markerCluster.removeMarkers(this.markers)
     //}
 
     // this.markerCluster.addMarkers(this.markers)
 
-    for (let i = 0; i < this.fieldReportArray.length; i++) {
+    for (let i = 0; i < this.disasterArray.length; i++) {
 
       // !TODO: Add filters: Only show selected teams, for last hours:minutes, with status XYZ,
       // or assume any selection/filtering in the Reports page...
 
-      fr = this.fieldReportArray[i]
-      latlng = new google.maps.LatLng(fr.location.lat, fr.location.lng)
-      title = `${fr.callsign} (${fr.status}) at ${fr.date} at lat ${fr.location.lat}, lng ${fr.location.lng} with "${fr.notes}".`
+      disaster = this.disasterArray[i]
+      latlng = new google.maps.LatLng(disaster.location.lat, disaster.location.lng)
+      title = `${disaster.callsign} (${disaster.status}) at ${disaster.date} at lat ${disaster.location.lat}, lng ${disaster.location.lng} with "${disaster.notes}".`
       //title = infoContent
 
       //! TODO: Provide a better icon generating mechanism...available via Dependency Injection/service?!
-      labelText = fr.callsign
+      labelText = disaster.callsign
 
-      for (let j = 0; j < fieldReportStatuses.length; j++) {
-        if (fieldReportStatuses[j].status != fr.status) continue
-        icon = fieldReportStatuses[j].icon
-        labelColor = fieldReportStatuses[j].color
+      for (let j = 0; j < disasterTypes.length; j++) {
+        if (disasterTypes[j].status != disaster.status) continue
+        icon = disasterTypes[j].icon
+        labelColor = disasterTypes[j].color
         break
       }
 
-      // this.log.excessive(`displayMarkers adding marker #${i} at ${JSON.stringify(latlng)} with ${labelText}, ${title}, ${labelColor}`, this.id)
+      // console.log(`displayMarkers adding marker #${i} at ${JSON.stringify(latlng)} with ${labelText}, ${title}, ${labelColor}`)
 
       this.addMarker(latlng.lat(), latlng.lng(), title, labelText, title, labelColor, "14px", icon)
     }
@@ -298,7 +279,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
     // this.showMarkers() //! This directly adds to map - not in clusters...
     this.markerCluster.addMarkers(this.markers)
 
-    this.log.verbose(`displayMarkers added ${this.fieldReportArray.length} markers`, this.id)
+    console.log(`displayMarkers added ${this.disasterArray.length} markers`)
 
 
 
@@ -325,7 +306,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
    */
   override addMarker(lat: number, lng: number, infoContent = "", labelText = "", title = "", labelColor = "aqua", fontSize = "8px", icon = "unpublished_FILL0_wght400_GRAD0_opsz48.png", animation = google.maps.Animation.DROP, msDelay = 100) {
 
-    //this.log.excessive(`addMarker`, this.id)
+    //console.log(`addMarker`)
 
     if (infoContent == "") {
       infoContent = `Manual Marker dropped ${lat}, ${lng} at ${Date()}`
@@ -427,7 +408,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
       //}, msDelay)
 
     } else {
-      this.log.error("event.latLng is BAD; can not add marker..", this.id)
+      console.error("event.latLng is BAD; can not add marker..")
     }
     //this.refreshMarkerDisplay()
   }
@@ -449,7 +430,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
       // this.gMap.setZoom(map.getZoom());
       this.gMap.panBy(0, 0);
     } else {
-      this.log.warn(`ResetMap called, but gMap not created yet!`, this.id)
+      console.warn(`ResetMap called, but gMap not created yet!`)
     }
     /*
         let data
@@ -487,7 +468,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
   // Shows any markers currently in the array.
   showMarkers(): void {
     if (!this.gMap) {
-      this.log.error(`showMarkers() got null gMap`, this.id)
+      console.error(`showMarkers() got null gMap`)
       return
     }
     this.markers.forEach((i) => i.setMap(this.gMap))
@@ -495,7 +476,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
 
   // Deletes all markers in the array by removing references to them.
   override removeAllMarkers() {
-    this.log.verbose(`removeAllMarkers()`, this.id)
+    console.log(`removeAllMarkers()`)
     this.hideMarkers()
     this.markers = []
     // this.gMap.clear();
@@ -506,7 +487,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
   // Deletes all markers in the array by removing references to them
   // https://developers.google.com/maps/documentation/javascript/markers#remove
   removeAllMarkers2() {
-    this.log.verbose(`(Abstract) removeAllMarkers()`, this.id)
+    console.log(`(Abstract) removeAllMarkers()`)
     this.hideMarkers()
     // this.clearMarkers = [] // BUG: this won't work!
     // this.map.clear();
