@@ -61,10 +61,10 @@ export class ListViewComponent implements OnInit, OnDestroy {
     // Following works: based on reading an actual JSON file
     /*
     let myTest = disasterDeclarationsSummariesV2Service.test()
-      console.error (`DatasetViewerComponent: ${JSON.stringify(myTest.DisasterDeclarationsSummaries[0])}`)
+      console.error (`ListViewComponent: ${JSON.stringify(myTest.DisasterDeclarationsSummaries[0])}`)
     */
 
-    console.log(`DatasetViewerComponent: Getting declarationsSummariesSubscription`)
+    console.log(`ListViewComponent: Getting declarationsSummariesSubscription`)
 
     this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
       next: (newDisasterDeclarationsSummary) => {
@@ -76,18 +76,18 @@ export class ListViewComponent implements OnInit, OnDestroy {
       complete: () => console.info('declarationsSummariesSubscription complete')
     })
 
-    console.log(`DatasetViewerComponent: Got declarationsSummariesSubscription, awaiting results`)
+    console.log(`ListViewComponent: Got declarationsSummariesSubscription, awaiting results`)
   }
 
   ngOnInit(): void {
     // fetch data async after constructior when async pipe subscribes to the disasters$ observable
     // debugger
-    console.error(`DatasetViewerComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
+    console.error(`ListViewComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
   }
 
   displayDataSet() {
-    console.log(`DatasetViewerComponent: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
-    console.log(`DatasetViewerComponent: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
+    console.log(`ListViewComponent: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
+    console.log(`ListViewComponent: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
 
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
   }

@@ -1,10 +1,12 @@
 /// <reference types="@types/google.maps" />
 
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Observable, Subscription, throwError } from 'rxjs';
 
 import { GoogleMap } from '@angular/google-maps'
 import { MarkerClusterer } from '@googlemaps/markerclusterer'
 
+import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, WebDisasterSummariesService, DisasterDeclarationsSummariesV2Service } from 'src/app/services'
 import { Common } from "../"
 
 declare const google: any // declare tells compiler "this variable exists (from elsewhere) & can be referenced by other code. There's no need to compile this statement"
@@ -44,19 +46,57 @@ GoogleMapsModule (their Angular wrapper) exports three components that we can us
 @Component({
   selector: 'map-view',
   templateUrl: './map-view.component.html',
-  styleUrls: ['./map-view.component.scss']
+  styleUrls: ['./map-view.component.scss'],
+  providers: [DisasterDeclarationsSummariesV2Service],
 })
-export class MapViewComponent implements OnInit {
+export class MapViewComponent implements OnInit, OnDestroy {
+  @Input('data') disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
 
-  constructor() { }
+  private declarationsSummariesSubscription!: Subscription
+  private disasterDeclarationsSummary!: DisasterDeclarationsSummary
+  //disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
+
+  constructor(
+    //private httpClient: HttpClient,
+    private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
+  ) {
+
+    // Following works: based on reading an actual JSON file
+    /*
+    let myTest = disasterDeclarationsSummariesV2Service.test()
+      console.error (`MapViewComponent: ${JSON.stringify(myTest.DisasterDeclarationsSummaries[0])}`)
+    */
+
+    console.log(`MapViewComponent: Getting declarationsSummariesSubscription`)
+
+    this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
+      next: (newDisasterDeclarationsSummary) => {
+        this.disasterDeclarationsSummary = newDisasterDeclarationsSummary
+        this.displayDataSet()
+        //debugger
+      },
+      error: (e) => console.error('declarationsSummariesSubscription got:' + e),
+      complete: () => console.info('declarationsSummariesSubscription complete')
+    })
+
+    console.log(`MapViewComponent: Got declarationsSummariesSubscription, awaiting results`)
+  }
 
   ngOnInit(): void {
+    // fetch data async after constructior when async pipe subscribes to the disasters$ observable
+    // debugger
+    console.error(`MapViewComponent: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
   }
 
-  calcBackgroundColor(type: string) {
-    return Common.calcBackgroundColor(type)
+  displayDataSet() {
+    console.log(`MapViewComponent: Received new disasterDeclarationsSummary via subscription. \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
+    console.log(`MapViewComponent: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
+
+    this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
   }
 
-
+  ngOnDestroy(): void {
+    this.declarationsSummariesSubscription?.unsubscribe()
+  }
 
 }
