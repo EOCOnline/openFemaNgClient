@@ -8,7 +8,7 @@
     "build": "ng build",
     "opt": "ng build  --optimization=true",
     "watch": "ng build --watch --configuration development",
-    "u1": "",
+    "u1": "npx ng update @angular/core @angular/cli --next",
     "u2": "",
     "u3": "",
     "u4": "",
