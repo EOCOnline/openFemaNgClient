@@ -293,7 +293,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
 
   hideMarkers() {
     //! unimplemented
-    console.error(`hideMarkers(): UNIMPLEMENTED!`, this.id)
+    console.error(`hideMarkers(): UNIMPLEMENTED!`)
   }
 
   // Deletes all markers in the array by removing references to them
@@ -368,13 +368,11 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
     <a href="/details/${i}" > See all detail fields < /a>`
 */
 
-      //! TODO: Provide a better icon generating mechanism...available via Dependency Injection/service?!
-      labelText = disaster.femaDeclarationString
-
+      let labelText = disaster.femaDeclarationString
       let icon = this.iconBase + this.getDisasterTypeIcon(disaster.incidentType)
       let labelColor = this.getDisasterTypeColor(disaster.incidentType)
 
-      console.log(`displayMarkers adding marker #${i} at ${JSON.stringify(latlng)} with ${labelText}, ${title}, ${labelColor} `)
+      console.log(`displayMarkers adding marker #${i} at ${JSON.stringify(latlng)} with ${tooltipHtml}, ${disaster.femaDeclarationString}, ${labelColor}, ${icon}`)
       this.addMarker(latlng.lat(), latlng.lng(), disaster.femaDeclarationString, tooltipHtml, disaster.femaDeclarationString, labelColor, "14px", icon)
     }
 
@@ -578,16 +576,16 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
   // ------------------ BOUNDS ---------------------------
   /*
     boundsToBound(bounds: LatLngBounds) {
-      this.log.verbose(`Bounds conversion-- E: ${ bounds.getEast() }; N: ${ bounds.getNorth() }; W: ${ bounds.getWest() }; S: ${ bounds.getSouth() }; `, this.id)
+      this.log.verbose(`Bounds conversion-- E: ${ bounds.getEast() }; N: ${ bounds.getNorth() }; W: ${ bounds.getWest() }; S: ${ bounds.getSouth() }; `)
       return { east: bounds.getEast(), north: bounds.getNorth(), south: bounds.getSouth(), west: bounds.getWest() }
     }
 
     recalcFieldBounds(reports: FieldReportsType) {
-      this.log.verbose(`recalcFieldBounds got ${ reports.fieldReportArray.length } field reports`, this.id)
-      //this.log.excessive(`OLD Value: E: ${ reports.bounds.getEast() }; N: ${ reports.bounds.getNorth() }; W: ${ reports.bounds.getWest() }; S: ${ reports.bounds.getSouth() }; `, this.id)
+      this.log.verbose(`recalcFieldBounds got ${ reports.fieldReportArray.length } field reports`)
+      //this.log.excessive(`OLD Value: E: ${ reports.bounds.getEast() }; N: ${ reports.bounds.getNorth() }; W: ${ reports.bounds.getWest() }; S: ${ reports.bounds.getSouth() }; `)
 
       if (!this.settings) {
-        this.log.error('this.settings is undefined', this.id)
+        this.log.error('this.settings is undefined')
         throwError(() => new Error('this.settings is undefined'))
         return
       }
@@ -627,20 +625,20 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
         east = this.settings.defLng
       }
 
-      this.log.info(`recalcFieldBounds got E:${ east } W:${ west } N:${ north } S:${ south } `, this.id)
+      this.log.info(`recalcFieldBounds got E:${ east } W:${ west } N:${ north } S:${ south } `)
       if (east - west < 2 * this.boundsMargin) {
         east += this.boundsMargin
         west -= this.boundsMargin
-        this.log.info(`recalcFieldBounds BROADENED to E:${ east } W:${ west } `, this.id)
+        this.log.info(`recalcFieldBounds BROADENED to E:${ east } W:${ west } `)
       }
       if (north - south < 2 * this.boundsMargin) {
         north += this.boundsMargin
         south -= this.boundsMargin
-        this.log.info(`recalcFieldBounds BROADENED to N:${ north } S:${ south } `, this.id)
+        this.log.info(`recalcFieldBounds BROADENED to N:${ north } S:${ south } `)
       }
 
       reports.bounds = new L.LatLngBounds([[south, west], [north, east]])//SW, NE
-      this.log.excessive(`New bounds: E: ${ reports.bounds.getEast() }; N: ${ reports.bounds.getNorth() }; W: ${ reports.bounds.getWest() }; S: ${ reports.bounds.getSouth() }; `, this.id)
+      this.log.excessive(`New bounds: E: ${ reports.bounds.getEast() }; N: ${ reports.bounds.getNorth() }; W: ${ reports.bounds.getWest() }; S: ${ reports.bounds.getSouth() }; `)
     }
   */
 
