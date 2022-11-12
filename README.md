@@ -1,6 +1,14 @@
 # OpenFemaNgClient
 
+<!-- https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax -->
+
 <img align="right" src="./src/assets/icons/opoenFemaNgClient_logo.ico">
+
+<!-- picture>
+ <source media="(prefers-color-scheme: dark)" srcset="YOUR-DARKMODE-IMAGE">
+ <source media="(prefers-color-scheme: light)" srcset="YOUR-LIGHTMODE-IMAGE">
+ <img alt="YOUR-ALT-TEXT" src="YOUR-DEFAULT-IMAGE">
+</picture -->
 
 FEMA has released a wide variety of data for public use over the last decade. Their OpenFEMA project provides extensive, historic disaster-related data. It is well documented at: <https://www.fema.gov/about/reports-and-data/openfema>. However there are not many samples illustrating ways to display and analyze the data without advanced programming skills.
 
@@ -32,36 +40,37 @@ OpenFemaNgClient is an Angular (i.e., 'Ng') and Typescript application that prov
 
 ## Known/Planned Issues
 
-- Only displays the Disaster Declarations dataset
-- Only brings in the top 1000 rows for now
-- Doesn't have practical analysis
+- [ ] Only displays the Disaster Declarations dataset
+- [ ] Only brings in the top 1000 rows for now
+- [ ] Doesn't have practical analysis
 
 ## Roadmap
 
-With encouragement/funding:
+With encouragement :+1: /funding:
 
-- Select any of the datasets for display
-- Support access to key API parameters
-- Move 'View' component code to an 'abstract' class where possible for consistency and streamlined sharing of code
-- More analysis & filtering options to aid analysis/investigation
-- Trend displays
+- [ ] Select any of the datasets for display
+- [ ] Support access to key API parameters
+- [ ] Move 'View' component code to an 'abstract' class where possible for consistency and streamlined sharing of code
+- [ ] More analysis & filtering options to aid analysis/investigation
+- [ ] Trend displays
 
 ## Building this web page
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.
 
-To update libraries use package.json commands. Start with a clean repository: checkin any outstanding code updates. You likely need do this between the following steps:
+To update libraries either use Evergreen Angular extension or use the same commands from package.json directly: Start with a clean repository: checkin any outstanding code updates. You likely need do this periodically between the following steps.
 
-- npm run u1 (i.e., npx ng update @angular/core @angular/cli --next)
-- npm run u2 (i.e., npx ng update --next)
+- `npm run update1` (i.e., `npx ng update @angular/core @angular/cli --next`)
+- `npm run update2` (i.e., `npx ng update --next`)
   - Update any packages as listed by the above command
-- npm run u3 (i.e.,
-- npm run u4 (i.e.,
-- npm run u5 (i.e.,
+- `npm run update3` (i.e., `npx npm-check-updates --next`)
+- `npm run update4` (i.e., `npx npm-check-updates -u`) which updates package.json to the latest format - only if requested by the previous command
+- `npm run update5` (i.e., `npm install`)
+- `npm run update6` (i.e., `npm i -g rimraf` Post-Update Checkup)
 
 ### Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. (Or do the previous more succinctly with just 'ng s -o'.) The application will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. (Or do the previous more succinctly with just `ng s -o`.) The application will automatically reload if you change any of the source files.
 
 ### Build
 
