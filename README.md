@@ -1,12 +1,10 @@
 # OpenFemaNgClient
 
-![OpenFemaNgClient](./src/assets/icons/opoenFemaNgClient_logo.ico)
+<img align="right" src="./src/assets/icons/opoenFemaNgClient_logo.ico">
 
 FEMA has released a wide variety of data for public use over the last decade. Their OpenFEMA project provides extensive, historic disaster-related data. It is well documented at: <https://www.fema.gov/about/reports-and-data/openfema>. However there are not many samples illustrating ways to display and analyze the data without advanced programming skills.
 
 OpenFemaNgClient is an Angular (i.e., 'Ng') and Typescript application that provides one such sample approach for accessing a few of these data sets with ubiqitious JavaScript. Initially this is a proof of concept, with encouragement it could be fortified into an enterprise ready tool!
-
-<img align="right" src="./src/assets/icons/opoenFemaNgClient_logo.ico">
 
 ## Features
 
@@ -65,4 +63,4 @@ To report issues please visit <https://github.com/EOCOnline/OpenFemaNgClient/iss
 
 ©2022 eoc.online, under the MIT License
 
-![MIT License](./src/assets/imgs/MIT_License.png)
+<img align="right" src="./src/assets/imgs/MIT_License.png">
