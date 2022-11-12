@@ -6,6 +6,8 @@ FEMA has released a wide variety of data for public use over the last decade. Th
 
 OpenFemaNgClient is an Angular (i.e., 'Ng') and Typescript application that provides one such sample approach for accessing a few of these data sets with ubiqitious JavaScript. Initially this is a proof of concept, with encouragement it could be fortified into an enterprise ready tool!
 
+<img align="right" src="./src/assets/icons/opoenFemaNgClient_logo.ico">
+
 ## Features
 
 - Displays dataset using List, Card, Ag-Grid Grid and Google Map views
