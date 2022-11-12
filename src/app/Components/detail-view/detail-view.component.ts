@@ -68,8 +68,8 @@ export class DetailViewComponent implements OnInit, AfterViewInit {
     this.gotData = true
   }
 
-  calcBackgroundColor(type: string) {
-    return Common.calcBackgroundColor(type)
+  getDisasterColorStyle(type: string) {
+    return Common.getDisasterColorStyle(type)
   }
 
 

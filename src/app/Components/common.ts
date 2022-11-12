@@ -13,10 +13,13 @@ export class Common {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
-  static calcBackgroundColor(type: string) {
+  static getDisasterType(type: string) {
+    return DisasterTypes.find(el => el.type == type)
+  }
+
+  static getDisasterColorStyle(type: string) {
     let id = DisasterTypes.find(el => el.type == type)
     return { 'background-color': `${id ? id.color : '#A3A3A3'}` }
-    // UNKNOWN!
   }
   /*
       for (let i = 0; i < DisasterTypes.length; i++) {

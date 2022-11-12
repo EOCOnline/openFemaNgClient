@@ -27,7 +27,7 @@ export class ListItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  calcBackgroundColor(type: string) {
-    return Common.calcBackgroundColor(type)
+  getDisasterColorStyle(type: string) {
+    return Common.getDisasterColorStyle(type)
   }
 }

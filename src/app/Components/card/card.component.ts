@@ -25,8 +25,8 @@ export class CardComponent implements OnInit {
     //console.log(`CardComponent: disaster=${this.disaster?.femaDeclarationString}, in ${this.disaster?.state}`)
   }
 
-  calcBackgroundColor(type: string) {
-    return Common.calcBackgroundColor(type)
+  getDisasterColorStyle(type: string) {
+    return Common.getDisasterColorStyle(type)
   }
 }
 

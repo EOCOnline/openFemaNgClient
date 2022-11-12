@@ -105,7 +105,7 @@ export class GridViewComponent implements OnInit, OnDestroy {
     this.columnDefs = [
       {
         headerName: "Type", field: "incidentType", headerTooltip: 'incidentType', width: 30,
-        cellStyle: (params: { value: string; }) => { return this.calcBackgroundColor(params.value) }
+        cellStyle: (params: { value: string; }) => { return this.getDisasterColorStyle(params.value) }
       },
       {
         headerName: "Declaration", field: "femaDeclarationString", headerTooltip: 'femaDeclarationString',
@@ -140,8 +140,8 @@ export class GridViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  calcBackgroundColor(type: string) {
-    return Common.calcBackgroundColor(type)
+  getDisasterColorStyle(type: string) {
+    return Common.getDisasterColorStyle(type)
   }
 
 

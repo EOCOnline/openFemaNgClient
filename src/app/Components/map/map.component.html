@@ -1,8 +1,8 @@
 <h1>Map View</h1>
 
-<map id="map" width="100%" [options]="mapOptions" (mapInitialized)="onMapInitialized($event)">
+<google-map id="map" width="100%" [options]="mapOptions" (mapInitialized)="onMapInitialized($event)">
   <div id="markerDiv" #markerDiv *ngFor="let marker of markers"></div>
-</map>
+</google-map>
 
 <span class="material-symbols-outlined">
   landslide
@@ -18,7 +18,7 @@ ebd7
   article class="list-item">
   <span class="title">{{index}} - {{disaster.incidentType}}</span>
 
-  <h3 class="list-head" [ngStyle]="calcBackgroundColor(disaster.incidentType)">{{disaster.femaDeclarationString}}:
+  <h3 class="list-head" [ngStyle]="getDisasterColorStyle(disaster.incidentType)">{{disaster.femaDeclarationString}}:
     &nbsp;&nbsp;
     {{disaster.declarationTitle}}</h3>
 

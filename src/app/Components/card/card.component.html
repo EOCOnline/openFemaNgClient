@@ -1,7 +1,7 @@
 <article class="card">
   <span class="item">
     {{index}} - {{disaster.incidentType}}</span>
-  <h3 class="card-head" [ngStyle]="calcBackgroundColor(disaster.incidentType)">
+  <h3 class="card-head" [ngStyle]="getDisasterColorStyle(disaster.incidentType)">
     {{disaster.femaDeclarationString}}:
     &nbsp;&nbsp;
     {{disaster.declarationTitle}}</h3>
