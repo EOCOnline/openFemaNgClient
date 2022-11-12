@@ -12,6 +12,24 @@ OpenFemaNgClient is an Angular (i.e., 'Ng') and Typescript application that prov
 - Provides coding sample using latest versions of Angular & Typescript
 - Open Source, freely available using the permisive MIT license
 
+### Screenshots
+
+#### List View
+
+![OpenFemaNgClient's List View](non-dist/imgs/ListView.png)
+
+#### Card View
+
+![OpenFemaNgClient's Card View](non-dist/imgs/CardView.png)
+
+#### Grid View
+
+![OpenFemaNgClient's Grid View](non-dist/imgs/GridView.png)
+
+#### Map View
+
+![OpenFemaNgClient's Map View](non-dist/imgs/MapView.png)
+
 ## Known/Planned Issues
 
 - Only displays the Disaster Declarations dataset
@@ -28,9 +46,18 @@ With encouragement/funding:
 - More analysis & filtering options to aid analysis/investigation
 - Trend displays
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
-
 ## Building this web page
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.
+
+To update libraries use package.json commands. Start with a clean repository: checkin any outstanding code updates. You likely need do this between the following steps:
+
+- npm run u1 (i.e., npx ng update @angular/core @angular/cli --next)
+- npm run u2 (i.e., npx ng update --next)
+  - Update any packages as listed by the above command
+- npm run u3 (i.e.,
+- npm run u4 (i.e.,
+- npm run u5 (i.e.,
 
 ### Development server
 
