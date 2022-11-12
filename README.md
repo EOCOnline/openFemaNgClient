@@ -62,7 +62,7 @@ To update libraries either use Evergreen Angular extension or use the same comma
 
 - `npm run update1` (i.e., `npx ng update @angular/core @angular/cli --next`)
 - `npm run update2` (i.e., `npx ng update --next`)
-  - Update any packages as listed by the above command
+  - Update any packages as listed by the above command, e.g., `ng update @angular/cli @angular/core @angular/google-maps --next`
 - `npm run update3` (i.e., `npx npm-check-updates --next`)
 - `npm run update4` (i.e., `npx npm-check-updates -u`) which updates package.json to the latest format - only if requested by the previous command
 - `npm run update5` (i.e., `npm install`)
