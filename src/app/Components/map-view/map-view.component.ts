@@ -51,6 +51,7 @@ GoogleMapsModule (their Angular wrapper) exports three components that we can us
 })
 export class MapViewComponent implements OnInit, OnDestroy {
   @Input('data') disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
+  @Input('data') disasters!: DisasterDeclarationsSummaryType[]
 
   private declarationsSummariesSubscription!: Subscription
   private disasterDeclarationsSummary!: DisasterDeclarationsSummary

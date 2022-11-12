@@ -9,6 +9,7 @@ import { Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular
 import { Common } from ".."
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { GoogleMap } from '@angular/google-maps';
+import { DisasterDeclarationsSummary } from '../../services/disaster-declarations-summaries-v2.interface';
 
 //standalone: true,
 //imports: [CommonModule, RouterModule],
@@ -20,7 +21,7 @@ import { GoogleMap } from '@angular/google-maps';
   //providers:[DisasterDeclarationsSummariesV2Service],
 })
 export class MapComponent implements OnInit {
-  @Input() disaster!: DisasterDeclarationsSummaryType // | null = null
+  @Input() disasters!: DisasterDeclarationsSummary
   // Get reference to map components, for later use
   @ViewChild(GoogleMap, { static: false }) ngMap!: GoogleMap
   @ViewChild(GoogleMap, { static: false }) overviewNgMap!: GoogleMap
@@ -209,7 +210,13 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
       })
       */
 
+  getAndDisplayDisasterReports() {
 
+  }
+
+  updateDisasterReports() {
+
+  }
   // ------------------------------------  Markers  ---------------------------------------
 
   // !REVIEW: Need to explicitly set each marker to null? https://developers.google.com/maps/documentation/javascript/markers#remove
@@ -221,7 +228,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
     console.log(`(Abstract) displayMarkers()`)
 
     let latlng
-    //let infoContent
+    let infoContent
     let labelText
     let title
     let icon
@@ -257,7 +264,13 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
       // or assume any selection/filtering in the Reports page...
 
       disaster = this.disasterArray[i]
-      latlng = new google.maps.LatLng(disaster.location.lat, disaster.location.lng)
+
+      let zipCode = disaster.placeCode // Or FIPS County Code?
+
+      let latlng = zip2LatLng(zipCode)
+
+
+      //latlng = new google.maps.LatLng(disaster.location.lat, disaster.location.lng)
       title = `${disaster.callsign} (${disaster.status}) at ${disaster.date} at lat ${disaster.location.lat}, lng ${disaster.location.lng} with "${disaster.notes}".`
       //title = infoContent
 
@@ -280,13 +293,14 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
     this.markerCluster.addMarkers(this.markers)
 
     console.log(`displayMarkers added ${this.disasterArray.length} markers`)
-
-
-
-
-
-
   }
+
+  zip2LatLng(zipCode: string) {
+
+    latlng = new google.maps.LatLng(-122, 47)
+  }
+
+
 
 
   // --------------------------------  addMarker  ------------------------------
@@ -304,7 +318,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
    * @param animation
    * @param msDelay
    */
-  override addMarker(lat: number, lng: number, infoContent = "", labelText = "", title = "", labelColor = "aqua", fontSize = "8px", icon = "unpublished_FILL0_wght400_GRAD0_opsz48.png", animation = google.maps.Animation.DROP, msDelay = 100) {
+  addMarker(lat: number, lng: number, infoContent = "", labelText = "", title = "", labelColor = "aqua", fontSize = "8px", icon = "unpublished_FILL0_wght400_GRAD0_opsz48.png", animation = google.maps.Animation.DROP, msDelay = 100) {
 
     //console.log(`addMarker`)
 
@@ -350,21 +364,21 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
         // icon: this.iconBase + icon,  // works
         icon: svgMarker, // works
         // icon: google.maps.SymbolPath.CIRCLE,  // gets ignored
-
-        icon_BROKEN: {  // gets ignored
-          // from: https://jsfiddle.net/geocodezip/voeqsw6j/
-          // & https://stackoverflow.com/questions/34001414/google-maps-api-v-3-changing-the-origin-of-custom-marker-icon
-          //path: this.iconBase + icon,
-          //url: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-          labelOrigin: new google.maps.Point(10, 30),
-          //strokeColor: myPoint.color,
-          //fillColor: myPoint.color,
-          fillOpacity: 0.6,
-          scale: this.gMap.getZoom()! / 2,
-          strokeWeight: this.gMap.getZoom()! / 3,
-          //rotation: myPoint.heading,
-        },
-
+        /*
+                icon_BROKEN: {  // gets ignored
+                  // from: https://jsfiddle.net/geocodezip/voeqsw6j/
+                  // & https://stackoverflow.com/questions/34001414/google-maps-api-v-3-changing-the-origin-of-custom-marker-icon
+                  //path: this.iconBase + icon,
+                  //url: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                  labelOrigin: new google.maps.Point(10, 30),
+                  //strokeColor: myPoint.color,
+                  //fillColor: myPoint.color,
+                  fillOpacity: 0.6,
+                  scale: this.gMap.getZoom()! / 2,
+                  strokeWeight: this.gMap.getZoom()! / 3,
+                  //rotation: myPoint.heading,
+                },
+        */
         label: {
           // https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerLabel
           //! BUG: a letter or number that appears inside a marker: We're putting a phrase in!!!
@@ -475,7 +489,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
   }
 
   // Deletes all markers in the array by removing references to them.
-  override removeAllMarkers() {
+  removeAllMarkers() {
     console.log(`removeAllMarkers()`)
     this.hideMarkers()
     this.markers = []
