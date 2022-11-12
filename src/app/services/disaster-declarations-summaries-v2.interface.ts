@@ -44,17 +44,19 @@ export interface DisasterDeclarationsSummary {
 }
 
 // https://www.colorsandfonts.com/color-system
+// https://fonts.google.com/icons?icon.query=disaster&icon.style=Outlined
 export const DisasterTypes = [
-  { type: 'Coastal Storm', color: '#80DEEA', display: true },
-  { type: 'Earthquake', color: '#FFFF00', display: true },
-  { type: 'Fire', color: '#FF6E40', display: true },
-  { type: 'Flood', color: '#8C9EFF', display: true },
-  { type: 'Hurricane', color: '#CE93D8', display: true },
-  { type: 'Severe Ice Storm', color: '#B2EBF2', display: true },
-  { type: 'Severe Storm', color: 'lightblue', display: true },
-  { type: 'Snowstorm', color: '#E0E0E0', display: true },
-  { type: 'Tornado', color: '#E1BEE7', display: true },
+  { type: 'Coastal Storm', color: '#80DEEA', icon: 'waves', display: true },
+  { type: 'Earthquake', color: '#FFFF00', icon: 'landslide', display: true },
+  { type: 'Fire', color: '#FF6E40', icon: 'forest', display: true },
+  { type: 'Flood', color: '#8C9EFF', icon: 'flood', display: true },
+  { type: 'Hurricane', color: '#CE93D8', icon: 'cyclone', display: true },
+  { type: 'Severe Ice Storm', color: '#B2EBF2', icon: 'ac_unit', display: true },
+  { type: 'Severe Storm', color: 'lightblue', icon: 'storm', display: true },
+  { type: 'Snowstorm', color: '#E0E0E0', icon: 'snowing', display: true },
+  { type: 'Tornado', color: '#E1BEE7', icon: 'tornado', display: true },
+  { type: 'Volcano', color: '#F42D2D', icon: 'volcano', display: true },
 
-  { type: 'Other', color: '#EEEEEE', display: true },
+  { type: 'Other', color: '#EEEEEE', icon: 'sentiment_dissatisfied', display: true },
 ]
 

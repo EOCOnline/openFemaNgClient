@@ -1,18 +1,34 @@
 # OpenFemaNgClient
 
-FEMA has released a wide variety of data for public use over the last decade. Their OpenFEMA project provides extensive, historic disaster-related data. It is very well documented at: <https://www.fema.gov/about/reports-and-data/openfema>. However there are not many samples illustrating ways to display and analyze the data without advanced programming skills.
+FEMA has released a wide variety of data for public use over the last decade. Their OpenFEMA project provides extensive, historic disaster-related data. It is well documented at: <https://www.fema.gov/about/reports-and-data/openfema>. However there are not many samples illustrating ways to display and analyze the data without advanced programming skills.
 
 OpenFemaNgClient is an Angular (i.e., 'Ng') and Typescript application that provides one such sample approach for accessing a few of these data sets with ubiqitious JavaScript. Initially this is a proof of concept, with encouragement it could be fortified into an enterprise ready tool!
+
+## Features
+
+- Displays dataset using List, Card, Ag-Grid Grid and Google Map views
+- Provides coding sample using latest versions of Angular & Typescript
+- Open Source, freely available using the permisive MIT license
+
+## Known/Planned Issues
+
+- Only displays the Disaster Declarations dataset
+- Only brings in the top 1000 rows for now
+- Doesn't have practical analysis
+
+## Roadmap
+
+With encouragement:
+
+- Select any of the datasets for display
+- More analysis & filtering options to aid analysis/investigation
+- Trend displays
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. (Or do the previous more succinctly with just 'ng s -o'.) The application will automatically reload if you change any of the source files.
 
 ## Build
 
@@ -21,10 +37,6 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
 ## Further help
 
@@ -41,7 +53,9 @@ We encourage your feedback and contributions to this repository. Content suggest
 
 ## eoc.online
 
-<http://eoc.online> provides free tools for Emergency Operations Centers and local CERT/VOAD/Citizen Corps groups. For more information check out <http://eoc.online>. We'd LOVE to get your reports of use and suggestions for enhancement. To report issues please visit <https://github.com/EOCOnline/OpenFemaNgClient/issues>.
+<http://eoc.online> provides free tools for Emergency Operations Centers and local CERT/VOAD/Citizen Corps groups. For more information check out <http://eoc.online>. We'd LOVE to get your reports of use and suggestions for enhancement.
+
+To report issues please visit <https://github.com/EOCOnline/OpenFemaNgClient/issues>.
 
 ©2022 eoc.online, under the MIT License
 
