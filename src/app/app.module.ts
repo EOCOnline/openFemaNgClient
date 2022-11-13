@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 
 import { DetailViewComponent, GridViewComponent, ListItemComponent, FooterComponent, CardViewComponent, NavbarComponent, ListViewComponent, CardComponent, MapComponent, MapViewComponent } from './components';
 import { AgGridModule } from 'ag-grid-angular';
-//import { GoogleMap } from '@angular/google-maps';
+import { GoogleMap } from '@angular/google-maps';
 import { GoogleMapsModule } from '@angular/google-maps'
 
 @NgModule({
@@ -23,7 +23,8 @@ import { GoogleMapsModule } from '@angular/google-maps'
     FooterComponent,
     MapComponent,
     MapViewComponent,
-    GoogleMapsModule,
+    //! BUG: GoogleMapsModule,
+    // GoogleMaps,
   ],
   imports: [
     BrowserModule,
