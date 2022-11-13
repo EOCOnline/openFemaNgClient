@@ -21,17 +21,67 @@ export class Common {
     let id = DisasterTypes.find(el => el.type == type)
     return { 'background-color': `${id ? id.color : '#A3A3A3'}` }
   }
-  /*
-      for (let i = 0; i < DisasterTypes.length; i++) {
-        if (type == DisasterTypes[i].type) {
-          color = DisasterTypes[0].color
-        }
+
+
+  // https://www.devmaking.com/learn/algorithms/binary-search/typescript/
+  static binarySearchIterative(arr: number[], num: number): number {
+    let low = 0;
+    let mid = 0;
+    let high = arr.length - 1;
+
+    while (low <= high) {
+      mid = (low + high) / 2;
+
+      if (num < arr[mid]) {
+        high = mid - 1;
       }
-      return { 'background-color': `${color}` }
+      else if (num > arr[mid]) {
+        low = mid + 1;
+      }
+      else {
+        return mid;
+      }
     }
-    */
+    // Arbitrary value to signify non-existance.
+    return -1;
+  }
+
+  static binarySearchRecursive(arr: number[], num: number): number {
+    return this.binarySearchRecursiveAux(arr, num, 0, arr.length - 1);
+  }
+
+  static binarySearchRecursiveAux(arr: number[], num: number, low: number, high: number): any {
+    const mid = (low + high) / 2;
+
+    if (low >= high) return -1;
+
+    if (num < arr[mid]) {
+      return this.binarySearchRecursiveAux(arr, num, low, mid - 1);
+    }
+    else if (num > arr[mid]) {
+      return this.binarySearchRecursiveAux(arr, num, mid + 1, high);
+    }
+    else {
+      return mid;
+    }
+  }
 
 
+  /**
+     * time
+     * Returns a nice time string...
+     * msPrecision has a max of 3 or 4...
+     */
+  static time(msPrecision = 0) {
+    const dt = new Date()
+
+    let time = `${Common.zeroFill(dt.getHours(), 2)}:${Common.zeroFill(dt.getMinutes(), 2)}:${Common.zeroFill(dt.getSeconds(), 2)}`
+
+    if (msPrecision > 0) {
+      time += `.${Common.zeroFill(dt.getMilliseconds(), msPrecision)}`
+    }
+    return time
+  }
 
 
   // ==================== unused ===============
@@ -67,21 +117,7 @@ export class Common {
   // https://cryptojs.gitbook.io/docs/
   // https://www.w3schools.com/nodejs/ref_crypto.asp
 
-  /**
-   * time
-   * Returns a nice time string...
-   * msPrecision has a max of 3 or 4...
-   */
-  static time(msPrecision = 0) {
-    const dt = new Date()
 
-    let time = `${Common.zeroFill(dt.getHours(), 2)}:${Common.zeroFill(dt.getMinutes(), 2)}:${Common.zeroFill(dt.getSeconds(), 2)}`
-
-    if (msPrecision > 0) {
-      time += `.${Common.zeroFill(dt.getMilliseconds(), msPrecision)}`
-    }
-    return time
-  }
 
   /**
  *
