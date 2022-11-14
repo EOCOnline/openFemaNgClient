@@ -245,7 +245,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
       return
     }
 
-    console.log(`startMapping got map too, so all set. Onward...`)
+    console.error(`startMapping got map too, so all set. Onward...[probably on wrong thread though!]`)
     // Auto-center maps on bounding coordinates centroid of all markers, then zoom map to show all points
     // this.center = { lat: this.settings ? this.settings.defLat : 0, lng: this.settings ? this.settings.defLng : 0 }
     // this.mouseLatLng = this.center
@@ -266,7 +266,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
       // renderer?: Renderer,
       // onClusterClick?: onClusterClickHandler,
     })
-
+    this.displayMarkers()
     this.showMarkers()
   }
 
@@ -284,7 +284,6 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
      */
   // Shows any markers currently in the array.
   showMarkers(): void {
-
     this.markers.forEach((i) => i.setMap(this.gMap))
   }
 
@@ -323,13 +322,8 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
     let labelColor
     let disaster: DisasterDeclarationsSummaryType
 */
-    let disasterTypes = DisasterTypes //
-    // REVIEW: Might this mess with existing disaster's? (User instructed NOT to rename existing statuses...)
+    //    let disasterTypes = DisasterTypes //
 
-    if (!this.disasterArray) {
-      console.error(`displayMarkers() BUT No disasterArray yet!`)
-      return
-    }
     console.log(`displayMarkers got ${this.disasterArray.length} disasters to display`)
 
 
@@ -354,8 +348,9 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
 
       let disaster = this.disasterArray[i]
       let latlng = this.zip2LatLng(disaster.placeCode)
-
-
+      if (i < 10) {
+        console.log(`zip2LatLng got ${JSON.stringify(latlng)} for disaster zip code ${disaster.placeCode}`)
+      }
       //latlng = new google.maps.LatLng(disaster.location.lat, disaster.location.lng)
 
       // Style="getDisasterColorStyle(disaster.incidentType)"
@@ -391,7 +386,8 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
   zip2LatLng(zipCode: string) {
     // or use Or FIPS County Code?
     //!TODO implement binary search on
-    let latlng = new google.maps.LatLng(-122, 47)
+    let rndx = (Math.random() - .5) * 5
+    let latlng = new google.maps.LatLng(40 + rndx, -100 + rndx)  //lat: 40, lng: -100
     return latlng
   }
 
