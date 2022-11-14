@@ -38,6 +38,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
   serverSortProperty = { key: 'server order', value: 'index' }
   assend = true
   prevKey = ""
+  i = 0
 
   constructor(
     private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
@@ -119,7 +120,11 @@ export class CardViewComponent implements OnInit, OnDestroy {
   getDatasetProperties(index: number = 0) {
     let propArray: propArrayT[] = [this.serverSortProperty] //! this special tag could also be added in the html!
     Object.entries(this.disasterDeclarationsSummaries[index])
-      .forEach(([key, value]) => propArray.push({ 'key': key, 'value': value }))
+      .forEach(([key, value]) => {
+        // console.log(`key: ${key}, ${typeof key}`)
+        propArray.push({ 'key': key, 'value': value }
+        )
+      })
 
     return propArray
   }
@@ -159,10 +164,12 @@ export class CardViewComponent implements OnInit, OnDestroy {
       console.warn(`CardViewer: sortBy ${key}; sorting ${this.disasterDeclarationsSummaries.length} records`)
       // ! BUG: Need to do BOTH sort & filtering...
 
-      this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries.sort(this.sortFn(x, y, key, assend))
-      //arrayOfObjects.sort((a, b) => (a.propertyToSortBy < b.propertyToSortBy ? -1 : 1))
-      //arrayOfObjects.sort((a.propertyToSortBy, b.propertyToSortBy) => (a.propertyToSortBy < b.propertyToSortBy ? -1 : 1))
-      //arrayOfObjects.sort((a.propertyToSortBy, b.propertyToSortBy) => (a.propertyToSortBy > b.propertyToSortBy ? -1 : 1))
+      let sortKey: keyof DisasterDeclarationsSummaryType = 'designatedArea' //this.propArray[4].key
+
+      this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries.sort((x, y) => this.sortFn(x, y, sortKey, this.assend))
+      for (let i = 0; i < 15; i++) {
+        console.error(`After sort: ${i}) ${this.filteredDisasterDeclarationsSummaries[i][sortKey]}`)
+      }
     }
   }
 
@@ -170,37 +177,21 @@ export class CardViewComponent implements OnInit, OnDestroy {
     sortKey: keyof DisasterDeclarationsSummaryType, assending: boolean = true) {
 
     let assention = assending ? 1 : -1
+    this.i = 0
 
-    if (sortKey && x && y) {
-      let xx = x[sortKey]
-      let yy = x[sortKey]
-
-      if (xx && yy) {
-        if (xx > yy) return assention
-        if (xx < yy) return -assention
-      }
+    //    if (sortKey && x && y) {
+    let xx = x[sortKey]
+    let yy = y[sortKey]
+    if (xx && yy) {
+      if (xx > yy) return assention
+      if (xx < yy) return -assention
     }
+    //  }
     return 0
   }
 
-  getProperty(disaster: DisasterDeclarationsSummaryType, property: keyof DisasterDeclarationsSummaryType) {
-    return disaster[property]
-  }
   // https://stackoverflow.com/a/62311449/18004414
   getKeyValue = <T extends {}, U extends keyof T>(key: U) => (obj: T) => obj[key]
-
-  sortByy = <T extends {}>(index: string, list: T[]): T[] => {
-    return list.sort((a, b): number => {
-      const _a = this.getKeyValue<keyof T, T>(index)(a)
-      const _b = this.getKeyValue<keyof T, T>(index)(b)
-      if (_a < _b) return -1
-      if (_a > _b) return 1
-      return 0
-    })
-  }
-
-  const x = [{ label: 'anything' }, { label: 'goes' }]
-
 
   ngOnDestroy(): void {
     this.declarationsSummariesSubscription?.unsubscribe()
