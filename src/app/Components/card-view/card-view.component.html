@@ -1,8 +1,8 @@
 <h1>Card View</h1>
 
 <div class="sort">
-  <label for="sortBy" class="header">Sort by this property: </label>
 
+  <label for="sortBy" class="header">Sort by this property: </label>
   <select name="sortBy" id="sortBy" (change)="sortBy($event)">
     <option value="" disabled>--Please choose an option--</option>
     <option value={{serverSort}}>{{serverSort}}</option>
@@ -31,7 +31,7 @@
     <label class="header">Disaster Types to Display: </label>
     <span *ngFor="let type of types">
       <li class="check" (click)="onChecked(type.type)">
-        <input type="checkbox" attr.id=' {{type.type}}' checked="true">
+        <input type="checkbox" attr.id='{{type.type}}' checked="true">
         <label> {{type.type}}</label>
       </li>
     </span>

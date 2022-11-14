@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, OnDestroy, Inject, ViewChild, ElementRef } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { PaginationInstance } from 'ngx-pagination'
 
@@ -41,7 +40,6 @@ export class CardViewComponent implements OnInit, OnDestroy {
 
   constructor(
     private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
-    //   @Inject(DOCUMENT) private document: Document,
   ) {
     console.log(`CardViewer: Getting declarationsSummariesSubscription`)
     this.declarationsSummariesSubscription = disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
@@ -57,8 +55,6 @@ export class CardViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // fetch data async after constructior when async pipe subscribes to the disasters$ observable
-    // console.error(`CardViewer: Got observable: ${this.disasterDeclarationsSummary}   ${JSON.stringify(this.disasterDeclarationsSummary)}`)
   }
 
   displayDataSet() {
@@ -82,8 +78,15 @@ export class CardViewComponent implements OnInit, OnDestroy {
     //console.log(`CardViewer: Received new per page value ${this.config.itemsPerPage}`)
   }
 
-
   //  ======================= Filter & Sort ==============================
+
+  // https://imfaber.me/typescript-how-to-iterate-over-object-properties/
+  getDatasetProperties(index: number = 0) {
+    let propArray: propArrayT[] = [] // NOTE: special sortServer tag is added in the template/html
+    Object.entries(this.disasterDeclarationsSummaries[index])
+      .forEach(([key, value]) => propArray.push({ key: key as keyof DisasterDeclarationsSummaryType, value: value }))
+    return propArray
+  }
 
   filterSort() {
     // filter, then sort, based on latest user selections
@@ -95,6 +98,11 @@ export class CardViewComponent implements OnInit, OnDestroy {
       this.filteredDisasterDeclarationsSummaries = this.filteredDisasterDeclarationsSummaries.sort((x, y) => this.sortFn(x, y))
       for (let i = 0; i < 15; i++) {
         console.error(`After sort: ${i}) ${this.filteredDisasterDeclarationsSummaries[i][this.sortKey]}`)
+      }
+    } else {
+      if (this.ascend < 0) {
+        // TODO: handle decending sort
+        console.error(`CardViewer descending sort of server order not implemented yet!`)
       }
     }
   }
@@ -119,27 +127,14 @@ export class CardViewComponent implements OnInit, OnDestroy {
   }
 
   shouldDisplay(el: DisasterDeclarationsSummaryType) {
-    // WIERD: can't access this.types within this filter function: scoping issues?!
-    // const myTypes = DisasterTypes
     return DisasterTypes.find(ell => ell.type == el.incidentType)?.display
   }
 
-  /**
-   * https://imfaber.me/typescript-how-to-iterate-over-object-properties/
-   */
-  getDatasetProperties(index: number = 0) {
-    let propArray: propArrayT[] = []//this.serverSortProperty] //! this special tag could also be added in the html!
-    Object.entries(this.disasterDeclarationsSummaries[index])
-      .forEach(([key, value]) => propArray.push({ key: key as keyof DisasterDeclarationsSummaryType, value: value }))
-    return propArray
-  }
-
-  // handle Keydown of space or return?
+  // TODO: handle Keydown of space or return?
   //if (event.key === 'Enter' || event.key === ' ') {event.preventDefault(); this.toggleStatus();}
   sortOrder(ev: Event) {
     let selectElement = document.querySelector('#sortBy') as HTMLSelectElement
 
-    //debugger
     if (selectElement.getAttribute('aria-checked') === 'true') {
       this.ascend = 1
     } else {
@@ -158,6 +153,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
     console.log(`CardViewer: Sorting ${this.ascend == 1 ? "ascending" : "decending"} by ${keyString}...`)
 
     if (keyString == this.serverSort) {
+      this.sortKey = undefined
       console.warn(`CardViewer sortBy: sorting by 'server order': i.e., NOTHING!`)
       if (this.ascend < 0) {
         // TODO: handle decending sort
@@ -166,14 +162,12 @@ export class CardViewComponent implements OnInit, OnDestroy {
     } else {
       console.warn(`CardViewer: sortBy ${keyString}; sorting ${this.disasterDeclarationsSummaries.length} records`)
       this.sortKey = keyString as keyof DisasterDeclarationsSummaryType
-      //this.sortKey = 'designatedArea' //this.propArray[4].key
-      this.filterSort()
     }
+    this.filterSort()
   }
 
   sortFn(x: DisasterDeclarationsSummaryType, y: DisasterDeclarationsSummaryType) {
     if (this.sortKey != undefined) {
-      //if (sortKey && x && y) {
       let xx = x[this.sortKey]
       let yy = y[this.sortKey]
       if (xx && yy) {
