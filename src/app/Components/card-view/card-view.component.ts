@@ -34,7 +34,10 @@ export class CardViewComponent implements OnInit, OnDestroy {
   disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
   types = DisasterTypes
   propArray!: propArrayT[]
+
   serverSortProperty = { key: 'server order', value: 'index' }
+  assend = true
+  prevKey = ""
 
   constructor(
     private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
@@ -126,44 +129,42 @@ export class CardViewComponent implements OnInit, OnDestroy {
   sortBy(ev: Event) {
     let selectElement = document.querySelector('#sortOrder') as HTMLSelectElement;
     let key = selectElement?.value
-    console.log(`CardViewer: Sorting by ${key}...`)
 
+    // if users re-selects key, then sort decending
+    if (this.prevKey == key) {
+      this.assend = !this.assend
+    } else {
+      this.assend = true
+      this.prevKey = key
+    }
 
-    // get key to sort by...
-    //let Object.keys(this.disasterDeclarationsSummaries[0]).find(t=>t.product_id ==  key)
-
-
+    console.log(`CardViewer: Sorting ${this.assend ? "assending" : "decending"} by ${key}...`)
 
     if (key == this.serverSortProperty.key) {
       // no need to sort, but IF its already been sorted...
       console.warn(`CardViewer sortBy: sorting by 'server order' WILL IGNORE PREVIOUS FILTERS!`)
       this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries
     } else {
-      let cntrl = document.getElementById(key) as HTMLInputElement
+      // let cntrl = document.getElementById(key) as HTMLInputElement
 
-      let arrayItem = this.propArray.find(el => el.key == key)
-      if (!arrayItem) {
-        console.error(`CardViewer: could NOT find ${key} in list of disaster dataset properties`)
-        return
-      }
+      // let arrayItem = this.propArray.find(el => el.key == key)
+      // if (!arrayItem) {
+      //   console.error(`CardViewer: could NOT find ${key} in list of disaster dataset properties`)
+      //   return
+      // }
 
 
       // NOW filter all summaries by whether they should be displayed.
-      // Old way of only displaying card only if that key's display was true messed up pagination...)
+      // Old way of only displaying card, only if that key's display was true, messed up pagination...)
       console.warn(`CardViewer: sortBy ${key}; sorting ${this.disasterDeclarationsSummaries.length} records`)
       // ! BUG: Need to do BOTH sort & filtering...
 
-      const sorted = this.sortByy('label', this.x)
-
-
-      this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries.sort(this.sortFn(x, y))
+      this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries.sort(this.sortFn(x, y, key, assend))
       //arrayOfObjects.sort((a, b) => (a.propertyToSortBy < b.propertyToSortBy ? -1 : 1))
       //arrayOfObjects.sort((a.propertyToSortBy, b.propertyToSortBy) => (a.propertyToSortBy < b.propertyToSortBy ? -1 : 1))
       //arrayOfObjects.sort((a.propertyToSortBy, b.propertyToSortBy) => (a.propertyToSortBy > b.propertyToSortBy ? -1 : 1))
     }
   }
-
-
 
   sortFn(x: DisasterDeclarationsSummaryType, y: DisasterDeclarationsSummaryType,
     sortKey: keyof DisasterDeclarationsSummaryType, assending: boolean = true) {
