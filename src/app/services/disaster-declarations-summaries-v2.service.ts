@@ -104,7 +104,7 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
         next: (v) => {
           // ! This gets -- but does NOT save the subscribed object!
           //console.log(v)
-          console.log(`disaster via HttpClient: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`)
+          //console.log(`disaster via HttpClient: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`)
           return v
         },
         error: (e) => console.error(`Subscription via HttpClient got error: ${e}`),
@@ -128,7 +128,7 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
       next: (v) => {
         // ! This gets -- but does NOT save the subscribed object!
         //console.log(v)
-        console.log(`disaster via BSubject: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`)
+        //console.log(`disaster via BSubject: ${v.DisasterDeclarationsSummaries[0].femaDeclarationString}; state: ${v.DisasterDeclarationsSummaries[0].state}; #:${v.DisasterDeclarationsSummaries[0].disasterNumber}`)
       },
       error: (e) => console.error(`Subscription via BSubject got error: ${e}`),
       complete: () => console.info('Subscription via BSubject complete')
@@ -210,7 +210,7 @@ export class DisasterDeclarationsSummariesV2Service implements OnInit, OnDestroy
     //localStorage.setItem(this.storageLocalName, JSON.stringify(newSettings))
     this.disasterDeclarationsSummary = newDisasterDeclarationsSummary
     this.declarationsSummarySubject$.next(this.disasterDeclarationsSummary)
-    console.log(`Notified subscribers of new Disaster Summaries object ${JSON.stringify(newDisasterDeclarationsSummary)} `)
+    console.log(`Notified subscribers of new Disaster Summaries object`) // ${JSON.stringify(newDisasterDeclarationsSummary)} `)
   }
 
   /**
