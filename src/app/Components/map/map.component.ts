@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { DOCUMENT, JsonPipe } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
 import { Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import { Observable, Subscription, throwError } from 'rxjs';
 
-import { GoogleMap } from '@angular/google-maps' //https://github.com/angular/components/blob/main/src/google-maps/
+import { GoogleMap, MapMarker } from '@angular/google-maps' //https://github.com/angular/components/blob/main/src/google-maps/
 import { MarkerClusterer } from '@googlemaps/markerclusterer'
 
-import { DisasterDeclarationsSummary, DisasterDeclarationsSummaryType, DisasterTypes, WebDisasterSummariesService } from '../../services';
+import { DisasterDeclarationsSummary, DisasterDeclarationsSummaryType, DisasterTypes, DisasterDeclarationsSummariesV2Service, WebDisasterSummariesService } from '../../services';
 import { Common } from ".."
 
 
@@ -25,6 +26,7 @@ import { Common } from ".."
  *
  */
 
+
 declare const google: any // declare tells compiler "this variable exists (from elsewhere) & can be referenced by other code. There's no need to compile this statement"
 /*
 google-maps: OLD
@@ -34,6 +36,8 @@ GoogleMapsModule (their Angular wrapper) exports three components that we can us
 - GoogleMap: this is the wrapper around Google Maps, available via the google-map selector
 - MapMarker: used to add markers on the map, available via the map-marker selector
 - MapInfoWindow: the info window of a marker, available via the map-info-window selector
+These already imported in app.module.ts
+from https://timdeschryver.dev/blog/google-maps-as-an-angular-component
 
 @google/markerclusterer: OLD
 @googlemaps/markerclustererplus: OLD
@@ -69,7 +73,7 @@ https://github.com/angular/components/blob/main/src/google-maps/
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-  @Input() disasters!: DisasterDeclarationsSummary
+  // @Input() disasters!: DisasterDeclarationsSummary
   // Get reference to map components, for later use
   @ViewChild(GoogleMap, { static: false }) ngMap!: GoogleMap
 
@@ -84,17 +88,20 @@ export class MapComponent implements OnInit {
     scrollwheel: true,
     disableDoubleClickZoom: false,
     mapTypeId: google.maps.MapTypeId.TERRAIN,  // https://developers.google.com/maps/documentation/javascript/maptypes
-    zoom: 12,
+    zoom: 4,
     maxZoom: 21,
-    minZoom: 4,
-    center: { lat: 40.45, lng: -122.46 },
+    minZoom: 3,
+    center: { lat: 40, lng: -100 },
     //draggableCursor: 'crosshair', //https://www.w3.org/TR/CSS21/ui.html#propdef-cursor has others...
     //heading: 90,
   }
 
   infowindow = new google.maps.InfoWindow({ maxWidth: 150, })
 
+  private declarationsSummariesSubscription!: Subscription
+  disasterDeclarationsSummary!: DisasterDeclarationsSummary
   disasterArray!: DisasterDeclarationsSummaryType[]
+  //disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
 
   // Google MapMarker only wraps google.maps.LatLngLiteral (positions) - NOT google.maps.Marker: styles, behaviors, etc. -- But might be able to set marker options: see https://github.com/angular/components/blob/main/src/google-maps/README.md#the-options-input
   markers: google.maps.Marker[] = []
@@ -117,12 +124,31 @@ export class MapComponent implements OnInit {
   //  public zoomDisplay = 10 // what's displayed below main map
 
 
+
+
+
   constructor(
-    //readonly webDisasterSummariesService: WebDisasterSummariesService,
+    readonly disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
     httpClient: HttpClient,
-    @Inject(DOCUMENT) protected document: Document
+    //  @Inject(DOCUMENT) protected document: Document
   ) {
     console.log(`======== Constructor() ============ Google Map, using version ${google.maps.version}`)
+
+
+    this.declarationsSummariesSubscription = this.disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
+      next: (newDisasterDeclarationsSummary) => {
+        this.disasterDeclarationsSummary = newDisasterDeclarationsSummary
+        this.displayDataSet()
+      },
+      error: (e) => console.error('declarationsSummariesSubscription got:' + e),
+      complete: () => console.info('declarationsSummariesSubscription complete')
+    })
+
+    console.log(`MapViewComponent: Requested declarationsSummariesSubscription, awaiting results`)
+
+
+
+
 
     // https://github.com/angular/components/tree/master/src/google-maps/map-marker-clusterer
     // this.markerPositions = []; evil angular wrapper
@@ -165,46 +191,26 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
   }
 
   ngOnInit(): void {
-    console.log("ngOnInit()")
+    console.log("Map: ngOnInit()")
     //this.center = { lat: this.settings.defLat, lng: this.settings.defLng }
     //this.mouseLatLng = this.center
 
-    if (this.disasters) {
-      console.log(`ngInit got disasters: ${JSON.stringify(this.disasters.DisasterDeclarationsSummaries[0])}`)
+    if (this.disasterArray) {
+      console.log(`ngInit got disasters.`) //: ${JSON.stringify(this.disasterArray[0])}`)
     } else {
       console.warn(`ngInit hasn't got disasters yet!`)
     }
 
   }
+  displayDataSet() {
 
-  // ---------------- Init Map -----------------
-  /**
-   *
-   * @returns
-   */
-  initMap() {
-    console.log("initMap()")
+    console.log(`MapViewComponent: Received new disasterDeclarationsSummary via subscription.`) // \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
 
-    // Auto-center maps on bounding coordinates centroid of all markers, then zoom map to show all points
-    // this.center = { lat: this.settings ? this.settings.defLat : 0, lng: this.settings ? this.settings.defLng : 0 }
-    // this.mouseLatLng = this.center
-    // this.zoom = this.settings ? this.settings.google.defZoom : 15
+    //  console.log(`MapViewComponent: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
 
-    if (this.disasters) {
-      console.log(`initMap got disasters: ${JSON.stringify(this.disasters.DisasterDeclarationsSummaries[0])}`)
-    } else {
-      console.warn(`initMap hasn't got disasters yet!`)
-      return
-    }
+    this.disasterArray = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
 
-    if (this.gMap) {
-      console.log(`initMap(): this.gMap is Initialized`)
-      // this.gMap.fitBounds(this.disasterArray.boundsToBound(this.fieldReports!.bounds))
-      //      this.gMap.setMapTypeId("roadmap")
-      //this.gMap.setMapTypeId('terrain')
-    } else {
-      console.error(`initMap(): this.gMap NOT INitialized yet!`)
-    }
+    this.startMapping()
   }
 
   /**
@@ -217,14 +223,35 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
   onMapInitialized(mappy: google.maps.Map) {
     console.log(`onMapInitialized()`)
 
-    if (this.disasters) {
-      console.log(`onMapInitialized got disasters: ${JSON.stringify(this.disasters.DisasterDeclarationsSummaries[0])}`)
+    this.gMap = mappy
+
+    this.startMapping()
+  }
+
+
+  startMapping() {
+    // called if we've Map OR Disasters, it only proceeds if both are valid...
+    console.log(`startMapping: verify we've both map and disaster array...`)
+
+    if (this.disasterArray) {
+      console.log(`ngInit got disasters.`) //: ${JSON.stringify(this.disasterArray[0])}`)
     } else {
-      console.warn(`onMapInitialized hasn't got disasters yet!`)
+      console.warn(`startMapping hasn't got disasters yet!`)
       return
     }
 
-    this.gMap = mappy
+    if (!this.gMap) {
+      console.error(`showMarkers() got null gMap`)
+      return
+    }
+
+    console.log(`startMapping got map too, so all set. Onward...`)
+    // Auto-center maps on bounding coordinates centroid of all markers, then zoom map to show all points
+    // this.center = { lat: this.settings ? this.settings.defLat : 0, lng: this.settings ? this.settings.defLng : 0 }
+    // this.mouseLatLng = this.center
+    // this.zoom = this.settings ? this.settings.google.defZoom : 15
+
+
     // Listen in on mouse moves/zooms
     //this.captureGMoveAndZoom(this.gMap)
 
@@ -240,26 +267,8 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
       // onClusterClick?: onClusterClickHandler,
     })
 
-    this.getAndDisplayDisasterReports() // REVIEW: Works with NO Markers?
-
-    this.updateDisasterReports()
-
+    this.showMarkers()
   }
-
-  getAndDisplayDisasterReports() {
-    console.log('getAndDisplayDisasterReports')
-    if (this.disasters) {
-      console.log(`getAndDisplayDisasterReports got disasters: ${JSON.stringify(this.disasters.DisasterDeclarationsSummaries[0])}`)
-    } else {
-      console.warn(`getAndDisplayDisasterReports hasn't got disasters yet!`)
-      return
-    }
-  }
-
-  updateDisasterReports() {
-    console.log('updateDisasterReports: ANY NEED FOR THIS?!')
-  }
-
 
   // ------------------------------------  Markers  ---------------------------------------
 
@@ -275,10 +284,7 @@ See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.
      */
   // Shows any markers currently in the array.
   showMarkers(): void {
-    if (!this.gMap) {
-      console.error(`showMarkers() got null gMap`)
-      return
-    }
+
     this.markers.forEach((i) => i.setMap(this.gMap))
   }
 

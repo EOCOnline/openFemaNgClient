@@ -5,10 +5,17 @@ import { NgxPaginationModule } from 'ngx-pagination'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component';
 
-import { DetailViewComponent, GridViewComponent, ListItemComponent, FooterComponent, CardViewComponent, NavbarComponent, ListViewComponent, CardComponent, MapComponent, MapViewComponent } from './components';
+import { DetailViewComponent, GridViewComponent, ListItemComponent, FooterComponent, CardViewComponent, NavbarComponent, ListViewComponent, CardComponent, MapComponent } from './components';
 import { AgGridModule } from 'ag-grid-angular';
-import { GoogleMap } from '@angular/google-maps';
+//import { GoogleMap, MapMarker, MapInfoWindow } from '@angular/google-maps';
 import { GoogleMapsModule } from '@angular/google-maps'
+/**
+ * https://timdeschryver.dev/blog/google-maps-as-an-angular-component:
+ * The GoogleMapsModule exports three components that we can use:
+ * GoogleMap: this is the wrapper around Google Maps, available via the google-map selector
+ * MapMarker: used to add markers on the map, available via the map-marker selector
+ * MapInfoWindow: the info window of a marker, available via the map-info-window selector
+ */
 
 @NgModule({
   declarations: [
@@ -22,8 +29,9 @@ import { GoogleMapsModule } from '@angular/google-maps'
     ListItemComponent,
     FooterComponent,
     MapComponent,
-    MapViewComponent,
-    //! BUG: GoogleMapsModule,
+    //MapViewComponent,
+    // GoogleMap,
+    // MapMarker,
     // GoogleMaps,
   ],
   imports: [
@@ -32,7 +40,7 @@ import { GoogleMapsModule } from '@angular/google-maps'
     HttpClientModule,
     NgxPaginationModule,
     AgGridModule,
-    //GoogleMap,
+    GoogleMapsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
