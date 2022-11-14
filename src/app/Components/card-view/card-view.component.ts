@@ -10,7 +10,8 @@ import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, DisasterD
   standalone: true,  // https://angular.io/guide/standalone-components
     imports: [CommonModule, CardComponent],
   */
-type propArrayT = { key: string, value: string | number | boolean | null }
+
+type propArrayT = { key: keyof DisasterDeclarationsSummaryType | undefined, value: string | number | boolean | null }
 
 @Component({
   selector: 'card-view',
@@ -20,8 +21,12 @@ type propArrayT = { key: string, value: string | number | boolean | null }
 })
 export class CardViewComponent implements OnInit, OnDestroy {
   @Input('data') filteredDisasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
-  //  @Input('data') !: DisasterDeclarationsSummaryType[]
   @ViewChild('NumPerPage') NumPerPage!: ElementRef
+
+  private declarationsSummariesSubscription!: Subscription
+  private disasterDeclarationsSummary!: DisasterDeclarationsSummary
+  disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
+  types = DisasterTypes
 
   // https://michaelbromley.github.io/ngx-pagination
   config: PaginationInstance = {
@@ -29,16 +34,10 @@ export class CardViewComponent implements OnInit, OnDestroy {
     currentPage: 1
   }
 
-  private declarationsSummariesSubscription!: Subscription
-  private disasterDeclarationsSummary!: DisasterDeclarationsSummary
-  disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
-  types = DisasterTypes
   propArray!: propArrayT[]
-
-  serverSortProperty = { key: 'server order', value: 'index' }
-  assend = true
-  prevKey = ""
-  i = 0
+  serverSort = 'server order'
+  sortKey!: keyof DisasterDeclarationsSummaryType | undefined  // undefined is flag for serverSort: no sort
+  ascend = 1
 
   constructor(
     private disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
@@ -72,6 +71,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
     this.propArray = this.getDatasetProperties(0)
   }
 
+  //  ========================== Paginate =================================
   absoluteIndex(indexOnPage: number): number {
     return this.config.itemsPerPage * (this.config.currentPage - 1) + indexOnPage;
   }
@@ -82,7 +82,23 @@ export class CardViewComponent implements OnInit, OnDestroy {
     //console.log(`CardViewer: Received new per page value ${this.config.itemsPerPage}`)
   }
 
-  //!TODO: Merge sortBy & onChecked, so both run in predictable way
+
+  //  ======================= Filter & Sort ==============================
+
+  filterSort() {
+    // filter, then sort, based on latest user selections
+
+    // start with full dataset
+    this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries.filter(this.shouldDisplay)
+    console.warn(`CardViewer: refiltered to ${this.filteredDisasterDeclarationsSummaries.length} records. Sort on ${this.sortKey}`)
+    if (this.sortKey != undefined) {
+      this.filteredDisasterDeclarationsSummaries = this.filteredDisasterDeclarationsSummaries.sort((x, y) => this.sortFn(x, y))
+      for (let i = 0; i < 15; i++) {
+        console.error(`After sort: ${i}) ${this.filteredDisasterDeclarationsSummaries[i][this.sortKey]}`)
+      }
+    }
+  }
+
   onChecked(type: string) {
     let cntrl = document.getElementById(type) as HTMLInputElement
 
@@ -98,9 +114,8 @@ export class CardViewComponent implements OnInit, OnDestroy {
 
     // NOW filter all summaries by whether they should be displayed.
     // Old way of only displaying card only if that type's display was true messed up pagination...)
-    console.warn(`CardViewer: onChecked refiltering ${this.disasterDeclarationsSummaries.length} records`)
-    this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries.filter(this.shouldDisplay)
-    console.warn(`CardViewer: onChecked refiltered to ${this.filteredDisasterDeclarationsSummaries.length}`)
+    console.warn(`CardViewer: onChecked refiltering all ${this.disasterDeclarationsSummaries.length} records`)
+    this.filterSort()
   }
 
   shouldDisplay(el: DisasterDeclarationsSummaryType) {
@@ -109,89 +124,68 @@ export class CardViewComponent implements OnInit, OnDestroy {
     return DisasterTypes.find(ell => ell.type == el.incidentType)?.display
   }
 
-  filterBy(type: string) {
-    return this.types.find(el => el.type == type)?.display
-  }
-
   /**
-   *
    * https://imfaber.me/typescript-how-to-iterate-over-object-properties/
    */
   getDatasetProperties(index: number = 0) {
-    let propArray: propArrayT[] = [this.serverSortProperty] //! this special tag could also be added in the html!
+    let propArray: propArrayT[] = []//this.serverSortProperty] //! this special tag could also be added in the html!
     Object.entries(this.disasterDeclarationsSummaries[index])
-      .forEach(([key, value]) => {
-        // console.log(`key: ${key}, ${typeof key}`)
-        propArray.push({ 'key': key, 'value': value }
-        )
-      })
-
+      .forEach(([key, value]) => propArray.push({ key: key as keyof DisasterDeclarationsSummaryType, value: value }))
     return propArray
   }
 
+  // handle Keydown of space or return?
+  //if (event.key === 'Enter' || event.key === ' ') {event.preventDefault(); this.toggleStatus();}
+  sortOrder(ev: Event) {
+    let selectElement = document.querySelector('#sortBy') as HTMLSelectElement
 
-  //!TODO: Merge sortBy & onChecked, so both run in predictable way
-  sortBy(ev: Event) {
-    let selectElement = document.querySelector('#sortOrder') as HTMLSelectElement;
-    let key = selectElement?.value
-
-    // if users re-selects key, then sort decending
-    if (this.prevKey == key) {
-      this.assend = !this.assend
+    //debugger
+    if (selectElement.getAttribute('aria-checked') === 'true') {
+      this.ascend = 1
     } else {
-      this.assend = true
-      this.prevKey = key
+      this.ascend = -1
     }
+    selectElement.setAttribute('aria-checked', this.ascend == 1 ? 'false' : 'true')
 
-    console.log(`CardViewer: Sorting ${this.assend ? "assending" : "decending"} by ${key}...`)
+    this.filterSort()
+    console.log(`CardViewer: sort in ${this.ascend == 1 ? "as" : "de"}sending order`)
+  }
 
-    if (key == this.serverSortProperty.key) {
-      // no need to sort, but IF its already been sorted...
-      console.warn(`CardViewer sortBy: sorting by 'server order' WILL IGNORE PREVIOUS FILTERS!`)
-      this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries
-    } else {
-      // let cntrl = document.getElementById(key) as HTMLInputElement
+  sortBy(ev: Event) {
+    let selectElement = document.querySelector('#sortBy') as HTMLSelectElement
+    let keyString = selectElement?.value
 
-      // let arrayItem = this.propArray.find(el => el.key == key)
-      // if (!arrayItem) {
-      //   console.error(`CardViewer: could NOT find ${key} in list of disaster dataset properties`)
-      //   return
-      // }
+    console.log(`CardViewer: Sorting ${this.ascend == 1 ? "ascending" : "decending"} by ${keyString}...`)
 
-
-      // NOW filter all summaries by whether they should be displayed.
-      // Old way of only displaying card, only if that key's display was true, messed up pagination...)
-      console.warn(`CardViewer: sortBy ${key}; sorting ${this.disasterDeclarationsSummaries.length} records`)
-      // ! BUG: Need to do BOTH sort & filtering...
-
-      let sortKey: keyof DisasterDeclarationsSummaryType = 'designatedArea' //this.propArray[4].key
-
-      this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries.sort((x, y) => this.sortFn(x, y, sortKey, this.assend))
-      for (let i = 0; i < 15; i++) {
-        console.error(`After sort: ${i}) ${this.filteredDisasterDeclarationsSummaries[i][sortKey]}`)
+    if (keyString == this.serverSort) {
+      console.warn(`CardViewer sortBy: sorting by 'server order': i.e., NOTHING!`)
+      if (this.ascend < 0) {
+        // TODO: handle decending sort
+        console.error(`CardViewer descending sort of server order not implemented yet!`)
       }
+    } else {
+      console.warn(`CardViewer: sortBy ${keyString}; sorting ${this.disasterDeclarationsSummaries.length} records`)
+      this.sortKey = keyString as keyof DisasterDeclarationsSummaryType
+      //this.sortKey = 'designatedArea' //this.propArray[4].key
+      this.filterSort()
     }
   }
 
-  sortFn(x: DisasterDeclarationsSummaryType, y: DisasterDeclarationsSummaryType,
-    sortKey: keyof DisasterDeclarationsSummaryType, assending: boolean = true) {
-
-    let assention = assending ? 1 : -1
-    this.i = 0
-
-    //    if (sortKey && x && y) {
-    let xx = x[sortKey]
-    let yy = y[sortKey]
-    if (xx && yy) {
-      if (xx > yy) return assention
-      if (xx < yy) return -assention
+  sortFn(x: DisasterDeclarationsSummaryType, y: DisasterDeclarationsSummaryType) {
+    if (this.sortKey != undefined) {
+      //if (sortKey && x && y) {
+      let xx = x[this.sortKey]
+      let yy = y[this.sortKey]
+      if (xx && yy) {
+        if (xx > yy) return this.ascend
+        if (xx < yy) return -this.ascend
+      }
     }
-    //  }
     return 0
   }
 
   // https://stackoverflow.com/a/62311449/18004414
-  getKeyValue = <T extends {}, U extends keyof T>(key: U) => (obj: T) => obj[key]
+  getKeyValue_UNUSED = <T extends {}, U extends keyof T>(key: U) => (obj: T) => obj[key]
 
   ngOnDestroy(): void {
     this.declarationsSummariesSubscription?.unsubscribe()

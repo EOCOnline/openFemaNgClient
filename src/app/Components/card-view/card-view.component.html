@@ -1,28 +1,42 @@
 <h1>Card View</h1>
 
 <div class="sort">
-  <label for="sortOrder" class="header">Sort by this property: </label>
+  <label for="sortBy" class="header">Sort by this property: </label>
 
-  <select name="sortOrder" id="sortOrder" (change)="sortBy($event)">
+  <select name="sortBy" id="sortBy" (change)="sortBy($event)">
     <option value="" disabled>--Please choose an option--</option>
+    <option value={{serverSort}}>{{serverSort}}</option>
     <<ng-container *ngFor="let prop of propArray">
       <option value="{{prop.key}}">{{prop.key}}</option>
       </ng-container>
   </select>
-</div>
 
+  <span class="switch" aria-checked="true" (click)="sortOrder($event)">
+    <span>
+      <label for="switch">Sort Order:</label>
+      <span *ngIf="ascend==1; else descending" class="nonLabel">
+        <span class="material-symbols-outlined" id="sortIcon">arrow_upward</span>
+        <span id="direction">Ascending</span>
+      </span>
+      <ng-template #descending>
+        <span class="material-symbols-outlined" id="sortIcon">arrow_downward</span>
+        <span id="direction">Descending</span>
+      </ng-template>
+    </span>
+  </span>
+</div>
 
 <div class="checks">
   <ul class="horizList">
     <label class="header">Disaster Types to Display: </label>
     <span *ngFor="let type of types">
-      <li class="check" (click)="onChecked(type.type)"><input type="checkbox" attr.id=' {{type.type}}' checked="true">
+      <li class="check" (click)="onChecked(type.type)">
+        <input type="checkbox" attr.id=' {{type.type}}' checked="true">
         <label> {{type.type}}</label>
       </li>
     </span>
   </ul>
 </div>
-
 
 <div class="content">
   <!-- LENGTH={{disasterDeclarationsSummaries.length}}<br -->
@@ -31,7 +45,6 @@
     <!-- card [disaster]=disaster [index]=i *ngIf="filterBy(disaster.incidentType)"></card -->
   </div>
 </div>
-
 
 <div class="text-center paginator">
   <label class="header">Number/Page: </label>
