@@ -1,15 +1,28 @@
 <h1>Card View</h1>
 
+<div class="sort">
+  <label for="sortOrder" class="header">Sort by this property: </label>
+
+  <select name="sortOrder" id="sortOrder" (change)="sortBy($event)">
+    <option value="" disabled>--Please choose an option--</option>
+    <<ng-container *ngFor="let prop of propArray">
+      <option value="{{prop.key}}">{{prop.key}}</option>
+      </ng-container>
+  </select>
+</div>
+
+
 <div class="checks">
   <ul class="horizList">
-    Disaster Types to Display:
+    <label class="header">Disaster Types to Display: </label>
     <span *ngFor="let type of types">
-      <li class="check" (click)="onChecked(type.type)"><input type="checkbox" attr.id='{{type.type}}' checked="true">
+      <li class="check" (click)="onChecked(type.type)"><input type="checkbox" attr.id=' {{type.type}}' checked="true">
         <label> {{type.type}}</label>
       </li>
     </span>
   </ul>
 </div>
+
 
 <div class="content">
   <!-- LENGTH={{disasterDeclarationsSummaries.length}}<br -->
@@ -19,9 +32,10 @@
   </div>
 </div>
 
-<br>
-<div class="text-center">
-  <label>Number/Page: </label><input #NumPerPage id="idNumPerPage" size="30" type="number" [value]="config.itemsPerPage"
+
+<div class="text-center paginator">
+  <label class="header">Number/Page: </label>
+  <input #NumPerPage id="idNumPerPage" size="30" type="number" [value]="config.itemsPerPage"
     (change)="onNumberPerPage()" (blur)="onNumberPerPage()">
   <pagination-controls (pageChange)="config.currentPage = $event"></pagination-controls>
   <!-- [maxSize]="10" -->
