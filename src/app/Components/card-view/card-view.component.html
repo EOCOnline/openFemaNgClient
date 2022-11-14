@@ -11,9 +11,9 @@
       </ng-container>
   </select>
 
-  <span class="switch" aria-checked="true" (click)="sortOrder($event)">
+  <span class="sortOrderSwitch" aria-checked="true" (click)="sortOrder($event)">
     <span>
-      <label for="switch">Sort Order:</label>
+      <label>Sort Order:</label>
       <span *ngIf="ascend==1; else descending" class="nonLabel">
         <span class="material-symbols-outlined" id="sortIcon">arrow_upward</span>
         <span id="direction">Ascending</span>
@@ -39,10 +39,8 @@
 </div>
 
 <div class="content">
-  <!-- LENGTH={{disasterDeclarationsSummaries.length}}<br -->
   <div *ngFor="let disaster of filteredDisasterDeclarationsSummaries | paginate: config; index as i">
     <card [disaster]=disaster [index]=absoluteIndex(i)></card>
-    <!-- card [disaster]=disaster [index]=i *ngIf="filterBy(disaster.incidentType)"></card -->
   </div>
 </div>
 
@@ -50,6 +48,5 @@
   <label class="header">Number/Page: </label>
   <input #NumPerPage id="idNumPerPage" size="30" type="number" [value]="config.itemsPerPage"
     (change)="onNumberPerPage()" (blur)="onNumberPerPage()">
-  <pagination-controls (pageChange)="config.currentPage = $event"></pagination-controls>
-  <!-- [maxSize]="10" -->
+  <pagination-controls (pageChange)="config.currentPage = $event" [maxSize]="10"></pagination-controls>
 </div>

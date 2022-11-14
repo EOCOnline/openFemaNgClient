@@ -95,10 +95,8 @@ export class CardViewComponent implements OnInit, OnDestroy {
     this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummaries.filter(this.shouldDisplay)
     console.warn(`CardViewer: refiltered to ${this.filteredDisasterDeclarationsSummaries.length} records. Sort on ${this.sortKey}`)
     if (this.sortKey != undefined) {
-      this.filteredDisasterDeclarationsSummaries = this.filteredDisasterDeclarationsSummaries.sort((x, y) => this.sortFn(x, y))
-      for (let i = 0; i < 15; i++) {
-        console.error(`After sort: ${i}) ${this.filteredDisasterDeclarationsSummaries[i][this.sortKey]}`)
-      }
+      this.filteredDisasterDeclarationsSummaries = this.filteredDisasterDeclarationsSummaries.sort((x, y) => this.sortByObjKey(x, y))
+      // for (let i = 0; i < 15; i++) { console.log(`After sort: ${i}) ${this.filteredDisasterDeclarationsSummaries[i][this.sortKey]}`)}
     } else {
       if (this.ascend < 0) {
         // TODO: handle decending sort
@@ -119,10 +117,8 @@ export class CardViewComponent implements OnInit, OnDestroy {
     cntrl.checked = arrayItem.display
 
     console.log(`CardViewer: now ${arrayItem.display ? '' : 'NOT '}displaying ${cntrl.id}`)
-
-    // NOW filter all summaries by whether they should be displayed.
-    // Old way of only displaying card only if that type's display was true messed up pagination...)
     console.warn(`CardViewer: onChecked refiltering all ${this.disasterDeclarationsSummaries.length} records`)
+
     this.filterSort()
   }
 
@@ -141,9 +137,9 @@ export class CardViewComponent implements OnInit, OnDestroy {
       this.ascend = -1
     }
     selectElement.setAttribute('aria-checked', this.ascend == 1 ? 'false' : 'true')
+    console.log(`CardViewer: sort in ${this.ascend == 1 ? "as" : "de"}sending order`)
 
     this.filterSort()
-    console.log(`CardViewer: sort in ${this.ascend == 1 ? "as" : "de"}sending order`)
   }
 
   sortBy(ev: Event) {
@@ -166,7 +162,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
     this.filterSort()
   }
 
-  sortFn(x: DisasterDeclarationsSummaryType, y: DisasterDeclarationsSummaryType) {
+  sortByObjKey(x: DisasterDeclarationsSummaryType, y: DisasterDeclarationsSummaryType) {
     if (this.sortKey != undefined) {
       let xx = x[this.sortKey]
       let yy = y[this.sortKey]
