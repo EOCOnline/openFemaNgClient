@@ -28,7 +28,7 @@ export class Common {
     let low = 0;
     let mid = 0;
     let high = arr.length - 1;
-
+    debugger
     while (low <= high) {
       mid = (low + high) / 2;
 

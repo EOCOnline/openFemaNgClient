@@ -65,7 +65,7 @@ https://github.com/angular/components/blob/main/src/google-maps/
 //standalone: true,
 //imports: [CommonModule, RouterModule],
 
-import * as ZipCode2 from '../../../assets/data/USZipCodes2013.json'
+import * as ZipCode2 from '../../../assets/data/USZipCodes2013numeric.json'
 
 
 @Component({
@@ -78,7 +78,7 @@ export class MapComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) ngMap!: GoogleMap
 
   mouseLatLng!: google.maps.LatLngLiteral
-  readonly ZipCode = require('../../../assets/data/USZipCodes2013.json')
+  readonly ZipCode = require('../../../assets/data/USZipCodes2013numeric.json')
   private zips!: number[]
   private zips2!: number[]
 
@@ -289,27 +289,25 @@ export class MapComponent implements OnInit {
       let icon = this.iconBase + this.getDisasterTypeIcon(disaster.incidentType)
       let labelColor = this.getDisasterTypeColor(disaster.incidentType)
 
-      console.log(`displayMarkers adding marker #${i} at ${JSON.stringify(latlng)} with ${tooltipHtml}, ${disaster.femaDeclarationString}, ${labelColor}, ${icon}`)
+      if (i < 10) { console.log(`displayMarkers adding marker #${i} at ${JSON.stringify(latlng)} with ${tooltipHtml}, ${disaster.femaDeclarationString}, ${labelColor}, ${icon}`) }
       this.addMarker(latlng.lat(), latlng.lng(), disaster.femaDeclarationString, tooltipHtml, disaster.femaDeclarationString, labelColor, "14px", icon)
     }
 
     this.markerCluster.addMarkers(this.markers)
     console.log(`displayMarkers added ${this.disasterArray.length} markers`)
   }
-
+  tempI = 0
   zip2LatLng(zipCode: string) {
     // or use Or FIPS County Code?
-
-
-    let rndx = (Math.random() - .5) * 5
-    let latlng = new google.maps.LatLng(40 + rndx, -100 + rndx)  //lat: 40, lng: -100
-
-
-    let index = Common.binarySearchRecursive(this.ZipCode, Number(zipCode))
-    console.log(`zip2LatLng for ${this.ZipCode} markers got index= ${index}`)
-    //if
-    //let latlng = new google.maps.LatLng(this.ZipCode[index].lat, this.ZipCode[index].lng)  //lat: 40, lng: -100
-    //console.log(`zip2LatLng for ${this.ZipCode} markers`)
+    //    let rndx = (Math.random() - .5) * 5
+    //  let latlng = new google.maps.LatLng(40 + rndx, -100 + rndx)  //lat: 40, lng: -100
+    let zip = Number(zipCode)
+    let index = Common.binarySearchRecursive(this.zips2, zip)
+    if (this.tempI++ < 10) {
+      console.log(`zip2LatLng for ${zip} got index= ${index}`)
+    }
+    let latlng = new google.maps.LatLng(this.ZipCode.zip[index].lat, this.ZipCode.zip[index].lng)  //lat: 40, lng: -100
+    if (this.tempI++ < 10) { console.log(`zip2LatLng for ${this.ZipCode} markers`) }
     return latlng
   }
 
