@@ -6,7 +6,7 @@ import { Observable, Subscription, throwError } from 'rxjs';
 
 import { GoogleMap, MapMarker } from '@angular/google-maps' //https://github.com/angular/components/blob/main/src/google-maps/
 import { MarkerClusterer } from '@googlemaps/markerclusterer'
-//import { ZipCodes } from '../../assets/data/ZipCodes.2013.json'
+//import { ZipCodes } from '../../assets/data/USZipCodes2013.json'
 import { DisasterDeclarationsSummary, DisasterDeclarationsSummaryType, DisasterTypes, DisasterDeclarationsSummariesV2Service, WebDisasterSummariesService } from '../../services';
 import { Common } from ".."
 
@@ -26,7 +26,7 @@ import { Common } from ".."
  *
  */
 
-//import ZipCode from '../../../assets/data/ZipCodes.2013.json';
+//import ZipCode from '../../../assets/data/USZipCodes2013.json';
 
 declare const google: any // declare tells compiler "this variable exists (from elsewhere) & can be referenced by other code. There's no need to compile this statement"
 /*
@@ -79,7 +79,7 @@ export class MapComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) ngMap!: GoogleMap
 
   mouseLatLng!: google.maps.LatLngLiteral
-  const ZipCode = require('../../../assets/data/ZipCodes.2013.json')
+  readonly ZipCode = require('../../../assets/data/USZipCodes2013.json')
   // this.ngMap: GoogleMap (Angular wrapper for the same underlying map!)
   // this.gMap: google.maps.Map (JavaScript core map) - made available in onMapInitialized()
   gMap!: google.maps.Map
@@ -388,11 +388,15 @@ export class MapComponent implements OnInit {
     // or use Or FIPS County Code?
 
 
-    //let rndx = (Math.random() - .5) * 5
-    //let latlng = new google.maps.LatLng(40 + rndx, -100 + rndx)  //lat: 40, lng: -100
-    Common.binarySearchRecursive(this.ZipCode, Number(zipCode))
-    let latlng = new google.maps.LatLng()  //lat: 40, lng: -100
+    let rndx = (Math.random() - .5) * 5
+    let latlng = new google.maps.LatLng(40 + rndx, -100 + rndx)  //lat: 40, lng: -100
 
+
+    let index = Common.binarySearchRecursive(this.ZipCode, Number(zipCode))
+    console.log(`zip2LatLng for ${this.ZipCode} markers got index= ${index}`)
+    //if
+    //let latlng = new google.maps.LatLng(this.ZipCode[index].lat, this.ZipCode[index].lng)  //lat: 40, lng: -100
+    //console.log(`zip2LatLng for ${this.ZipCode} markers`)
     return latlng
   }
 

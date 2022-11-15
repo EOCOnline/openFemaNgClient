@@ -1,5 +1,5 @@
 <h1>Map View</h1>
 
-<google-map id="map" width="100%" [options]="mapOptions" (mapInitialized)="onMapInitialized($event)">
+<google-map id="map" [options]="mapOptions" (mapInitialized)="onMapInitialized($event)">
   <div id="markerDiv" #markerDiv *ngFor="let marker of markers"></div>
 </google-map>

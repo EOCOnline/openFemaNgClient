@@ -1,56 +1,8 @@
-.list-item {
-  background-color: rgb(248, 248, 230);
-  margin          : 1rem 0;
-  padding         : .4rem 0;
-  width           : 70vw;
-  border-radius   : 7px;
-  box-shadow      : rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-}
-
-.list-card_unused {
-  display       : flex;
-  flex-direction: column;
-  flex-wrap     : wrap;
-  border-radius : 10px;
-  box-shadow    : rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-  width         : 350px;
-  margin        : 10px;
-  padding       : 15px 0 10px 15px;
-}
-
-.list-head {
-  //  border-radius: 10px 10px 0 0;
-  font-size          : large;
-  //font-weight: bolder;
-  //width        : 400px;
-  //padding        : 15px 0 0 15px;
-  //padding          : 0;
-  padding            : .15rem 0;
-}
-
-.list-subhead {
-  font-size: small;
-}
-
-.list-location {
-  font-weight  : bold;
-  margin-bottom: 3px;
-}
-
-.list-date {
-  //font-weight  : bold;
-  margin-bottom: 3px;
-}
-
-.list-description {
-  font-weight    : normal;
-  //margin-bottom: 3px;
-}
-
-.list-details {
-  text-align  : right;
-  margin-right: 10px;
-  margin-left : 30vw;
+#map {
+  height          : 80vh;
+  width           : 80%;
+  margin          : 100px;
+  background-color: aqua;
 }
 
 .material-symbols-outlined {
