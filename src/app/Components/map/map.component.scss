@@ -1,8 +1,24 @@
 #map {
-  height          : 80vh;
-  width           : 90%;
-  margin          : 10px;
-  background-color: aqua;
+  //height               : 80vh;
+  //width             : 100%;
+  //margin          : 10px;
+  //background-color: aqua;
+  width : 500px;
+  height: 200px;
+}
+
+.map-container {
+  height: 100%;
+}
+
+#container,
+#gmap {
+  //height: 100%;
+  width: 100%;
+}
+
+#gMap {
+  position: relative;
 }
 
 .material-symbols-outlined {
@@ -11,4 +27,17 @@
     'wght'400,
     'GRAD'0,
     'opsz'48
+}
+
+/** Always set the map height explicitly to define the size of the div
+  *  element that contains the map.
+  */
+
+
+/* Make the map fill the page */
+html,
+body {
+  height : 100%;
+  margin : 0 1em;
+  padding: 0;
 }

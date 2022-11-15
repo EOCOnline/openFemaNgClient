@@ -137,10 +137,10 @@ export class MapComponent implements OnInit {
 
     // less 'elegant' - but faster...
     this.zips2 = []
-    for (let i = 0; i < this.ZipCode.length; i++) {
-      this.zips2.push(this.ZipCode[i].zip);
+    for (let i = 0; i < this.ZipCode.zips.length; i++) {
+      this.zips2.push(this.ZipCode.zips[i].zip);
     }
-    debugger
+    //debugger
   }
 
   ngOnInit(): void {
