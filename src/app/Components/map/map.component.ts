@@ -1,11 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { DOCUMENT, JsonPipe } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
 import { Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { Observable, Subscription, throwError } from 'rxjs';
 
 import { GoogleMap, MapMarker } from '@angular/google-maps' //https://github.com/angular/components/blob/main/src/google-maps/
 import { MarkerClusterer } from '@googlemaps/markerclusterer'
+
 //import { ZipCodes } from '../../assets/data/USZipCodes2013.json'
 import { DisasterDeclarationsSummary, DisasterDeclarationsSummaryType, DisasterTypes, DisasterDeclarationsSummariesV2Service, WebDisasterSummariesService } from '../../services';
 import { Common } from ".."
@@ -23,12 +22,10 @@ import { Common } from ".."
  * https://googlemaps.github.io/js-markermanager/
  * https://github.com/googlemaps/js-markerwithlabel
  * https://github.com/googlemaps/js-typescript-guards
- *
  */
 
-//import ZipCode from '../../../assets/data/USZipCodes2013.json';
+//declare const google: any // declare tells compiler "this variable exists (from elsewhere) & can be referenced by other code. There's no need to compile this statement"
 
-declare const google: any // declare tells compiler "this variable exists (from elsewhere) & can be referenced by other code. There's no need to compile this statement"
 /*
 google-maps: OLD
 google.maps: BEST
@@ -74,12 +71,11 @@ https://github.com/angular/components/blob/main/src/google-maps/
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-  // @Input() disasters!: DisasterDeclarationsSummary
   // Get reference to map components, for later use
   @ViewChild(GoogleMap, { static: false }) ngMap!: GoogleMap
 
   mouseLatLng!: google.maps.LatLngLiteral
-  readonly ZipCode = require('../../../assets/data/USZipCodes2013.json')
+  readonly ZipCode = require('../../../assets/data/USZipCodes2013numeric.json')
   // this.ngMap: GoogleMap (Angular wrapper for the same underlying map!)
   // this.gMap: google.maps.Map (JavaScript core map) - made available in onMapInitialized()
   gMap!: google.maps.Map
@@ -93,8 +89,6 @@ export class MapComponent implements OnInit {
     maxZoom: 21,
     minZoom: 3,
     center: { lat: 40, lng: -100 },
-    //draggableCursor: 'crosshair', //https://www.w3.org/TR/CSS21/ui.html#propdef-cursor has others...
-    //heading: 90,
   }
 
   infowindow = new google.maps.InfoWindow({ maxWidth: 150, })
@@ -102,7 +96,6 @@ export class MapComponent implements OnInit {
   private declarationsSummariesSubscription!: Subscription
   disasterDeclarationsSummary!: DisasterDeclarationsSummary
   disasterArray!: DisasterDeclarationsSummaryType[]
-  //disasterDeclarationsSummaries!: DisasterDeclarationsSummaryType[]
 
   // Google MapMarker only wraps google.maps.LatLngLiteral (positions) - NOT google.maps.Marker: styles, behaviors, etc. -- But might be able to set marker options: see https://github.com/angular/components/blob/main/src/google-maps/README.md#the-options-input
   markers: google.maps.Marker[] = []
@@ -110,31 +103,16 @@ export class MapComponent implements OnInit {
   // markerPositions: google.maps.LatLngLiteral[] angular brain-dead wrapper
   markerClustererImagePath =
     'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m';
-  // markerOptions = { draggable: false }
-
-  //labelIndex = 0;
-  apiLoaded //: Observable<boolean> // used by template
-
+  //apiLoaded //: Observable<boolean> // used by template
   iconBase = "../../../assets/icons/"
-
-  //  protected map!: Map
-  //  public location!: LocationType
-  //  public center = { lat: 0, lng: 0 }
-  //  public mouseLatLng = this.center // google.maps.LatLngLiteral |
-  public zoom = 10 // actual zoom level of main map
-  //  public zoomDisplay = 10 // what's displayed below main map
-
-
-
+  //  public zoom = 10
 
 
   constructor(
     readonly disasterDeclarationsSummariesV2Service: DisasterDeclarationsSummariesV2Service,
     httpClient: HttpClient,
-    //  @Inject(DOCUMENT) protected document: Document
   ) {
     console.log(`======== Constructor() ============ Google Map, using version ${google.maps.version}`)
-
 
     this.declarationsSummariesSubscription = this.disasterDeclarationsSummariesV2Service.getDisasterDeclarationsSummariesV2ServiceObserver().subscribe({
       next: (newDisasterDeclarationsSummary) => {
@@ -144,99 +122,37 @@ export class MapComponent implements OnInit {
       error: (e) => console.error('declarationsSummariesSubscription got:' + e),
       complete: () => console.info('declarationsSummariesSubscription complete')
     })
-
     console.log(`MapViewComponent: Requested declarationsSummariesSubscription, awaiting results`)
-
-
-
-
-
-    // https://github.com/angular/components/tree/master/src/google-maps/map-marker-clusterer
-    // this.markerPositions = []; evil angular wrapper
-
-    // https://github.com/googlemaps/js-markerclusterer
-    // use default algorithm and renderer
-    /*
-
-    constructor MarkerClusterer(map: google.maps.Map, markers?: google.maps.Marker[] | undefined, options?: MarkerClustererOptions | undefined): MarkerClusterer
-  Class for clustering markers on a Google Map.
-
-  See googlemaps.github.io/v3-utility-library/classes/_google_markerclustererplus.markerclusterer.html
-
-  */
-
-    // https://developers.google.com/maps/documentation/javascript/examples/map-latlng-literal
-    // https://developers.google.com/maps/documentation/javascript/reference/coordinates
-
-    // this.circleCenter: google.maps.LatLngLiteral = {lat: this.settings.defLat, lng: this.settings.defLng};
-    // https://github.com/angular/components/tree/master/src/google-maps
-    // this.apiLoaded = httpClient.jsonp(`https://maps.googleapis.com/maps/api/js?key=${SettingsService.secrets[3].key}`, 'callback')
-    // this.apiLoaded = true
-    /*
-    httpClient.jsonp(`https://maps.googleapis.com/maps/api/js?key=YOUR_API_HERE`, "callback")
-      .pipe(
-        map(() => true),
-        catchError(() => of(false)),
-      );
-    */
-    // google.maps.event.addDomListener(window, 'load', this.initMap);
-    // this.LoadMap()
-    //super('MyName')
-
-    this.apiLoaded = true  //! bogus...
-    /*) {
-      if (!this.index) {
-        this.index = -1
-      }
-      */
   }
 
   ngOnInit(): void {
     console.log("Map: ngOnInit()")
-    //this.center = { lat: this.settings.defLat, lng: this.settings.defLng }
-    //this.mouseLatLng = this.center
-
-    if (this.disasterArray) {
-      console.log(`ngInit got disasters.`) //: ${JSON.stringify(this.disasterArray[0])}`)
-    } else {
-      console.warn(`ngInit hasn't got disasters yet!`)
-    }
-
   }
-  displayDataSet() {
 
+  displayDataSet() {
     console.log(`MapViewComponent: Received new disasterDeclarationsSummary via subscription.`) // \n metadata: \n ${JSON.stringify(this.disasterDeclarationsSummary.metadata)}`)
 
-    //  console.log(`MapViewComponent: Received new disasterDeclarationsSummary via subscription. \n DisasterDeclarationsSummaries: \n ${JSON.stringify(this.disasterDeclarationsSummary.DisasterDeclarationsSummaries)}`)
-
     this.disasterArray = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
-
     this.startMapping()
   }
 
   /**
    * This routine is called by google once <google-map> (in the html) has been instanciated
-   *
    * @param mappy
    */
   // this.ngMap: GoogleMap (Angular wrapper for the same underlying map!)
   // this.gMap: google.maps.Map (JavaScript core map) - made available in onMapInitialized()
   onMapInitialized(mappy: google.maps.Map) {
     console.log(`onMapInitialized()`)
-
     this.gMap = mappy
-
     this.startMapping()
   }
-
 
   startMapping() {
     // called if we've Map OR Disasters, it only proceeds if both are valid...
     console.log(`startMapping: verify we've both map and disaster array...`)
 
-    if (this.disasterArray) {
-      console.log(`ngInit got disasters.`) //: ${JSON.stringify(this.disasterArray[0])}`)
-    } else {
+    if (!this.disasterArray) {
       console.warn(`startMapping hasn't got disasters yet!`)
       return
     }
@@ -246,17 +162,7 @@ export class MapComponent implements OnInit {
       return
     }
 
-    console.error(`startMapping got map too, so all set. Onward...[probably on wrong thread though!]`)
-    // Auto-center maps on bounding coordinates centroid of all markers, then zoom map to show all points
-    // this.center = { lat: this.settings ? this.settings.defLat : 0, lng: this.settings ? this.settings.defLng : 0 }
-    // this.mouseLatLng = this.center
-    // this.zoom = this.settings ? this.settings.google.defZoom : 15
-
-
-    // Listen in on mouse moves/zooms
-    //this.captureGMoveAndZoom(this.gMap)
-
-    // this.gMap.fitBounds(this.fieldReportService.boundsToBound(this.fieldReports!.bounds))
+    console.log(`startMapping has reference to map and disasters, so all set. Onward...[on 'wrong' thread though?!]`)
 
     // https://github.com/googlemaps/js-markerclusterer
     // https://newbedev.com/google-markerclusterer-decluster-markers-below-a-certain-zoom-level
@@ -268,11 +174,10 @@ export class MapComponent implements OnInit {
       // onClusterClick?: onClusterClickHandler,
     })
     this.displayMarkers()
-    this.showMarkers()
   }
 
-  // ------------------------------------  Markers  ---------------------------------------
 
+  // ------------------------------------  Markers  ---------------------------------------
 
   clearMarkers() {
     // !REVIEW: Need to explicitly set each marker to null? https://developers.google.com/maps/documentation/javascript/markers#remove
@@ -280,33 +185,32 @@ export class MapComponent implements OnInit {
   }
 
   /**
-     *
      * @returns
      */
   // Shows any markers currently in the array.
-  showMarkers(): void {
-    this.markers.forEach((i) => i.setMap(this.gMap))
-  }
+  // showMarkers(): void {
+  //   this.markers.forEach((i) => i.setMap(this.gMap))
+  // }
 
   // Deletes all markers in the array by removing references to them.
   removeAllMarkers() {
     console.log(`removeAllMarkers()`)
-    this.hideMarkers()
+    // /this.hideMarkers()
     this.markers = []
     // this.gMap.clear();
     this.markerCluster.clearMarkers()
   }
 
-  hideMarkers() {
-    //! unimplemented
-    console.error(`hideMarkers(): UNIMPLEMENTED!`)
-  }
+  // hideMarkers() {
+  //   //! unimplemented
+  //   console.error(`hideMarkers(): UNIMPLEMENTED!`)
+  // }
 
   // Deletes all markers in the array by removing references to them
   // https://developers.google.com/maps/documentation/javascript/markers#remove
   removeAllMarkers2() {
     console.log(`(Abstract) removeAllMarkers()`)
-    this.hideMarkers()
+    //this.hideMarkers()
     // this.clearMarkers = [] // BUG: this won't work!
     // this.map.clear();
     // this.markerCluster.clearMarkers()
@@ -327,26 +231,19 @@ export class MapComponent implements OnInit {
 
     console.log(`displayMarkers got ${this.disasterArray.length} disasters to display`)
 
-
     //! this.addMarker(this.fieldReports[i].location.lat, this.fieldReports[i].location.lng, this.fieldReports[i].status)
-
 
     //! TODO: Start by hiding/clearing existing markers & rebuilding....
     //this.markerCluster.clearMarkers()
     this.removeAllMarkers()
-
     //if (!this.disasterArray.length) {
     //this.removeAllMarkers()
     //this.markerCluster.removeMarkers(this.markers)
     //}
-
     // this.markerCluster.addMarkers(this.markers)
 
     for (let i = 0; i < this.disasterArray.length; i++) {
-
-      // !TODO: Add filters: Only show selected teams, for last hours:minutes, with status XYZ,
-      // or assume any selection/filtering in the Reports page...
-
+      // !TODO: Could add filters here?
       let disaster = this.disasterArray[i]
       let latlng = this.zip2LatLng(disaster.placeCode)
       if (i < 10) {
@@ -378,9 +275,7 @@ export class MapComponent implements OnInit {
       this.addMarker(latlng.lat(), latlng.lng(), disaster.femaDeclarationString, tooltipHtml, disaster.femaDeclarationString, labelColor, "14px", icon)
     }
 
-    // this.showMarkers() //! This directly adds to map - not in clusters...
     this.markerCluster.addMarkers(this.markers)
-
     console.log(`displayMarkers added ${this.disasterArray.length} markers`)
   }
 

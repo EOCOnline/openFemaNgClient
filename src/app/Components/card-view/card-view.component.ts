@@ -10,7 +10,8 @@ import { DisasterDeclarationsSummaryType, DisasterDeclarationsSummary, DisasterD
     imports: [CommonModule, CardComponent],
   */
 
-type propArrayT = { key: keyof DisasterDeclarationsSummaryType | undefined, value: string | number | boolean | null }
+type keyArrayT = { key: keyof DisasterDeclarationsSummaryType | undefined }
+type valueArrayT = { key: keyof DisasterDeclarationsSummaryType | undefined, value: string | number | boolean | null }
 
 @Component({
   selector: 'card-view',
@@ -33,7 +34,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
     currentPage: 1
   }
 
-  propArray!: propArrayT[]
+  keyArray!: keyArrayT[]
   serverSort = 'server order'
   sortKey!: keyof DisasterDeclarationsSummaryType | undefined  // undefined is flag for serverSort: no sort
   ascend = 1
@@ -64,7 +65,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
 
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
     this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
-    this.propArray = this.getDatasetProperties(0)
+    this.keyArray = this.getDatasetKeys(0)
   }
 
   //  ========================== Paginate =================================
@@ -81,11 +82,23 @@ export class CardViewComponent implements OnInit, OnDestroy {
   //  ======================= Filter & Sort ==============================
 
   // https://imfaber.me/typescript-how-to-iterate-over-object-properties/
-  getDatasetProperties(index: number = 0) {
-    let propArray: propArrayT[] = [] // NOTE: special sortServer tag is added in the template/html
+  getDatasetKeys(index: number = 0) {
+    let keyArray: keyArrayT[] = [] // NOTE: special sortServer tag is added in the template/html
+    Object.keys(this.disasterDeclarationsSummaries[index])
+      .forEach(([key]) => keyArray.push({ key: key as keyof DisasterDeclarationsSummaryType }))
+
+    //or just:
+    let altKeyArray = Object.getOwnPropertyNames(this.disasterDeclarationsSummaries[index])
+    debugger
+    return keyArray
+  }
+
+  // https://imfaber.me/typescript-how-to-iterate-over-object-properties/
+  getDatasetValues_UNUSED(index: number = 0) {
+    let valueArray: valueArrayT[] = [] // NOTE: special sortServer tag is added in the template/html
     Object.entries(this.disasterDeclarationsSummaries[index])
-      .forEach(([key, value]) => propArray.push({ key: key as keyof DisasterDeclarationsSummaryType, value: value }))
-    return propArray
+      .forEach(([key, value]) => valueArray.push({ key: key as keyof DisasterDeclarationsSummaryType, value: value }))
+    return valueArray
   }
 
   filterSort() {
@@ -99,8 +112,9 @@ export class CardViewComponent implements OnInit, OnDestroy {
       // for (let i = 0; i < 15; i++) { console.log(`After sort: ${i}) ${this.filteredDisasterDeclarationsSummaries[i][this.sortKey]}`)}
     } else {
       if (this.ascend < 0) {
-        // TODO: handle decending sort
-        console.error(`CardViewer descending sort of server order not implemented yet!`)
+        // decending sort
+        this.filteredDisasterDeclarationsSummaries = this.filteredDisasterDeclarationsSummaries.reverse()
+        console.error(`CardViewer descending sort of server order`)
       }
     }
   }
