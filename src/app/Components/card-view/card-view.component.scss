@@ -17,9 +17,7 @@
   font-size          : large;
 }
 
-#sortBy {
-  font-size: large;
-}
+
 
 .checks,
 .sort,
@@ -38,26 +36,41 @@
   margin : 1rem;
 }
 
-.sortOrderSwitch {
-  padding: 5px;
-  margin : 20px;
+#sortBy {
+  font-size       : large;
+  padding         : 3px;
+  font-weight     : bold;
+  border          : 2px;
+  border-style    : groove;
+  border-radius   : 7px;
+  background-color: rgb(244, 248, 252);
 }
 
-.sortOrderSwitch label {
-  font-weight: bold;
+[assend="true"] {
+  padding             : 3px;
+  font-weight         : bold;
+  border              : 2px;
+  border-style        : groove;
+  border-radius       : 7px;
+  background-color    : rgb(244, 248, 252);
+  //background-color  : rgb(218, 185, 185);
 }
 
-.sortOrderSwitch :hover {
-  background-color  : #def;
+[assend="false"] {
+  padding           : 3px;
+  font-weight       : bold;
   border            : 2px;
   border-style      : groove;
   border-radius     : 7px;
-  padding           : 3px 5px;
-  box-shadow        : rgba(0, 0, 0, 0.16) 0px 5px 6px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-  //vertical-align  : text-bottom;
+  //background-color: rgb(241, 245, 249);
+  background-color  : rgb(218, 185, 185);
+}
+
+.sortOrderSwitch :hover {
+  background-color: rgb(161, 206, 252);
+  box-shadow      : rgba(0, 0, 0, 0.16) 0px 5px 6px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
 #sortIcon {
-  //padding: 15px 0 -15px 0;
   vertical-align: text-bottom;
 }

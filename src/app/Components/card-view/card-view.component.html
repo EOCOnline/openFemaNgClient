@@ -1,8 +1,23 @@
 <h1>Card View</h1>
 
 <div class="sort">
+  <label for="sortBy" class="header">Sort </label>
 
-  <label for="sortBy" class="header">Sort by this property: </label>
+  <span class="sortOrderSwitch" (click)="sortOrder($event)">
+    <span *ngIf="ascend==1; else descending" assend="true">
+      <span class="material-symbols-outlined" id="sortIcon">arrow_upward</span>
+      <span id="direction">Ascending</span>
+    </span>
+
+    <ng-template #descending>
+      <span assend="false">
+        <span class="material-symbols-outlined" id="sortIcon">arrow_downward</span>
+        <span id="direction">Descending</span>
+      </span>
+    </ng-template>
+  </span>
+
+  <label for="sortBy" class="header"> by: </label>
   <select name="sortBy" id="sortBy" (change)="sortBy($event)">
     <option value="" disabled>--Please choose an option--</option>
     <option value={{serverSort}}>{{serverSort}}</option>
@@ -10,20 +25,6 @@
       <option value="{{key.key}}">{{key.key}}</option>
       </ng-container>
   </select>
-
-  <span class="sortOrderSwitch" aria-checked="true" (click)="sortOrder($event)">
-    <span>
-      <label>Sort Order:</label>
-      <span *ngIf="ascend==1; else descending" class="nonLabel">
-        <span class="material-symbols-outlined" id="sortIcon">arrow_upward</span>
-        <span id="direction">Ascending</span>
-      </span>
-      <ng-template #descending>
-        <span class="material-symbols-outlined" id="sortIcon">arrow_downward</span>
-        <span id="direction">Descending</span>
-      </ng-template>
-    </span>
-  </span>
 </div>
 
 <div class="checks">

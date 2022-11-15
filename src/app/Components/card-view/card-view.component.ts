@@ -35,6 +35,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
   }
 
   keyArray!: keyArrayT[]
+  valueArray!: valueArrayT[]
   serverSort = 'server order'
   sortKey!: keyof DisasterDeclarationsSummaryType | undefined  // undefined is flag for serverSort: no sort
   ascend = 1
@@ -65,12 +66,19 @@ export class CardViewComponent implements OnInit, OnDestroy {
 
     this.disasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
     this.filteredDisasterDeclarationsSummaries = this.disasterDeclarationsSummary.DisasterDeclarationsSummaries
-    this.keyArray = this.getDatasetKeys(0)
+    //this.keyArray = this.getDatasetKeys(0)
+    this.keyArray = this.getDatasetProperties(0)
+    //this.valueArray = this.getDatasetValues_UNUSED(0)
   }
 
   //  ========================== Paginate =================================
   absoluteIndex(indexOnPage: number): number {
-    return this.config.itemsPerPage * (this.config.currentPage - 1) + indexOnPage;
+    const absIndex = this.config.itemsPerPage * (this.config.currentPage - 1) + indexOnPage
+    if (this.sortKey == undefined && this.ascend < 0) {
+      console.error(`CardViewer descending sort of server order!`)
+      return this.filteredDisasterDeclarationsSummaries.length - absIndex
+    }
+    return absIndex
   }
 
   onNumberPerPage() {
@@ -84,12 +92,20 @@ export class CardViewComponent implements OnInit, OnDestroy {
   // https://imfaber.me/typescript-how-to-iterate-over-object-properties/
   getDatasetKeys(index: number = 0) {
     let keyArray: keyArrayT[] = [] // NOTE: special sortServer tag is added in the template/html
+    // BUG: Object.keys JUST returns 1st letter of properties!!!
     Object.keys(this.disasterDeclarationsSummaries[index])
       .forEach(([key]) => keyArray.push({ key: key as keyof DisasterDeclarationsSummaryType }))
 
-    //or just:
-    let altKeyArray = Object.getOwnPropertyNames(this.disasterDeclarationsSummaries[index])
-    debugger
+    //or just: (but NOT ... as keyof DisasterDeclarationsSummaryType!)
+    //let altKeyArray: keyArrayT[] = Object.getOwnPropertyNames(this.disasterDeclarationsSummaries[index])
+    return keyArray
+  }
+
+  // https://imfaber.me/typescript-how-to-iterate-over-object-properties/
+  getDatasetProperties(index: number = 0) {
+    let keyArray: keyArrayT[] = [] // NOTE: special sortServer tag is added in the template/html
+    Object.entries(this.disasterDeclarationsSummaries[index])
+      .forEach(([key]) => keyArray.push({ key: key as keyof DisasterDeclarationsSummaryType }))
     return keyArray
   }
 
@@ -114,7 +130,8 @@ export class CardViewComponent implements OnInit, OnDestroy {
       if (this.ascend < 0) {
         // decending sort
         this.filteredDisasterDeclarationsSummaries = this.filteredDisasterDeclarationsSummaries.reverse()
-        console.error(`CardViewer descending sort of server order`)
+        //NOTE: absoluteIndex has special case to show reversed index
+        console.error(`CardViewer descending sort of server order. TODO: preserve id#: display 'array.length-index' instead...`)
       }
     }
   }

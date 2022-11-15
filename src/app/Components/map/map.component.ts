@@ -65,6 +65,9 @@ https://github.com/angular/components/blob/main/src/google-maps/
 //standalone: true,
 //imports: [CommonModule, RouterModule],
 
+import * as ZipCode2 from '../../../assets/data/USZipCodes2013.json'
+
+
 @Component({
   selector: 'map',
   templateUrl: './map.component.html',
@@ -75,7 +78,10 @@ export class MapComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) ngMap!: GoogleMap
 
   mouseLatLng!: google.maps.LatLngLiteral
-  readonly ZipCode = require('../../../assets/data/USZipCodes2013numeric.json')
+  readonly ZipCode = require('../../../assets/data/USZipCodes2013.json')
+  private zips!: number[]
+  private zips2!: number[]
+
   // this.ngMap: GoogleMap (Angular wrapper for the same underlying map!)
   // this.gMap: google.maps.Map (JavaScript core map) - made available in onMapInitialized()
   gMap!: google.maps.Map
@@ -123,6 +129,18 @@ export class MapComponent implements OnInit {
       complete: () => console.info('declarationsSummariesSubscription complete')
     })
     console.log(`MapViewComponent: Requested declarationsSummariesSubscription, awaiting results`)
+
+    // https://stackoverflow.com/a/46694321/18004414
+    // https://www.typescriptlang.org/docs/handbook/2/mapped-types.html#key-remapping-via-as
+    //this.zips = this.ZipCode.map((item: { zip: any; }) => item.zip)
+
+
+    // less 'elegant' - but faster...
+    this.zips2 = []
+    for (let i = 0; i < this.ZipCode.length; i++) {
+      this.zips2.push(this.ZipCode[i].zip);
+    }
+    debugger
   }
 
   ngOnInit(): void {
