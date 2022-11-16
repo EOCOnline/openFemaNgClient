@@ -266,7 +266,7 @@ export class MapComponent implements OnInit {
       let latlng = this.zip2LatLng(disaster.placeCode)
       if (latlng == null) {
         console.error(`Disaster declaration ${disaster.femaDeclarationString}: ${disaster.declarationTitle} had an placeCode '${disaster.placeCode}' that is NOT a valid Zip Code! IGNORING.`)
-        break
+        continue
       }
       if (i < 10) {
         console.log(`zip2LatLng got ${JSON.stringify(latlng)} for disaster zip code ${disaster.placeCode}`)
