@@ -56,7 +56,7 @@ With encouragement :+1: /funding:
 
 ## Building this web page
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.
 
 To update libraries either use Evergreen Angular extension or use the same commands from package.json directly: Start with a clean repository: checkin any outstanding code updates. You likely need do this periodically between the following steps.
 
