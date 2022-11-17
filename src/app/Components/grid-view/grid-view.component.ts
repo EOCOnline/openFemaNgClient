@@ -121,9 +121,9 @@ export class GridViewComponent implements OnInit, OnDestroy {
         },
         width: 200
       },
+      { headerName: "Place", field: "placeCode", headerTooltip: 'FEMA Place Code', width: 30 },
       { headerName: "County", field: "designatedArea", headerTooltip: 'designatedArea', width: 100 },
       { headerName: "State", field: "state", width: 5 },
-      { headerName: "Zip", field: "placeCode", headerTooltip: 'placeCode', width: 30 },
       { headerName: "BeginDate", field: "incidentBeginDate", headerTooltip: 'incidentBeginDate', valueGetter: this.myDateGetter, width: 25 },
       { headerName: "EndDate", field: "incidentEndDate", headerTooltip: 'incidentEndDate', valueGetter: this.myDateGetter, width: 25 },
       { headerName: "Declared", field: "declarationDate", tooltipField: "declarationDate", valueGetter: this.myDateGetter, width: 25 },

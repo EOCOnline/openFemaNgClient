@@ -5,7 +5,6 @@ import { Observable, Subscription, throwError } from 'rxjs';
 import { GoogleMap, MapMarker } from '@angular/google-maps' //https://github.com/angular/components/blob/main/src/google-maps/
 import { MarkerClusterer } from '@googlemaps/markerclusterer'
 
-//import { ZipCodes } from '../../assets/data/USZipCodes2013.json'
 import { DisasterDeclarationsSummary, DisasterDeclarationsSummaryType, DisasterTypes, DisasterDeclarationsSummariesV2Service, WebDisasterSummariesService } from '../../services';
 import { Common } from ".."
 
@@ -56,17 +55,14 @@ https://github.com/angular/components/blob/main/src/google-maps/
  https://console.cloud.google.com/google/maps-apis/ does *NOT* support client side usage?!
 */
 
-// Zip codes to lat/long:
-// https://developer.trimblemaps.com/restful-apis/mapping/polygon/zip-code/
-// https://pcmiler.alk.com/apis/rest/v1.0/Service.svc
-// https://gis.stackexchange.com/questions/102740/creating-zip-code-level-choropleth-using-leaflet-js
-// https://catalog.data.gov/dataset/tiger-line-shapefile-2019-2010-nation-u-s-2010-census-5-digit-zip-code-tabulation-area-zcta5-na
+// Fip codes to lat/long:
+// https://www.smarty.com/articles/county-fips-codes
 
 //standalone: true,
 //imports: [CommonModule, RouterModule],
 
-import * as ZipCode2 from '../../../assets/data/USZipCodes2013numeric.json'
 type latLngType = { lat: number; lng: number } | null
+type fipsType = { lat: number; lng: number } | null
 
 @Component({
   selector: 'map',
@@ -78,9 +74,9 @@ export class MapComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) ngMap!: GoogleMap
 
   mouseLatLng!: google.maps.LatLngLiteral
-  readonly ZipCode = require('../../../assets/data/USZipCodes2013numeric.json')
-  private zips!: number[]
-  private zips2!: number[]
+  readonly FipsCodes = require('../../../assets/data/fips_mapB.json')
+  //private zips!: number[]
+  private fips!: number[]
 
   // this.ngMap: GoogleMap (Angular wrapper for the same underlying map!)
   // this.gMap: google.maps.Map (JavaScript core map) - made available in onMapInitialized()
@@ -130,17 +126,17 @@ export class MapComponent implements OnInit {
     })
     console.log(`MapViewComponent: Requested declarationsSummariesSubscription, awaiting results`)
 
+    // fips[] : a sorted array of fips codes used (via a binary search) to rapidly find the row/index within the FipCodes object.
     // https://stackoverflow.com/a/46694321/18004414
     // https://www.typescriptlang.org/docs/handbook/2/mapped-types.html#key-remapping-via-as
-    //this.zips = this.ZipCode.map((item: { zip: any; }) => item.zip)
-
+    //this.fips = this.FipsCodes.map((item: { fip: any; }) => item.fip)
 
     // less 'elegant' - but faster...
-    this.zips2 = []
-    for (let i = 0; i < this.ZipCode.zips.length; i++) {
-      this.zips2.push(this.ZipCode.zips[i].zip);
+    this.fips = []
+    for (let i = 0; i < this.FipsCodes.length; i++) {
+      this.fips.push(Number(this.FipsCodes[i].fip))
     }
-    //debugger
+    //TODO: Just save this to disk, rather than recalcing...
   }
 
   ngOnInit(): void {
@@ -191,26 +187,21 @@ export class MapComponent implements OnInit {
       // renderer?: Renderer,
       // onClusterClick?: onClusterClickHandler,
     })
-    this.displayMarkers()
+
+    this.buildMarkerArray()
+
+    this.markerCluster.addMarkers(this.markers)
+    console.log(`displayMarkers added ${this.disasterArray.length} markers`)
+
+    // no ongoing activity?!
   }
 
 
   // ------------------------------------  Markers  ---------------------------------------
 
-  clearMarkers() {
-    // !REVIEW: Need to explicitly set each marker to null? https://developers.google.com/maps/documentation/javascript/markers#remove
-    this.markers = []
-  }
-
-  /**
-     * @returns
-     */
-  // Shows any markers currently in the array.
-  // showMarkers(): void {
-  //   this.markers.forEach((i) => i.setMap(this.gMap))
-  // }
-
   // Deletes all markers in the array by removing references to them.
+  // https://developers.google.com/maps/documentation/javascript/markers#remove
+  // REVIEW: Need to explicitly set each marker to null? https://developers.google.com/maps/documentation/javascript/markers#remove
   removeAllMarkers() {
     console.log(`removeAllMarkers()`)
     // /this.hideMarkers()
@@ -219,59 +210,38 @@ export class MapComponent implements OnInit {
     this.markerCluster.clearMarkers()
   }
 
-  // hideMarkers() {
-  //   //! unimplemented
-  //   console.error(`hideMarkers(): UNIMPLEMENTED!`)
-  // }
+  // tempI = 0
+  fip2LatLng(fip: number): latLngType {
+    let index = Common.binarySearchIterative(this.fips, fip)
+    //  if (this.tempI++ < 10) { console.log(`fip2LatLng for ${fip} got index= ${index}`) }
 
-  // Deletes all markers in the array by removing references to them
-  // https://developers.google.com/maps/documentation/javascript/markers#remove
-  removeAllMarkers2() {
-    console.log(`(Abstract) removeAllMarkers()`)
-    //this.hideMarkers()
-    // this.clearMarkers = [] // BUG: this won't work!
-    // this.map.clear();
-    // this.markerCluster.clearMarkers()
+    if (index == -1) {
+      return null // no such fipcode...
+    }
+    //debugger
+    //let latlng = new google.maps.LatLng(this.ZipCode.zip[index].lat, this.ZipCode.zip[index].lng)  //lat: 40, lng: -100
+    let latlng = { lat: this.FipsCodes[index].lat, lng: this.FipsCodes[index].long }  //lat: 40, lng: -100
+    //if (this.tempI++ < 10) { console.log(`zip2LatLng for ${JSON.stringify(this.FipsCodes[index])} markers`) }
+    return latlng
   }
 
-  displayMarkers() {
-    console.log(`displayMarkers()`)
-
-    /*let latlng
-    let infoContent
-    let labelText
-    let title
-    let icon
-    let labelColor
-    let disaster: DisasterDeclarationsSummaryType
-  */
-    //    let disasterTypes = DisasterTypes //
-
+  buildMarkerArray() {
     console.log(`displayMarkers got ${this.disasterArray.length} disasters to display`)
-
-    //! this.addMarker(this.fieldReports[i].location.lat, this.fieldReports[i].location.lng, this.fieldReports[i].status)
-
-    //! TODO: Start by hiding/clearing existing markers & rebuilding....
-    //this.markerCluster.clearMarkers()
     this.removeAllMarkers()
-    //if (!this.disasterArray.length) {
-    //this.removeAllMarkers()
-    //this.markerCluster.removeMarkers(this.markers)
-    //}
-    // this.markerCluster.addMarkers(this.markers)
 
+    //for (let disaster of this.disasterArray) {
     for (let i = 0; i < this.disasterArray.length; i++) {
       // !TODO: Could add filters here?
       let disaster = this.disasterArray[i]
-      let latlng = this.zip2LatLng(disaster.placeCode)
+      let fip: number = Number(disaster.fipsStateCode) * 1000 + Number(disaster.fipsCountyCode)
+      let latlng = this.fip2LatLng(fip)
       if (latlng == null) {
-        console.error(`Disaster declaration ${disaster.femaDeclarationString}: ${disaster.declarationTitle} had an placeCode '${disaster.placeCode}' that is NOT a valid Zip Code! IGNORING.`)
+        console.error(`Disaster declaration ${disaster.femaDeclarationString}: ${disaster.declarationTitle} had an fipCode ${disaster.fipsStateCode},${disaster.fipsCountyCode} that was not found in our FIPc listing! IGNORING.`)
         continue
       }
       if (i < 10) {
-        console.log(`zip2LatLng got ${JSON.stringify(latlng)} for disaster zip code ${disaster.placeCode}`)
+        console.log(`zip2LatLng got ${JSON.stringify(latlng)} for disaster fip code ${fip}`)
       }
-      //latlng = new google.maps.LatLng(disaster.location.lat, disaster.location.lng)
 
       // Style="getDisasterColorStyle(disaster.incidentType)"
       let tooltipHtml =
@@ -280,14 +250,22 @@ export class MapComponent implements OnInit {
         ${disaster.designatedArea}, ${disaster.state} ${disaster.placeCode}<br>`
 
       /*
-      ${disaster.incidentBeginDate | date: 'shortDate'
-  } to
-      ${ disaster.incidentEndDate | date: 'shortDate' };
-      Closed ${ disaster.disasterCloseoutDate | date: 'shortDate' } <br>
-    FIPS: ${ disaster.fipsCountyCode } & ${ disaster.fipsStateCode };
-      Request # ${ disaster.declarationRequestNumber } <br>
-    <a href="/details/${i}" > See all detail fields < /a>`
-  */
+        ${disaster.incidentBeginDate | date: 'shortDate'} to ${ disaster.incidentEndDate | date: 'shortDate' };
+        Closed ${ disaster.disasterCloseoutDate | date: 'shortDate' } <br>
+        FIPS: ${ disaster.fipsCountyCode } & ${ disaster.fipsStateCode };
+        Request # ${ disaster.declarationRequestNumber } <br>
+        <a href="/details/${i}" > See all detail fields < /a>`
+
+        const svgMarker = {
+    path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+    fillColor: "blue",
+    fillOpacity: 0.6,
+    strokeWeight: 0,
+    rotation: 0,
+    scale: 2,
+    anchor: new google.maps.Point(15, 30),
+  };
+      */
 
       let labelText = disaster.femaDeclarationString
       let icon = this.iconBase + this.getDisasterTypeIcon(disaster.incidentType)
@@ -296,32 +274,7 @@ export class MapComponent implements OnInit {
       if (i < 10) { console.log(`displayMarkers adding marker #${i} at ${JSON.stringify(latlng)} with ${tooltipHtml}, ${disaster.femaDeclarationString}, ${labelColor}, ${icon}`) }
       this.addMarker(latlng.lat, latlng.lng, disaster.femaDeclarationString, tooltipHtml, disaster.femaDeclarationString, labelColor, "14px", icon)
     }
-
-    this.markerCluster.addMarkers(this.markers)
-    console.log(`displayMarkers added ${this.disasterArray.length} markers`)
   }
-
-  tempI = 0
-  zip2LatLng(zipCode: string): latLngType {
-    // or use Or FIPS County Code?
-    let zip = Number(zipCode)
-    let index = Common.binarySearchRecursive(this.zips2, zip)
-    if (this.tempI++ < 10) {
-      console.log(`zip2LatLng for ${zip} got index= ${index}`)
-    }
-
-    if (index == -1) {
-      return null // no such zipcode...
-    }
-
-    //let latlng = new google.maps.LatLng(this.ZipCode.zip[index].lat, this.ZipCode.zip[index].lng)  //lat: 40, lng: -100
-    let latlng = { lat: this.ZipCode.zip[index].lat, lng: this.ZipCode.zip[index].lng }  //lat: 40, lng: -100
-    if (this.tempI++ < 10) { console.log(`zip2LatLng for ${this.ZipCode} markers`) }
-    return latlng
-  }
-
-
-
 
   // --------------------------------  addMarker  ------------------------------
   /**
@@ -442,7 +395,7 @@ export class MapComponent implements OnInit {
       //}, msDelay)
 
     } else {
-      console.error("event.latLng is BAD; can not add marker..")
+      console.error(`event.latLng is BAD. lat: ${lat}; lng: ${lng}. Can not add marker.`)
     }
     //this.refreshMarkerDisplay()
   }

@@ -27,10 +27,14 @@ export class Common {
   static binarySearchIterative(arr: number[], num: number): number {
     let low = 0
     let mid = 0
+    //let a = 0
     let high = arr.length - 1
-
+    //debugger
     while (low <= high) {
-      mid = Math.round((low + high) / 2)
+      //console.log(`${arr[low]} < ${num} < ${arr[high]}; ${low}, ${mid}, ${high}`)
+      mid = Math.floor((low + high) / 2)
+      //a = arr[mid]
+      //console.log(`new mid: ${mid} ${a}`)
 
       if (num < arr[mid]) {
         high = mid - 1
@@ -39,21 +43,30 @@ export class Common {
         low = mid + 1
       }
       else {
+        //console.log(` =========== Success:array[${mid}] = ${a} should = ${num} =============`)
         return mid
       }
     }
-    // Arbitrary value to signify non-existance.
+    // Arbitrary value to signify non-existance
+    //console.error(`binarySearchIterative: FAILURE: array[${mid}] = ${a} should = ${num} ################################`)
+    //debugger
     return -1
   }
 
   static binarySearchRecursive(arr: number[], num: number): number {
-    return this.binarySearchRecursiveAux(arr, num, 0, arr.length - 1)
+    let result = this.binarySearchRecursiveAux(arr, num, 0, arr.length - 1)
+    return result
   }
 
   static binarySearchRecursiveAux(arr: number[], num: number, low: number, high: number): any {
-    const mid = Math.round((low + high) / 2)
+    const mid = Math.floor((low + high) / 2)
 
-    if (low >= high) return -1
+    if (low >= high) {
+      // let l = arr[low]
+      // let h = arr[high]
+      // debugger
+      return -1
+    }
 
     if (num < arr[mid]) {
       return this.binarySearchRecursiveAux(arr, num, low, mid - 1)

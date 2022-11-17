@@ -7,13 +7,13 @@
     {{disaster.declarationTitle}}</h3>
   <!-- div class="card-subhead"></div -->
 
-  <div class="card-location">{{disaster.designatedArea}}, {{disaster.state}} {{disaster.placeCode}}</div>
+  <div class="card-location">{{disaster.designatedArea}}, {{disaster.state}}</div>
   <span class="card-date">{{disaster.incidentBeginDate | date: 'shortDate' }} to
     {{disaster.incidentEndDate | date: 'shortDate'}}; closed {{disaster.disasterCloseoutDate | date:
     'shortDate'}}</span>
 
   <div class="card-description">FIPS: {{disaster.fipsCountyCode}} & {{disaster.fipsStateCode}}; Request
-    # {{disaster.declarationRequestNumber}}</div>
+    # {{disaster.declarationRequestNumber}}; FEMA Place: {{disaster.placeCode}}</div>
 
   <div class="card-details"><a href="/details/{{index}}">See all detail fields</a></div>
   <article>
