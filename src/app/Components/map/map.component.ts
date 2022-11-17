@@ -21,6 +21,8 @@ import { Common } from ".."
  * https://googlemaps.github.io/js-markermanager/
  * https://github.com/googlemaps/js-markerwithlabel
  * https://github.com/googlemaps/js-typescript-guards
+ * https://developers.google.com/maps/documentation/javascript/dds-boundaries/region-lookup
+ * https://developers.google.com/maps/documentation/javascript/dds-boundaries/start
  */
 
 //declare const google: any // declare tells compiler "this variable exists (from elsewhere) & can be referenced by other code. There's no need to compile this statement"
