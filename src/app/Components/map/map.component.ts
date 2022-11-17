@@ -247,7 +247,7 @@ export class MapComponent implements OnInit {
       let tooltipHtml =
         `${i} - ${disaster.incidentType}<br>
         ${disaster.femaDeclarationString}: ${disaster.declarationTitle}<br>
-        ${disaster.designatedArea}, ${disaster.state} ${disaster.placeCode}<br>`
+        ${disaster.placeCode} - ${disaster.designatedArea}, ${disaster.state} <br>`
 
       /*
         ${disaster.incidentBeginDate | date: 'shortDate'} to ${ disaster.incidentEndDate | date: 'shortDate' };
@@ -272,7 +272,7 @@ export class MapComponent implements OnInit {
       let labelColor = this.getDisasterTypeColor(disaster.incidentType)
 
       if (i < 10) { console.log(`displayMarkers adding marker #${i} at ${JSON.stringify(latlng)} with ${tooltipHtml}, ${disaster.femaDeclarationString}, ${labelColor}, ${icon}`) }
-      this.addMarker(latlng.lat, latlng.lng, disaster.femaDeclarationString, tooltipHtml, disaster.femaDeclarationString, labelColor, "14px", icon)
+      this.addMarker(latlng.lat, latlng.lng, tooltipHtml, disaster.femaDeclarationString, disaster.femaDeclarationString, labelColor, "14px", icon)
     }
   }
 
@@ -295,9 +295,7 @@ export class MapComponent implements OnInit {
 
     //console.log(`addMarker`)
 
-    if (infoContent == "") {
-      infoContent = `Manual Marker dropped ${lat}, ${lng} at ${Date()} `
-    }
+    //if (infoContent == "") { infoContent = `Manual Marker dropped ${lat}, ${lng} at ${Date()} ` }
     /*  Somehow this breaks following code!!!
         let myIcon5 = new google.maps.Icon({
           url: this.iconBase + icon,
@@ -307,9 +305,9 @@ export class MapComponent implements OnInit {
 
     // https://developers.google.com/maps/documentation/javascript/examples/marker-symbol-custom
     const svgMarker = {
-      //url: this.iconBase + icon,
+      //url: icon, //this.iconBase +
       path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-      fillColor: "blue",
+      fillColor: labelColor,
       fillOpacity: 0.7,
       strokeWeight: 0,
       rotation: 0,
@@ -336,6 +334,7 @@ export class MapComponent implements OnInit {
         // https://developers.google.com/maps/documentation/javascript/reference/marker#Icon
         // icon: this.iconBase + icon,  // works
         icon: svgMarker, // works
+        //icon: icon, //svgMarker, // works
         // icon: google.maps.SymbolPath.CIRCLE,  // gets ignored
         /*
                 icon_BROKEN: {  // gets ignored
