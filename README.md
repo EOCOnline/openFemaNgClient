@@ -2,7 +2,7 @@
 
 <!-- https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax -->
 
-<img align="right" src="./src/assets/icons/opoenFemaNgClient_logo.ico">
+<img align="right" src="./src/assets/icons/openFemaNgClient_logo.ico">
 
 <!-- picture>
  <source media="(prefers-color-scheme: dark)" srcset="YOUR-DARKMODE-IMAGE">
