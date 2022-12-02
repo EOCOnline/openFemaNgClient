@@ -38,6 +38,10 @@ OpenFemaNgClient is an Angular (i.e., 'Ng') and Typescript application that prov
 
 ![OpenFemaNgClient's Map View](non-dist/imgs/MapView.lg.png)
 
+#### Detail View
+
+![OpenFemaNgClient's Detail View](non-dist/imgs/DetailView.lg.png)
+
 ## Known/Planned Issues
 
 - [ ] Only displays the Disaster Declarations dataset
