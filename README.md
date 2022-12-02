@@ -58,11 +58,18 @@ With encouragement :+1: /funding:
 - [ ] More analysis & filtering options to aid analysis/investigation
 - [ ] Trend displays
 
-## Building this web page
+## Build & Run this web app
+
+1. Install Node Js <https://nodejs.org/en/download> and NPM <https://docs.npmjs.com/downloading-and-installing-node-js-and-npm>.
+2. Fork, Clone, or Copy the source code from the <www.GitHub.com/EOConline/OpenFemaNgClient> repository to a directory on your dev workstation
+3. From a command line in that directory, enter `npm install` to install all the required 3rd party libraries
+4. Enter `n g -o` (shorthand for `ng serve -output`) to compile the application and serve it using the build-in development server and open your default browser to this location.
+
+### Updating Angular Libraries & Build Environment
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.
 
-To update libraries either use Evergreen Angular extension or use the same commands from package.json directly: Start with a clean repository: checkin any outstanding code updates. You likely need do this periodically between the following steps.
+To update libraries in the future: either use Evergreen Angular extension or use the same commands from package.json directly: Start with a clean repository: checkin any outstanding code updates. You likely need do this periodically between the following steps.
 
 - `npm run update1` (i.e., `npx ng update @angular/core @angular/cli --next`)
 - `npm run update2` (i.e., `npx ng update --next`)
