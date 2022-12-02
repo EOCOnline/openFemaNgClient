@@ -24,11 +24,11 @@ OpenFemaNgClient is an Angular (i.e., 'Ng') and Typescript application that prov
 
 #### List View
 
-![OpenFemaNgClient's List View](non-dist/imgs/ListView.png)
+![OpenFemaNgClient's List View](non-dist/imgs/ListView.lg.png)
 
 #### Card View
 
-![OpenFemaNgClient's Card View](non-dist/imgs/CardView.png)
+![OpenFemaNgClient's Card View](non-dist/imgs/CardView.lg.png)
 
 #### Grid View
 
