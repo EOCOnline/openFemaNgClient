@@ -32,11 +32,11 @@ OpenFemaNgClient is an Angular (i.e., 'Ng') and Typescript application that prov
 
 #### Grid View
 
-![OpenFemaNgClient's Grid View](non-dist/imgs/GridView.png)
+![OpenFemaNgClient's Grid View](non-dist/imgs/GridView.654x480.png)
 
 #### Map View
 
-![OpenFemaNgClient's Map View](non-dist/imgs/MapView.png)
+![OpenFemaNgClient's Map View](non-dist/imgs/MapView.529x480.png)
 
 ## Known/Planned Issues
 
