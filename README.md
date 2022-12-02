@@ -17,7 +17,8 @@ OpenFemaNgClient is an Angular (i.e., 'Ng') and Typescript application that prov
 ## Features
 
 - Displays dataset using List, Card, Ag-Grid Grid and Google Map views
-- Provides coding sample using latest versions of Angular & Typescript
+- Also displays a Detailed view showing all data fields.
+- Provides a coding sample using latest versions of Angular & Typescript
 - Open Source, freely available using the permisive MIT license
 
 ### Screenshots
@@ -65,6 +66,14 @@ With encouragement :+1: /funding:
 3. From a command line in that directory, enter `npm install` to install all the required 3rd party libraries
 4. Enter `n g -o` (shorthand for `ng serve -output`) to compile the application and serve it using the build-in development server and open your default browser to this location.
 
+### Development server
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. (Or do the previous more succinctly with just `ng s -o`.) The application will automatically reload if you change any of the source files.
+
+### Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
 ### Updating Angular Libraries & Build Environment
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.
@@ -78,14 +87,6 @@ To update libraries in the future: either use Evergreen Angular extension or use
 - `npm run update4` (i.e., `npx npm-check-updates -u`) which updates package.json to the latest format - only if requested by the previous command
 - `npm run update5` (i.e., `npm install`)
 - `npm run update6` (i.e., `npm i -g rimraf` Post-Update Checkup)
-
-### Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. (Or do the previous more succinctly with just `ng s -o`.) The application will automatically reload if you change any of the source files.
-
-### Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ### Running unit tests
 
