@@ -1,23 +1,25 @@
-#map {
+#xxmap {
   //height               : 80vh;
   //width             : 100%;
   //margin          : 10px;
   //background-color: aqua;
-  width : 500px;
-  height: 200px;
+  width : 100%;
+  height: 500px;
 }
 
-.map-container {
-  height: 100%;
+.xxmap-container {
+  //width           : 100%;
+  height          : 100%;
+  background-color: bisque;
 }
 
-#container,
-#gmap {
+#xxcontainer,
+#xxgmap {
   //height: 100%;
   width: 100%;
 }
 
-#gMap {
+#xxgMap {
   position: relative;
 }
 
