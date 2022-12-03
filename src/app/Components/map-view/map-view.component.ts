@@ -68,8 +68,8 @@ type fipsType = { lat: number; lng: number } | null
 
 @Component({
   selector: 'map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss'],
+  templateUrl: './map-view.component.html',
+  styleUrls: ['./map-view.component.scss'],
 })
 export class MapViewComponent implements OnInit {
   // Get reference to map components, for later use

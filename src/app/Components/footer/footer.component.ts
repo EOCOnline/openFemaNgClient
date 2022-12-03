@@ -20,12 +20,12 @@ export class FooterComponent { //implements OnInit, OnDestroy
   // page = 1
 
   today = new Date()
-  version = "0.0.1"
+  version = "0.1.0"
 
 
   constructor(
     //@Inject(DOCUMENT) private document: Document
-    ) {
+  ) {
     console.log(`======== FooterComponent Constructor() ============`)
 
     // for (let i = 1; i <= 100; i++) {
