@@ -71,7 +71,7 @@ type fipsType = { lat: number; lng: number } | null
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class MapViewComponent implements OnInit {
   // Get reference to map components, for later use
   @ViewChild(GoogleMap, { static: false }) ngMap!: GoogleMap
 

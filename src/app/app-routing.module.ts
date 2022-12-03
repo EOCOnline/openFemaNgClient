@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { ListViewComponent, GridViewComponent, DetailViewComponent, CardViewComponent, MapComponent } from './components'
+import { ListViewComponent, GridViewComponent, DetailViewComponent, CardViewComponent, MapViewComponent } from './components'
 
 const routes: Routes = [
   // EAGER Routes
@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: "list", component: ListViewComponent },
   { path: "card", component: CardViewComponent },
   { path: "grid", component: GridViewComponent },
-  { path: "map", component: MapComponent },
+  { path: "map", component: MapViewComponent },
   { path: 'details/:index', component: DetailViewComponent }
   //  { path: 'details/:index', loadComponent: () => import('./components/detail-view/detail-view.component').then(m => m.DetailViewComponent) } // for standalone
 
