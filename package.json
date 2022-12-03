@@ -1,6 +1,6 @@
 {
   "name": "open-fema-ng-client",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "xyz": "npm run script-name. Main scripts (start, stop, restart, install, version or test) do not require run command. https://docs.npmjs.com/cli/v8/using-npm/scripts",
     "ng": "ng",
@@ -48,6 +48,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": ""
+    "typescript": "^3.8.0"
   }
 }
